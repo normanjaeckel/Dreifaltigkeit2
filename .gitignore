@@ -1,0 +1,13 @@
+# Patterns of intentionally untracked files that Git should ignore
+
+# Python compiled files
+__pycache__/
+
+# Virtual Python Environment builder
+.virtualenv/
+
+# Django settings
+dreifaltigkeit_settings.py
+
+# Development database
+db.sqlite3
