@@ -11,3 +11,6 @@ dreifaltigkeit_settings.py
 
 # Development database
 db.sqlite3
+
+# Private development data
+private/

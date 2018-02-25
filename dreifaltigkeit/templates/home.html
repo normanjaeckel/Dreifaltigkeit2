@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>Herzlich willkommen<br /> </h1>
+											<p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
+										</header>
+										<p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. <a href="#">Pfarrer Sebastian Rebner</a> und alle weiteren Mitarbeiterinnen und Mitarbeiter helfen Ihnen gern weiter.</p>
+										<ul class="actions">
+											<li><a href="{% url 'events' %}" class="button big">Alle Termine im Überblick</a></li>
+										</ul>
+									</div>
+									<span class="image object">
+										<img src="{% static 'images/pic10.jpg' %}" alt="" />
+									</span>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Aktuelle Termine und Informationen</h2>
+									</header>
+									<div class="posts">
+										<article>
+											<a href="#" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
+											<h3>Nächster Gottesdienst</h3>
+                                            <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
+											<ul class="actions">
+												<li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+											<h3>Nächste Veranstaltung der Kirchenmusik</h3>
+											<p>Werktag, XX. Monat 2018, 19:00 Uhr, Trinitatiskirche: Konzert mit Kirchenchor und Posanuenchor. Wir spiele Werke von Bach, Händel, Telemann und Cage.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">Mehr zu unserer Kirchenmusik</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
+											<h3>Ausblick Sommerfest</h3>
+											<p>Am XX. und XX. Juni 2018 findet das Sommerfest der Gemeinde statt.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">Weitere Informationen</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
+											<h3>Information: Parkplätze am Gemeindehaus</h3>
+											<p>Ab sofort stehen in der Köhlerstraße vier Parkplätze für Besucherinnen und Besucher des Gemeindehauses zur Verfügung.</p>
+										</article>
+									</div>
+
+									<hr class="major" />
+
+								</section>
+
+{% endblock %}

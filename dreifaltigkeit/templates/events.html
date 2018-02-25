@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_stylesheets %}
+
+<link rel="stylesheet" href="{% static 'fullcalendar-3.8.2/fullcalendar.min.css' %}" />
+
+<style>
+
+    #calendar {
+        margin-top: 1em;
+    }
+
+    #calendar table {
+        margin-bottom: 0;
+    }
+
+    /* Fix CSS values for fullcalendar buttons */
+    #calendar button {
+        /*line-height: 0;*/
+        height: 3.5em;
+        padding: 0 2.25em;
+        font-size: 0.8em;
+    }
+
+    /* Allow wrapping event titles by overriding default fullcalendar CSS */
+    #calendar .fc-day-grid-event > .fc-content {
+        white-space: normal;
+    }
+
+</style>
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>Alle Termine und Veranstaltungen</h1>
+    </header>
+
+    <span class="image main"><img src="{% static 'images/pic11.jpg' %}" alt="" /></span>
+
+    <p>Im Kalender finden Sie alle Termine und Veranstaltungen der Gemeinde.</p>
+
+    <div id="calendar"></div>
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+<!-- The requirement jQuery is already in use so we do not have to add it here. -->
+<script src="{% static 'fullcalendar-3.8.2/lib/moment.min.js' %}"></script>
+<script src="{% static 'fullcalendar-3.8.2/fullcalendar.min.js' %}"></script>
+<script src="{% static 'fullcalendar-3.8.2/locale-all.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        var initialLocaleCode = 'de';
+
+        var currentView;
+
+        $('#calendar').fullCalendar({
+            locale: initialLocaleCode,
+            timezone: 'local',
+            timeFormat: 'HH:mm',
+            header: {
+                right: 'today prev next month listMonth',
+            },
+            fixedWeekCount: false,
+            viewRender: function (view) {
+                $('#calendar button')
+                .removeClass('fc-state-default disabled')
+
+                $('#calendar button.fc-state-disabled')
+                .removeClass('fc-state-disabled')
+                .addClass('disabled');
+
+                if (!currentView || view.type !== currentView.type) {
+                    $('#calendar button')
+                    .removeClass('special')
+
+                    $('#calendar button.fc-state-active')
+                    .removeClass('fc-state-active')
+                    .addClass('special');
+                }
+
+                currentView = view;
+            },
+
+            events:[
+                {% for event in events %}
+                    {{ event.fc_data|safe }},
+                {% endfor %}
+            ]
+        });
+
+
+    });
+</script>
+
+{% endblock %}

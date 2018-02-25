@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>Gottesdienste und Andachten</h1>
+    </header>
+
+    <span class="image main"><img src="{% static 'images/pic11.jpg' %}" alt="" /></span>
+
+    <p>Wir feiern Gottesdienste und Andachten ... Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, bla.</p>
+    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+
+    <hr class="major" />
+
+    <h2>Alle kommenden Gottesdienste und Andachten</h2>
+
+    <dl>
+        {% for service in services %}
+            <dt>{{ service.begin }} Uhr &ndash; {{service.get_type_display }}</dt>
+            <dd>
+                <p>{{service.title }}: {{ service.content }}</p>
+            </dd>
+        {% endfor %}
+    </dl>
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}

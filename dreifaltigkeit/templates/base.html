@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<!--
+    Editorial by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <title>Dreifaltigkeitskirchgemeinde Leipzig</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="{% static 'assets/js/ie/html5shiv.js' %}"></script><![endif]-->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="{% static 'assets/css/ie9.css' %}" /><![endif]-->
+    <!--[if lte IE 8]><link rel="stylesheet" href="{% static 'assets/css/ie8.css' %}" /><![endif]-->
+    {% block extra_stylesheets %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <a href="/" class="logo"><strong>Ev.-Luth. Dreifaltigkeitskirchgemeinde</strong> Leipzig</a>
+                    <ul class="icons">
+                        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+                    </ul>
+                </header>
+
+                {% block content %}{% endblock %}
+
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="inner">
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <header class="major">
+                        <h2>Menü</h2>
+                    </header>
+                    <ul>
+                        <li><a href="/">Startseite</a></li>
+                        <li><a href="{% url 'services' %}">Gottesdienste</a></li>
+                        <li><a href="{% url 'events' %}">Termine und Veranstaltungen</a></li>
+                        <li>
+                            <span class="opener">Gemeinde</span>
+                            <ul>
+                                <li><a href="#">Gruppen und Kreise</a></li>
+                                <li><a href="#">Kinder und Jugend</a></li>
+                                <li><a href="#">Kirchenmusik</a></li>
+                                <li><a href="#">Kirchenvorstand</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="opener">Mitarbeiter/innen</span>
+                            <ul>
+                                <li><a href="#">Pfarrer Sebastian Rebner</a></li>
+                                <li><a href="#">Kantorin Annette Groß</a></li>
+                                <li><a href="#">Gemeindepädagogin Johanna Pahl</a></li>
+                                <li><a href="#">Verwaltungsmitarbeiterinnen</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Markusbote</a></li>
+                        <li>
+                            <span class="opener">Gebäude</span>
+                            <ul>
+                                <li><a href="#">Trinitatiskirche</a></li>
+                                <li><a href="#">Markuskapelle im Gemeindehaus</a></li>
+                                <li><a href="#">Ehemalige Markuskirche</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Stadtteilprojekt Dresdner59</a></li>
+                        <li><a href="#">Kindergarten</a></li>
+                        <li><a href="#">Spenden</a></li>
+                        <li><a href="#">Impressum</a></li>
+                        <li><a href="{% url 'admin:index' %}">Administration</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Section -->
+                <section>
+                    <header class="major">
+                        <h2>Kontakt</h2>
+                    </header>
+                    <p>Schreiben Sie uns gern eine E-Mail oder rufen Sie zu den Sprechzeiten im Pfarramt an.</p>
+                    <ul class="contact">
+                        <li class="fa-envelope-o"><a href="#">kg.leipzig-dreifaltigkeitskirchgemeinde@evlks.de</a></li>
+                        <li class="fa-home">Pfarramt der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />Dresdner Straße 59<br />04317 Leipzig</li>
+                        <li class="fa-phone">(0341) 6880428<br />(0341) 6880335</li>
+                        <li class="fa-fax">(0341) 6810695</li>
+
+                        <li class="fa-calendar">Öffnungszeiten Pfarramt:<br />Dienstag 16:00 bis 18:00 Uhr<br />Mittwoch 16:00 bis 18:00 Uhr<br />Freitag 9:00 bis 11:00 Uhr</li>
+                    </ul>
+                </section>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright">&copy; Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle Rechte vorbehalten. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/skel.min.js' %}"></script>
+    <script src="{% static 'assets/js/util.js' %}"></script>
+    <!--[if lte IE 8]><script src="{% static 'assets/js/ie/respond.min.js' %}"></script><![endif]-->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>
