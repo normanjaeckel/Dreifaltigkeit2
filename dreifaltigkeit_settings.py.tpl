@@ -21,4 +21,4 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-WSGI_APPLICATION = 'dreifaltigkeit.wsgi.application'
+WSGI_APPLICATION = 'dreifaltigkeit_wsgi.application'
