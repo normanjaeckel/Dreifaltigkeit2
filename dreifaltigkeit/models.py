@@ -16,7 +16,7 @@ class EventTypes:
         self.event_types = collections.OrderedDict(**{
             'service': {
                 'verbose_name': ugettext_lazy('Gottesdienst'),
-                'color': 'yellow',
+                'color': 'darkorange',
             },
             'prayer': {
                 'verbose_name': ugettext_lazy('Andacht'),
@@ -28,11 +28,11 @@ class EventTypes:
             },
             'gathering': {
                 'verbose_name': ugettext_lazy('Treff'),
-                'color': 'aqua',
+                'color': 'darkcyan',
             },
             'period-of-reflection': {
                 'verbose_name': ugettext_lazy('Rüstzeit'),
-                'color': 'chartreuse',
+                'color': 'forestgreen',
             },
             'default': {
                 'verbose_name': ugettext_lazy('Sonstige Veranstaltung'),
