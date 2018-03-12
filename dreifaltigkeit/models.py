@@ -11,6 +11,8 @@ EVENT_TYPES = (
     ('service', ugettext_lazy('Gottesdienst')),
     ('prayer', ugettext_lazy('Andacht')),
     ('concert', ugettext_lazy('Konzert')),
+    ('gathering', ugettext_lazy('Treff')),
+    ('period-of-reflection', ugettext_lazy('Rüstzeit')),
     ('default', ugettext_lazy('Sonstige Veranstaltung')),
     ('hidden', ugettext_lazy('Nichtöffentliche Veranstaltung')),
 )
