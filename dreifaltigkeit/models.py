@@ -1,4 +1,5 @@
 import collections
+import datetime
 import json
 
 from django.db import models
@@ -112,6 +113,11 @@ class Event(models.Model):
         return ' – '.join((localize(localtime(self.begin)), self.title))
 
     @property
+    def end(self):
+        duration = self.duration or 0
+        return self.begin + datetime.timedelta(minutes=duration)
+
+    @property
     def fc_data(self):
         """
         Returns a string containing all data for the fullcalendar event object
@@ -120,6 +126,7 @@ class Event(models.Model):
         return json.dumps({
             'title': self.get_type_display() + ': ' + self.title,
             'start': self.begin.isoformat(),
+            'end': self.end.isoformat(),
             'color': EventTypes().event_types[self.type]['color']
         })
 
