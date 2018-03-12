@@ -7,15 +7,6 @@ from django.utils.formats import localize
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy
 
-EVENT_TYPES = (
-    ('service', ugettext_lazy('Gottesdienst')),
-    ('prayer', ugettext_lazy('Andacht')),
-    ('concert', ugettext_lazy('Konzert')),
-    ('gathering', ugettext_lazy('Treff')),
-    ('period-of-reflection', ugettext_lazy('Rüstzeit')),
-    ('default', ugettext_lazy('Sonstige Veranstaltung')),
-    ('hidden', ugettext_lazy('Nichtöffentliche Veranstaltung')),
-)
 
 class EventTypes:
     """
@@ -25,7 +16,7 @@ class EventTypes:
         self.event_types = collections.OrderedDict(**{
             'service': {
                 'verbose_name': ugettext_lazy('Gottesdienst'),
-                'color': 'blue',
+                'color': 'yellow',
             },
             'prayer': {
                 'verbose_name': ugettext_lazy('Andacht'),
@@ -33,11 +24,19 @@ class EventTypes:
             },
             'concert': {
                 'verbose_name': ugettext_lazy('Konzert'),
-                'color': 'yellow',
+                'color': 'green',
+            },
+            'gathering': {
+                'verbose_name': ugettext_lazy('Treff'),
+                'color': 'aqua',
+            },
+            'period-of-reflection': {
+                'verbose_name': ugettext_lazy('Rüstzeit'),
+                'color': 'chartreuse',
             },
             'default': {
                 'verbose_name': ugettext_lazy('Sonstige Veranstaltung'),
-                'color': 'green',
+                'color': 'grey',
             },
             'hidden': {
                 'verbose_name': ugettext_lazy('Nichtöffentliche Veranstaltung'),
