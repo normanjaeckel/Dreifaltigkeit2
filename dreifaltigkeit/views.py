@@ -44,3 +44,10 @@ class Events(ListView):
     template_name = 'events.html'
     context_object_name = 'events'
     model = Event
+
+
+class Imprint(TemplateView):
+    """
+    Imprint view with legal information.
+    """
+    template_name = 'imprint.html'
