@@ -2129,7 +2129,7 @@
 		font-style: italic;
 	}
 
-	p {
+	p, address {
 		margin: 0 0 2em 0;
 	}
 
