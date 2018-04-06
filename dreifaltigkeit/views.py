@@ -1,9 +1,11 @@
 from datetime import timedelta
 
 from django.db.models import Q
+from django.http import Http404
 from django.utils import timezone
 from django.views.generic import ListView, TemplateView
 
+from .context_processors import parish_pages
 from .models import Event
 
 
@@ -44,6 +46,19 @@ class Events(ListView):
     template_name = 'events.html'
     context_object_name = 'events'
     model = Event
+
+
+class Parish(TemplateView):
+    """
+    View for parish pages,
+    """
+    template_name = 'parish.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        if context['page'] not in parish_pages(self.request)['pages'].keys():
+            raise Http404('Page {} does not exist'.format(context['page']))
+        return context
 
 
 class Imprint(TemplateView):

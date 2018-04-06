@@ -22,6 +22,10 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('gottesdienste/', views.Services.as_view(), name='services'),
     path('termine/', views.Events.as_view(), name='events'),
+    path('gemeinde/<page>/', views.Parish.as_view(), name='parish'),
+    path('stadtteilprojekt/', views.Imprint.as_view(), name='quarter-project'),  # TODO: Change view.
+    path('kindergarten/', views.Imprint.as_view(), name='kindergarden'),  # TODO: Change view.
+    path('spenden/', views.Imprint.as_view(), name='donation'),  # TODO: Change view.
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('admin/', admin.site.urls),
 ]

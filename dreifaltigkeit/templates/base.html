@@ -59,18 +59,14 @@
                         <li>
                             <span class="opener">Gemeinde</span>
                             <ul>
-                                <li><a href="#">Gruppen und Kreise</a></li>
-                                <li><a href="#">Kinder und Jugend</a></li>
-                                <li><a href="#">Kirchenmusik</a></li>
-                                <li><a href="#">Markusbote</a></li>
-                                <li><a href="#">Mitarbeiter/innen</a></li>
-                                <li><a href="#">Kirchenvorstand</a></li>
-                                <li><a href="#">Gebäude</a></li>
+                                {% for page, verbose_name in pages.items %}
+                                    <li><a href="{% url 'parish' page=page %}">{{ verbose_name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
-                        <li><a href="#">Stadtteilprojekt Dresdner59</a></li>
-                        <li><a href="#">Kindergarten</a></li>
-                        <li><a href="#">Spenden</a></li>
+                        <li><a href="{% url 'quarter-project' %}">Stadtteilprojekt Dresdner59</a></li>
+                        <li><a href="{% url 'kindergarden' %}">Kindergarten</a></li>
+                        <li><a href="{% url 'donation' %}">Spenden</a></li>
                         <li><a href="{% url 'imprint' %}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
                     </ul>

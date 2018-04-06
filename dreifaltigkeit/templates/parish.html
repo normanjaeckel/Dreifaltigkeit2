@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load dreifaltigkeit_filters %}
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>
+            {{ pages|get_item:page }}
+        </h1>
+    </header>
+
+    <span class="image main"><img src="{% static 'images/pic11.jpg' %}" alt="" /></span>
+
+    {% if page == 'gruppen' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% elif page == 'jugend' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% elif page == 'kirchenmusik' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% elif page == 'markusbote' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% elif page == 'mitarbeiter' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% elif page == 'kirchenvorstand' %}
+
+        <p>Der Kirchenvorstand besteht aus 10 gewählten oder berufenen Gemeindegliedern und <a href="#">Pfarrer Sebastian Rebner</a> (Vorsitzender).</p>
+
+        <div class="row">
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Andrea Simmel</strong><br />
+                    Stellvertretende Vorsitzende, Kinder- und Jugendausschuss
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Volkmar Abel</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Valentina Greb</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Annette Groß</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Norman Jäckel</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Annedore Kluge</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Lutz Schober</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Sebastian Schott</strong><br />
+                    Bauausschuss, Finanzausschuss
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Johannes Schur</strong><br />
+                </p>
+            </div>
+
+            <div class="6u 12u$(small)">
+                <p>
+                    <span class="image left"><img src="{% static 'images/pic01.jpg' %}" alt="" /></span>
+                    <strong>Hartmut Werner</strong><br />
+                </p>
+            </div>
+
+        </div>
+
+    {% elif page == 'gebaeude' %}
+
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+
+    {% endif %}
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}
