@@ -1,0 +1,11 @@
+ul.parish-contact {
+    clear: both;
+}
+
+ul.parish-contact li {
+    margin-bottom: 0.5em;
+}
+
+ul.parish-contact li i {
+    color: #f56a6a;
+}
