@@ -21,8 +21,10 @@ class Home(TemplateView):
     def get_context_data(self, **context):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
         next_service = Event.objects.filter(type='service', begin__gte=threshold).first()
+        next_concert = Event.objects.filter(type='concert', begin__gte=threshold).first()
         return super().get_context_data(
             next_service=next_service,
+            next_concert=next_concert,
             **context
         )
 

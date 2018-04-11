@@ -38,7 +38,7 @@
 										<article>
 											<a href="#" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
 											<h3>Nächste Veranstaltung der Kirchenmusik</h3>
-											<p>Werktag, XX. Monat 2018, 19:00 Uhr, Trinitatiskirche: Konzert mit Kirchenchor und Posanuenchor. Wir spiele Werke von Bach, Händel, Telemann und Cage.</p>
+                                            <p>{{ next_concert.begin|date:"l, j. F Y, H:i" }}<br />{{ next_concert.place }}<br />{{ next_concert.title }}: {{ next_concert.content }}</p>
 											<ul class="actions">
 												<li><a href="#" class="button">Mehr zu unserer Kirchenmusik</a></li>
 											</ul>
