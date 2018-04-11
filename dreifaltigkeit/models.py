@@ -13,36 +13,35 @@ class EventTypes:
     Container object for all event types.
     """
     def __init__(self):
-        self.event_types = collections.OrderedDict(**{
-            'service': {
-                'verbose_name': ugettext_lazy('Gottesdienst'),
-                'color': 'darkorange',
-            },
-            'prayer': {
-                'verbose_name': ugettext_lazy('Andacht'),
-                'color': 'red',
-            },
-            'concert': {
-                'verbose_name': ugettext_lazy('Konzert'),
-                'color': 'green',
-            },
-            'gathering': {
-                'verbose_name': ugettext_lazy('Treff'),
-                'color': 'darkcyan',
-            },
-            'period-of-reflection': {
-                'verbose_name': ugettext_lazy('Rüstzeit'),
-                'color': 'forestgreen',
-            },
-            'default': {
-                'verbose_name': ugettext_lazy('Sonstige Veranstaltung'),
-                'color': 'grey',
-            },
-            'hidden': {
-                'verbose_name': ugettext_lazy('Nichtöffentliche Veranstaltung'),
-                'color': 'grey',
-            },
-        })
+        self.event_types = collections.OrderedDict()
+        self.event_types['service'] = {
+            'verbose_name': ugettext_lazy('Gottesdienst'),
+            'color': 'darkorange',
+        }
+        self.event_types['prayer'] = {
+            'verbose_name': ugettext_lazy('Andacht'),
+            'color': 'red',
+        }
+        self.event_types['concert'] = {
+            'verbose_name': ugettext_lazy('Konzert'),
+            'color': 'green',
+        }
+        self.event_types['gathering'] = {
+            'verbose_name': ugettext_lazy('Treff'),
+            'color': 'darkcyan',
+        }
+        self.event_types['period-of-reflection'] = {
+            'verbose_name': ugettext_lazy('Rüstzeit'),
+            'color': 'forestgreen',
+        }
+        self.event_types['default'] = {
+            'verbose_name': ugettext_lazy('Sonstige Veranstaltung'),
+            'color': 'grey',
+        }
+        self.event_types['hidden'] = {
+            'verbose_name': ugettext_lazy('Nichtöffentliche Veranstaltung'),
+            'color': 'grey',
+        }
 
     def get_choices(self):
         for name, event_type in self.event_types.items():
