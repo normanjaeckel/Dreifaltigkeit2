@@ -30,7 +30,7 @@
 										<article>
 											<a href="#" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
 											<h3>Nächster Gottesdienst</h3>
-                                            <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
+                                            <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.place }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
 											<ul class="actions">
 												<li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
 											</ul>

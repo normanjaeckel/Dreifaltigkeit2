@@ -6,7 +6,7 @@ from .models import Event, MediaFile
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'begin', 'type', )
+    list_display = ('title', 'place', 'begin', 'type', )
 
 
 admin.site.register(Event, EventAdmin)

@@ -59,13 +59,25 @@ class Event(models.Model):
         max_length=255,
         choices=EventTypes().get_choices(),
         default='default',
-        help_text=ugettext_lazy('Gottesdienste und Konzerte werden auf den besonderen Seite zusätzlich angezeigt.'),
+        help_text=ugettext_lazy(
+            'Gottesdienste und Konzerte werden auf den besonderen Seite '
+            'zusätzlich angezeigt.'),
     )
 
     title = models.CharField(
         ugettext_lazy('Titel'),
         max_length=255,
         help_text=ugettext_lazy('Kurzer Titel der Veranstaltung'),
+    )
+
+    place = models.CharField(
+        ugettext_lazy('Ort'),
+        blank=True,
+        default='Trinitatiskirche',
+        max_length=255,
+        help_text=ugettext_lazy(
+            'Ort der Veranstaltung, z. B. Trinitatiskirche, Markuskapelle, '
+            'Anbau der Trinitatiskirche, Gemeindehaus Dresdner Straße 59'),
     )
 
     content = models.TextField(
