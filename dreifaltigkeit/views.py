@@ -3,10 +3,10 @@ from datetime import timedelta
 from django.db.models import Q
 from django.http import Http404
 from django.utils import timezone
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from .context_processors import parish_pages
-from .models import Event
+from .models import Announcement, Event
 
 
 THRESHOLD = 30  # Threshold in minutes
@@ -21,10 +21,10 @@ class Home(TemplateView):
     def get_context_data(self, **context):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
         next_service = Event.objects.filter(type='service', begin__gte=threshold).first()
-        next_concert = Event.objects.filter(type='concert', begin__gte=threshold).first()
+        announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
         return super().get_context_data(
             next_service=next_service,
-            next_concert=next_concert,
+            announcements=announcements,
             **context
         )
 
@@ -57,6 +57,9 @@ class Parish(TemplateView):
     template_name = 'parish.html'
 
     def get_context_data(self, *args, **kwargs):
+        """
+        Customized method: Send HTTP 404 if parish page does not exist.
+        """
         context = super().get_context_data(*args, **kwargs)
         if context['page'] not in parish_pages(self.request)['pages'].keys():
             raise Http404('Page {} does not exist'.format(context['page']))
@@ -68,3 +71,24 @@ class Imprint(TemplateView):
     Imprint view with legal information.
     """
     template_name = 'imprint.html'
+
+
+class Announcements(DetailView):
+    """
+    View for details of an announcement.
+    """
+    template_name = 'announcements.html'
+    model = Announcement
+
+
+    def get_object(self):
+        """
+        Customized method: Send HTTP 404 if time is elapsed or if there is
+        no long_text.
+        """
+        announcement = super().get_object()
+        if announcement.end < timezone.now() or not announcement.long_text:
+            message = 'Announcement {} is elapsed or has no long_text.'.format(
+                announcement.title)
+            raise Http404(message)
+        return announcement

@@ -3,6 +3,7 @@ import datetime
 import json
 
 from django.db import models
+from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy
@@ -141,6 +142,45 @@ class Event(models.Model):
             'end': self.end.isoformat(),
             'color': EventTypes().event_types[self.type]['color']
         })
+
+
+class Announcement(models.Model):
+    """
+    Model for announcements for home view.
+    """
+    title = models.CharField(
+        ugettext_lazy('Titel'),
+        max_length=255,
+        help_text=ugettext_lazy('Kurzer Titel der Ankündigung'),
+    )
+
+    short_text = models.TextField(
+        ugettext_lazy('Kurztext'),
+        help_text=ugettext_lazy('Kurzer Text. Erscheint auf der Startseite.'),
+    )
+
+    long_text = models.TextField(
+        ugettext_lazy('Text'),
+        blank=True,
+        help_text=ugettext_lazy(
+            'Längerer Text. Erscheint nur auf einer gesonderten Seite, die von '
+            'der Startseite aus erreichbar ist.'),
+    )
+
+    end = models.DateTimeField(
+        ugettext_lazy('Ende'),
+        help_text=ugettext_lazy(
+            'Bis zu diesem Zeitpunkt ist die Ankündigung auf der Startseite '
+            'und ggf. über den gesonderten Link erreichbar.'),
+    )
+
+    def get_absolute_url(self):
+        return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
+
+    class Meta:
+        ordering = ('-end',)
+        verbose_name = ugettext_lazy('Ankündigung')
+        verbose_name_plural = ugettext_lazy('Ankündigungen')
 
 
 class MediaFile(models.Model):

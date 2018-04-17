@@ -27,5 +27,6 @@ urlpatterns = [
     path('kindergarten/', views.Imprint.as_view(), name='kindergarden'),  # TODO: Change view.
     path('spenden/', views.Imprint.as_view(), name='donation'),  # TODO: Change view.
     path('impressum/', views.Imprint.as_view(), name='imprint'),
+    path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
     path('admin/', admin.site.urls),
 ]

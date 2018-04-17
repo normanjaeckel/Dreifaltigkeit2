@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>{{ announcement.title }}</h1>
+    </header>
+
+    <span class="image main"><img src="{% static 'images/pic11.jpg' %}" alt="" /></span>
+
+    {{ announcement.long_text|linebreaks }}
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}
