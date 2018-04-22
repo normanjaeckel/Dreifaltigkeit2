@@ -2,11 +2,69 @@ import collections
 import datetime
 import json
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy
+
+
+def validate_year_month_number(value):
+    """
+    Validator for month field of MonthlyText model.
+    """
+    if not 99999 < value < 1000000:
+        raise ValidationError(ugettext_lazy('Die Zahl muss sechsstellig sein.'))
+    if not 2017 < int(str(value)[:4]) < 2200:
+        raise ValidationError(ugettext_lazy(
+            'Die ersten vier Ziffern (Jahreszahl) müssen zwischen 2018 und '
+            '2199 liegen.'))
+    if not 0 < int(str(value)[-2:]) < 13:
+        raise ValidationError(ugettext_lazy(
+            'Die letzten beiden Ziffern (Monatszahl) müssen zwischen 01 und '
+            '12 liegen.'))
+
+
+class MonthlyText(models.Model):
+    """
+    Model for monthly texts by the "Ökumenische Arbeitsgemeinschaft für
+    Bibellesen – ÖAB" in Berlin.
+    """
+    month = models.IntegerField(
+        ugettext_lazy('Monat'),
+        validators=[validate_year_month_number],
+        unique=True,
+        help_text=ugettext_lazy(
+            'Eingabe als sechsstellige Zahl bestehend aus Jahr und Monat '
+            'z. B. 201307 für Juli 2013.'),
+    )
+
+    text = models.TextField(
+        ugettext_lazy('Monatsspruch'),
+        help_text=ugettext_lazy('Der Monatsspruch erscheint nur auf der Gottesdienstseite.'),
+    )
+
+    verse = models.CharField(
+        ugettext_lazy('Bibelstelle'),
+        max_length=255,
+        help_text=ugettext_lazy('Beispiel: Joh 19,30.'),
+    )
+
+    class Meta:
+        ordering = ('-month',)
+        verbose_name = ugettext_lazy('Monatsspruch')
+        verbose_name_plural = ugettext_lazy('Monatssprüche')
+
+    def __str__(self):
+        return self.datetime.strftime('%B %Y')
+
+    @property
+    def datetime(self):
+        """
+        Returns a datetime object of the month of this instance.
+        """
+        return datetime.datetime.strptime(str(self.month), '%Y%m')
 
 
 class EventTypes:
@@ -142,6 +200,20 @@ class Event(models.Model):
             'end': self.end.isoformat(),
             'color': EventTypes().event_types[self.type]['color']
         })
+
+    @property
+    def monthly_text(self):
+        """
+        Returns the model instance of the monthly text if this event is a
+        service.
+        """
+        result = None
+        if self.type == 'service':
+            for monthly_text in MonthlyText.objects.all():
+                if monthly_text.datetime.month == self.begin.month:
+                    result = monthly_text
+                    break
+        return result
 
 
 class Announcement(models.Model):

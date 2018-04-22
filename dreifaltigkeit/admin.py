@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy
 
-from .models import Announcement, Event, MediaFile
+from .models import Announcement, Event, MediaFile, MonthlyText
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -15,6 +15,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
+admin.site.register(MonthlyText)
 admin.site.register(MediaFile)
 
 description = ugettext_lazy('{app_name} Administration').format(
