@@ -11,7 +11,7 @@
             <h1>Herzlich willkommen<br /> </h1>
             <p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
-        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. <a href="#">Pfarrer Sebastian Rebner</a> und alle weiteren Mitarbeiterinnen und Mitarbeiter helfen Ihnen gern weiter.</p>
+        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. <a href="{% url 'parish' page='mitarbeiter-innen' %}">Pfarrer Sebastian Rebner</a> und alle weiteren Mitarbeiterinnen und Mitarbeiter helfen Ihnen gern weiter.</p>
         <ul class="actions">
             <li><a href="{% url 'events' %}" class="button big">Alle Termine im Überblick</a></li>
         </ul>
@@ -30,14 +30,26 @@
         <article>
             <a href="{% url 'services' %}" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
             <h3>Nächster Gottesdienst</h3>
-            <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.place }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
+            {% if next_service %}
+                <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.place }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
+            {% else %}
+                <p>Wann und wo der nächste Gottesdienst in unserer Gemeinde stattfindet, erfahren Sie unter dem folgenden Link.</p>
+            {% endif %}
             <ul class="actions">
                 <li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
             </ul>
         </article>
+        <article>
+            <a href="{% url 'parish' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+            <h3>Aktueller Markusbote</h3>
+            <p>Hier finden Sie den aktuellen <a href="#">Markusboten</a> als PDF zum Download.</p>
+            <ul class="actions">
+                <li><a href="{% url 'parish' page='markusbote' %}" class="button">Alle Markusboten</a></li>
+            </ul>
+        </article>
         {% for announcement in announcements %}
             <article>
-                <a href="#" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+                <a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
                 <h3>{{ announcement.title }}</h3>
                 <p>{{ announcement.short_text }}</p>
                 {% if announcement.long_text %}

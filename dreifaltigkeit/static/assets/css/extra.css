@@ -9,3 +9,7 @@ ul.parish-contact li {
 ul.parish-contact li i {
     color: #f56a6a;
 }
+
+.image.left.big, .image.right.big {
+    max-width: 50%;
+}
