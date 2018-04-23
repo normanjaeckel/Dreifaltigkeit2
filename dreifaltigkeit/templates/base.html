@@ -31,12 +31,11 @@
 
                 <!-- Header -->
                 <header id="header">
-                    <a href="/" class="logo"><strong>Ev.-Luth. Dreifaltigkeitskirchgemeinde</strong> Leipzig</a>
-                    <ul class="icons">
-                        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-                        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-                        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-                    </ul>
+                    <div class="row">
+                        <a href="/" class="logo 4u 12u$(small)"><strong>Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig</strong></a>
+                        <a href="#" class="logo 4u 12u$(small)">Trinitatiskindergarten</a>
+                        <a href="http://www.dresdner59.de/" class="logo 4u$ 12u$(small)">Stadtteilprojekt Dresdner59</a>
+                    </div>
                 </header>
 
                 {% block content %}{% endblock %}
@@ -65,9 +64,28 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                        <li><a href="{% url 'quarter-project' %}">Stadtteilprojekt Dresdner59</a></li>
-                        <li><a href="{% url 'kindergarden' %}">Kindergarten</a></li>
-                        <li><a href="{% url 'donation' %}">Spenden</a></li>
+                        <li>
+                            <span class="opener">Kirchenmusik</span>
+                            <ul>
+                                <li><a href="#">Chor</a></li>
+                                <li><a href="#">Posunenchor</a></li>
+                                <li><a href="#">Kurrende</a></li>
+                                <li><a href="#">Konzerte</a></li>
+                                <li><a href="#">Orgel</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="opener">Kinder und Jugend</span>
+                            <ul>
+                                <li><a href="#">Krabbelkreis</a></li>
+                                <li><a href="#">Kleinkindkreis</a></li>
+                                <li><a href="#">Christenlehre</a></li>
+                                <li><a href="#">Konfirmandenunterricht</a></li>
+                                <li><a href="#">Junge Gemeinde</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'donation' %}">Spenden / Kirchgeld</a></li>
+                        <li><a href="{% url 'links' %}">Links</a></li>
                         <li><a href="{% url 'imprint' %}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
                     </ul>

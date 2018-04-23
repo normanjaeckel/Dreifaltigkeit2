@@ -7,11 +7,10 @@ def parish_pages(request):
     """
     pages = OrderedDict()
     pages['gruppen'] = 'Gruppen und Kreise'
-    pages['jugend'] = 'Kinder und Jugend'
-    pages['kirchenmusik'] = 'Kirchenmusik'
-    pages['markusbote'] = 'Markusbote'
     pages['mitarbeiter-innen'] = 'Mitarbeiter/innen'
     pages['kirchenvorstand'] = 'Kirchenvorstand'
+    pages['markusbote'] = 'Markusbote'
+    pages['schwestergemeinden'] = 'Schwestergemeinden'
     pages['gebaeude'] = 'Gebäude'
     return {
         'pages': pages
