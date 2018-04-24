@@ -7,6 +7,10 @@
     }
 }
 
+#header .logo {
+    text-align: center;
+}
+
 ul.parish-contact {
     clear: both;
 }
