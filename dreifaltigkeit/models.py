@@ -13,8 +13,8 @@ from django.utils.translation import ugettext_lazy
 class FlatPage(models.Model):
     """
     Model for flat pages for the three categories parish, music and youth.
-    The fields category, url, title and ordering are hidden in admin. The model
-    instances are created by site admin via migration file.
+    The fields category, url, title, ordering and redirect are hidden in admin.
+    The model instances are created via migration file.
     """
     category = models.CharField(
         ugettext_lazy('Kategorie'),
@@ -38,6 +38,12 @@ class FlatPage(models.Model):
 
     ordering = models.IntegerField(
         ugettext_lazy('Sortierung'),
+    )
+
+    redirect = models.CharField(
+        ugettext_lazy('Weiterleitung'),
+        blank=True,
+        max_length=255,
     )
 
     content = models.TextField(

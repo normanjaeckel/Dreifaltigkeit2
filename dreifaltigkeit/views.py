@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
@@ -65,6 +65,15 @@ class Flatpage(TemplateView):
         context['flatpage'] = get_object_or_404(
             FlatPage, category=context['category'], url=context['page'])
         return context
+
+    def get(self, request, *args, **kwargs):
+        """
+        Overridden method. Returns HTTP 301 if flatpage is only for redirect.
+        """
+        context = self.get_context_data(**kwargs)
+        if context['flatpage'].redirect:
+            return HttpResponsePermanentRedirect(context['flatpage'].redirect)
+        return self.render_to_response(context)
 
 
 class Imprint(TemplateView):
