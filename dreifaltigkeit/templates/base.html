@@ -59,31 +59,31 @@
                         <li>
                             <span class="opener">Gemeinde</span>
                             <ul>
-                                {% for page, verbose_name in pages.items %}
-                                    <li><a href="{% url 'parish' page=page %}">{{ verbose_name }}</a></li>
+                                {% for page in pages_gemeinde %}
+                                    <li>
+                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </li>
                         <li>
                             <span class="opener">Kirchenmusik</span>
                             <ul>
-                                <li><a href="#">Chor</a></li>
-                                <li><a href="#">Posaunenchor</a></li>
-                                <li><a href="#">Kurrende</a></li>
-                                <li><a href="#">Flötenkreis</a></li>
-                                <li><a href="#">Konzerte</a></li>
-                                <li><a href="#">Orgel</a></li>
+                                {% for page in pages_kirchenmusik %}
+                                    <li>
+                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </li>
                         <li>
                             <span class="opener">Kinder und Jugend</span>
                             <ul>
-                                <li><a href="#">Krabbelkreis</a></li>
-                                <li><a href="#">Kurrende</a></li>
-                                <li><a href="#">Christenlehre / Kirche für Kids</a></li>
-                                <li><a href="#">Konfirmandenunterricht</a></li>
-                                <li><a href="#">Junge Gemeinde</a></li>
-                                <li><a href="#">Kindergarten</a></li>
+                                {% for page in pages_kinderundjugend %}
+                                    <li>
+                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </li>
                         <li><a href="#">Ehrenamt</a></li>

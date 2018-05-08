@@ -1,17 +1,14 @@
-from collections import OrderedDict
+from collections import defaultdict
 
+from .models import FlatPage
 
-def parish_pages(request):
+def flatpages(request):
     """
-    Context processor to add all parish pages to the context of all views.
+    Context processor to add all flatpages to the context of all views.
+    Used for the main menu.
     """
-    pages = OrderedDict()
-    pages['gruppen'] = 'Gruppen und Kreise'
-    pages['mitarbeiter-innen'] = 'Mitarbeiter/innen'
-    pages['kirchenvorstand'] = 'Kirchenvorstand'
-    pages['markusbote'] = 'Markusbote'
-    pages['schwestergemeinden'] = 'Schwestergemeinden'
-    pages['gebaeude'] = 'Gebäude'
-    return {
-        'pages': pages
-    }
+    context = defaultdict(list)
+    for flatpage in FlatPage.objects.all():
+        key = 'pages_' + flatpage.category.replace('-', '')
+        context[key].append(flatpage)
+    return context

@@ -10,6 +10,51 @@ from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy
 
 
+class FlatPage(models.Model):
+    """
+    Model for flat pages for the three categories parish, music and youth.
+    The fields category, url, title and ordering are hidden in admin. The model
+    instances are created by site admin via migration file.
+    """
+    category = models.CharField(
+        ugettext_lazy('Kategorie'),
+        max_length=255,
+        choices=(
+            ('gemeinde', ugettext_lazy('Gemeinde')),
+            ('kirchenmusik', ugettext_lazy('Kirchenmusik')),
+            ('kinder-und-jugend', ugettext_lazy('Kinder und Jugend')),
+        ),
+    )
+
+    url = models.CharField(
+        ugettext_lazy('URL'),
+        max_length=255,
+    )
+
+    title = models.CharField(
+        ugettext_lazy('Titel'),
+        max_length=255,
+    )
+
+    ordering = models.IntegerField(
+        ugettext_lazy('Sortierung'),
+    )
+
+    content = models.TextField(
+        ugettext_lazy('Inhalt'),
+        blank=True,
+        help_text=ugettext_lazy('Inhalt der Seite in HTML.'),
+    )
+
+    class Meta:
+        ordering = ('ordering',)
+        verbose_name = ugettext_lazy('Statische Seite')
+        verbose_name_plural = ugettext_lazy('Statische Seiten')
+
+    def __str__(self):
+        return ' – '.join((self.get_category_display(), self.title))
+
+
 def validate_year_month_number(value):
     """
     Validator for month field of MonthlyText model.

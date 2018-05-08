@@ -11,7 +11,7 @@
             <h1>Herzlich willkommen<br /> </h1>
             <p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
-        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. <a href="{% url 'parish' page='mitarbeiter-innen' %}">Pfarrer Sebastian Rebner</a> und alle weiteren Mitarbeiterinnen und Mitarbeiter helfen Ihnen gern weiter.</p>
+        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. <a href="{% url 'flatpage' category='gemeinde' page='mitarbeiter-innen' %}">Pfarrer Sebastian Rebner</a> und alle weiteren Mitarbeiterinnen und Mitarbeiter helfen Ihnen gern weiter.</p>
         <ul class="actions">
             <li><a href="{% url 'events' %}" class="button big">Alle Termine im Überblick</a></li>
         </ul>
@@ -40,11 +40,11 @@
             </ul>
         </article>
         <article>
-            <a href="{% url 'parish' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+            <a href="{% url 'flatpage' category='gemeinde' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
             <h3>Aktueller Markusbote</h3>
             <p>Hier finden Sie den aktuellen <a href="#">Markusboten</a> als PDF zum Download.</p>
             <ul class="actions">
-                <li><a href="{% url 'parish' page='markusbote' %}" class="button">Alle Markusboten</a></li>
+                <li><a href="{% url 'flatpage' category='gemeinde' page='markusbote' %}" class="button">Alle Markusboten</a></li>
             </ul>
         </article>
         {% for announcement in announcements %}

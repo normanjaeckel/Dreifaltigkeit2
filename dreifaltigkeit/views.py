@@ -2,11 +2,11 @@ from datetime import timedelta
 
 from django.db.models import Q
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
 
-from .context_processors import parish_pages
-from .models import Announcement, Event
+from .models import Announcement, Event, FlatPage
 
 
 THRESHOLD = 30  # Threshold in minutes
@@ -50,19 +50,20 @@ class Events(ListView):
     model = Event
 
 
-class Parish(TemplateView):
+class Flatpage(TemplateView):
     """
-    View for parish pages,
+    View for all flatpages (parish, music, youth).
     """
-    template_name = 'parish.html'
+    template_name = 'flatpage.html'
 
     def get_context_data(self, *args, **kwargs):
         """
-        Customized method: Send HTTP 404 if parish page does not exist.
+        Customized method: Adds flatpage instance to the context and sends
+        HTTP 404 if page does not exist.
         """
         context = super().get_context_data(*args, **kwargs)
-        if context['page'] not in parish_pages(self.request)['pages'].keys():
-            raise Http404('Page {} does not exist'.format(context['page']))
+        context['flatpage'] = get_object_or_404(
+            FlatPage, category=context['category'], url=context['page'])
         return context
 
 
@@ -79,7 +80,6 @@ class Announcements(DetailView):
     """
     template_name = 'announcements.html'
     model = Announcement
-
 
     def get_object(self):
         """

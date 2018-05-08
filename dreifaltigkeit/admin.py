@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy
 
-from .models import Announcement, Event, MediaFile, MonthlyText
+from .models import Announcement, Event, FlatPage, MediaFile, MonthlyText
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -13,6 +13,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('title', 'end', )
 
 
+admin.site.register(FlatPage)  # TODO: Hide some fields.
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(MonthlyText)
