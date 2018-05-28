@@ -14,7 +14,8 @@ def add_flatpages(apps, schema_editor):
         ('gemeinde', 'kirchenvorstand', 'Kirchenvorstand', 130, ''),
         ('gemeinde', 'markusbote', 'Markusbote', 140, ''),
         ('gemeinde', 'schwestergemeinden', 'Schwestergemeinden', 150, ''),
-        ('gemeinde', 'gebaeude', 'Gebäude', 160, ''),
+        ('gemeinde', 'geschichte', 'Geschichte', 160, ''),
+        ('gemeinde', 'gebaeude', 'Gebäude', 170, ''),
 
         # Kirchenmusik
         ('kirchenmusik', 'kantorei', 'Kantorei', 210, ''),
@@ -34,7 +35,7 @@ def add_flatpages(apps, schema_editor):
         ('kinder-und-jugend', 'kindergarten', 'Kindergarten', 360, ''),
     )
 
-    # We can't import the Person model directly as it may be a newer
+    # We can't import the model directly as it may be a newer
     # version than this migration expects. We use the historical version.
     FlatPage = apps.get_model('dreifaltigkeit', 'FlatPage')
     for category, url, title, ordering, redirect in pages:
