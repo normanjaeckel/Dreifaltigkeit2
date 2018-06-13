@@ -8,10 +8,12 @@ __pycache__/
 
 # Django settings
 dreifaltigkeit_settings.py
+dreifaltigkeit_*_settings.py
 dreifaltigkeit_wsgi.py
 
 # Development database
 db.sqlite3
+db_dreifaltigkeit_*.sqlite3
 
 # Deployment directory
 deployment/

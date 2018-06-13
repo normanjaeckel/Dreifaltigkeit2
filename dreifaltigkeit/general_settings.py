@@ -56,20 +56,6 @@ TEMPLATES = [
 ]
 
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DEVELOPMENT_DATABASE_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'db.sqlite3')
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DEVELOPMENT_DATABASE_PATH,
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 

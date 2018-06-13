@@ -39,11 +39,23 @@ STATIC_ROOT = os.path.join(
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+DEVELOPMENT_DATABASE_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'db_dreifaltigkeit_{}.sqlite3'.format(SITE_ID)
+)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': DEVELOPMENT_DATABASE_PATH,
+    }
+}
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': '',
-#         'USER': '',
+#         'NAME': 'dreifaltigkeit_{}'.format(SITE_ID),
+#         'USER': 'dreifaltigkeit',
 #         'PASSWORD': '',
 #         'HOST': '',
 #         'PORT': '',
