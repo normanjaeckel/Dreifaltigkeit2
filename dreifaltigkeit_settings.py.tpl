@@ -23,7 +23,29 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 'parish'
+# SITE_ID = 'kindergarden'
+
 WSGI_APPLICATION = 'dreifaltigkeit_wsgi.application'
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'deployment', 'static')
+
+
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': '',
+#         'USER': '',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }

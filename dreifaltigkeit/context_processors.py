@@ -2,6 +2,7 @@ from collections import defaultdict
 
 from .models import FlatPage
 
+
 def flatpages(request):
     """
     Context processor to add all flatpages to the context of all views.

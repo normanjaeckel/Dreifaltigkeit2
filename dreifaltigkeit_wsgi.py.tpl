@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 
 import os, site
 
-DJANGO_SETTINGS_MODULE = 'dreifaltigkeit_settings'
-
 # site.addsitedir('/path/to/Dreifaltigkeit')
 # site.addsitedir('/path/to/Dreifaltigkeit/.virtualenv/lib/python3.6/site-packages')
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', DJANGO_SETTINGS_MODULE)
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dreifaltigkeit_settings')
+if not os.environ.get('DJANGO_SETTINGS_MODULE'):
+    raise RuntimeError(
+        'You have to set DJANGO_SETTINGS_MODULE environment variable.')
 
 from django.core.wsgi import get_wsgi_application
 

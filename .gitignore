@@ -13,5 +13,8 @@ dreifaltigkeit_wsgi.py
 # Development database
 db.sqlite3
 
+# Deployment directory
+deployment/
+
 # Private development data
 private/

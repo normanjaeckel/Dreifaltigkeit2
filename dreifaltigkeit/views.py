@@ -8,7 +8,6 @@ from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Announcement, Event, FlatPage
 
-
 THRESHOLD = 30  # Threshold in minutes
 
 
