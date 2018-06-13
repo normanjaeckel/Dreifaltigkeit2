@@ -50,6 +50,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'dreifaltigkeit.context_processors.flatpages',
+                'dreifaltigkeit.context_processors.site_id',
             ],
         },
     },

@@ -32,9 +32,16 @@
                 <!-- Header -->
                 <header id="header">
                     <div class="row">
-                        <a href="/" class="logo 4u 12u$(small)"><strong>Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig</strong></a>
-                        <a href="#" class="logo 4u 12u$(small)">Trinitatiskindergarten</a>
-                        <a href="http://www.dresdner59.de/" class="logo 4u$ 12u$(small)">Stadtteilprojekt Dresdner59</a>
+                        {% if SITE_ID == 'parish' %}
+                            <a href="/" class="logo 4u 12u$(small)"><strong>Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig</strong></a>
+                            <a href="#" class="logo 4u 12u$(small)">Trinitatiskindergarten</a>
+                            <a href="http://www.dresdner59.de/" class="logo 4u$ 12u$(small)">Stadtteilprojekt Dresdner59</a>
+                        {% else %}
+                            <!-- SITE_ID == 'kindergarden' -->
+                            <a href="#" class="logo 4u 12u$(small)">Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig</a>
+                            <a href="/" class="logo 4u 12u$(small)"><strong>Trinitatiskindergarten</strong></a>
+                            <a href="http://www.dresdner59.de/" class="logo 4u$ 12u$(small)">Stadtteilprojekt Dresdner59</a>
+                        {% endif %}
                     </div>
                 </header>
 
@@ -54,41 +61,46 @@
                     </header>
                     <ul>
                         <li><a href="/">Startseite</a></li>
-                        <li><a href="{% url 'services' %}">Gottesdienste</a></li>
-                        <li><a href="{% url 'events' %}">Termine und Veranstaltungen</a></li>
-                        <li>
-                            <span class="opener">Gemeinde</span>
-                            <ul>
-                                {% for page in pages_gemeinde %}
-                                    <li>
-                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="opener">Kirchenmusik</span>
-                            <ul>
-                                {% for page in pages_kirchenmusik %}
-                                    <li>
-                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="opener">Kinder und Jugend</span>
-                            <ul>
-                                {% for page in pages_kinderundjugend %}
-                                    <li>
-                                        <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                        <li><a href="#">Ehrenamt</a></li>
-                        <li><a href="{% url 'donation' %}">Spenden / Kirchgeld</a></li>
-                        <li><a href="{% url 'links' %}">Links</a></li>
+                        {% if SITE_ID == 'parish' %}
+                            <li><a href="{% url 'services' %}">Gottesdienste</a></li>
+                            <li><a href="{% url 'events' %}">Termine und Veranstaltungen</a></li>
+                            <li>
+                                <span class="opener">Gemeinde</span>
+                                <ul>
+                                    {% for page in pages_gemeinde %}
+                                        <li>
+                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="opener">Kirchenmusik</span>
+                                <ul>
+                                    {% for page in pages_kirchenmusik %}
+                                        <li>
+                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="opener">Kinder und Jugend</span>
+                                <ul>
+                                    {% for page in pages_kinderundjugend %}
+                                        <li>
+                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li><a href="#">Ehrenamt</a></li>
+                            <li><a href="{% url 'donation' %}">Spenden / Kirchgeld</a></li>
+                            <li><a href="{% url 'links' %}">Links</a></li>
+                        {% else %}
+                            <!-- SITE_ID == 'kindergarden' -->
+
+                        {% endif %}
                         <li><a href="{% url 'imprint' %}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
                     </ul>
@@ -99,32 +111,62 @@
                     <header class="major">
                         <h2>Kontakt</h2>
                     </header>
-                    <p>Schreiben Sie uns gern eine E-Mail oder rufen Sie zu den Öffnungszeiten im Pfarramt an.</p>
-                    <ul class="contact">
-                        <li class="fa-envelope-o">
-                            <span class="sr-only">E-Mail-Adresse</span>
-                            kg.leipzig-dreifaltigkeitskirchgemeinde [bei] evlks.de
-                        </li>
-                        <li class="fa-user">
-                            <span class="sr-only">Ansprechpartner</span>
-                            Pfarrer Sebastian Rebner
+                    {% if SITE_ID == 'parish' %}
+                        <p>Schreiben Sie uns gern eine E-Mail oder rufen Sie zu den Öffnungszeiten im Pfarramt an.</p>
+                        <ul class="contact">
+                            <li class="fa-envelope-o">
+                                <span class="sr-only">E-Mail-Adresse</span>
+                                kg.leipzig-dreifaltigkeitskirchgemeinde [bei] evlks.de
                             </li>
-                        <li class="fa-home">
-                            <span class="sr-only">Adresse</span>
-                            Pfarramt der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />Dresdner Straße 59<br />04317 Leipzig
-                        </li>
-                        <li class="fa-phone">
-                            <span class="sr-only">Telefon</span>
-                            (0341) 6880335<br />(0341) 6880428
-                        </li>
-                        <li class="fa-fax">
-                            <span class="sr-only">Telefax</span>
-                            (0341) 6810695
-                        </li>
-                        <li class="fa-calendar">
-                            Öffnungszeiten Pfarramt:<br />Dienstag 16:00 bis 18:00 Uhr<br />Mittwoch 16:00 bis 18:00 Uhr<br />Freitag 9:00 bis 11:00 Uhr
-                        </li>
-                    </ul>
+                            <li class="fa-user">
+                                <span class="sr-only">Ansprechpartner</span>
+                                Pfarrer Sebastian Rebner
+                                </li>
+                            <li class="fa-home">
+                                <span class="sr-only">Adresse</span>
+                                Pfarramt der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />Dresdner Straße 59<br />04317 Leipzig
+                            </li>
+                            <li class="fa-phone">
+                                <span class="sr-only">Telefon</span>
+                                (0341) 6880335<br />(0341) 6880428
+                            </li>
+                            <li class="fa-fax">
+                                <span class="sr-only">Telefax</span>
+                                (0341) 6810695
+                            </li>
+                            <li class="fa-calendar">
+                                Öffnungszeiten Pfarramt:<br />Dienstag 16:00 bis 18:00 Uhr<br />Mittwoch 16:00 bis 18:00 Uhr<br />Freitag 9:00 bis 11:00 Uhr
+                            </li>
+                        </ul>
+                    {% else %}
+                        <!-- SITE_ID == 'kindergarden' -->
+                        <p>Schreiben Sie gern eine E-Mail oder rufen Sie zu den Sprechzeiten im Kindergarten an.</p>
+                        <ul class="contact">
+                            <li class="fa-envelope-o">
+                                <span class="sr-only">E-Mail-Adresse</span>
+                                ev.kindergarten.trinitatis [bei] web.de
+                            </li>
+                            <li class="fa-user">
+                                <span class="sr-only">Ansprechpartner</span>
+                                Alexander Herfort (Leiter)
+                                </li>
+                            <li class="fa-home">
+                                <span class="sr-only">Adresse</span>
+                                Trinitatiskindergarten der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />Kohlgartenweg 3<br />04318 Leipzig
+                            </li>
+                            <li class="fa-phone">
+                                <span class="sr-only">Telefon</span>
+                                (0341) 6994793
+                            </li>
+                            <li class="fa-fax">
+                                <span class="sr-only">Telefax</span>
+                                (0341) 3572535
+                            </li>
+                            <li class="fa-calendar">
+                                Sprechzeiten Kindergarten:<br />Dienstag 14:30 bis 16:20 Uhr
+                            </li>
+                        </ul>
+                    {% endif %}
                 </section>
 
                 <!-- Footer -->
