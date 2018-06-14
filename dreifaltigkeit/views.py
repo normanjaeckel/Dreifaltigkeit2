@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.db.models import Q
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
@@ -15,7 +16,11 @@ class Home(TemplateView):
     """
     Home view.
     """
-    template_name = 'home.html'
+    def get_template_names(self):
+        """
+        Returns the template name: home_parish.html or home_kindergarden.html.
+        """
+        return ['home_{}.html'.format(settings.SITE_ID)]
 
     def get_context_data(self, **context):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
