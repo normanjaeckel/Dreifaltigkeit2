@@ -15,16 +15,28 @@
 
     <h2>Inhaltlich verantwortlich für diese Webseite:</h2>
 
-    <address>
-        Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />
-        Dresdner Straße 59<br />
-        04317 Leipzig<br />
-        Telefon: (0341) 6880428 oder (0341) 6880335<br />
-        Telefax: (0341) 6810695<br />
-        E-Mail: kg.leipzig-dreifaltigkeitskirchgemeinde [bei] evlks.de
-    </address>
+    {% if SITE_ID == 'parish' %}
+        <address>
+            Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />
+            Dresdner Straße 59<br />
+            04317 Leipzig<br />
+            Telefon: (0341) 6880428 oder (0341) 6880335<br />
+            Telefax: (0341) 6810695<br />
+            E-Mail: kg.leipzig-dreifaltigkeitskirchgemeinde [bei] evlks.de
+        </address>
+    {% else %}
+        <!-- SITE_ID == 'kindergarden' -->
+        <address>
+            Trinitatiskindergarten der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig<br />
+            Kohlgartenweg 3<br />
+            04318 Leipzig<br />
+            Telefon: (0341) 6994793<br />
+            Telefax: (0341) 3572535<br />
+            E-Mail: ev.kindergarten.trinitatis [bei] web.de
+        </address>
+    {% endif %}
 
-    <p>Die Gemeinde ist eine Körperschaft des öffentlichen Rechts (§ 3 Abs. 1 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>). Sie wird vertreten durch den <a href="{% url 'flatpage' category='gemeinde' page='kirchenvorstand' %}">Kirchenvorstand</a> (§ 3 Abs. 3 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>). Die Vertretung obliegt dem oder der Vorsitzenden (§ 16 Abs. 4 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>).</p>
+    <p>Die Kirchgemeinde ist eine Körperschaft des öffentlichen Rechts (§ 3 Abs. 1 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>). Sie wird vertreten durch den <a href="{% if SITE_ID == 'parish' %}{% url 'flatpage' category='gemeinde' page='kirchenvorstand' %}{% else %}#{% endif %}">Kirchenvorstand</a> (§ 3 Abs. 3 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>). Die Vertretung obliegt dem oder der Vorsitzenden (§ 16 Abs. 4 S. 1 <abbr title="Kirchgemeindeordnung der Evangelisch-Lutherischen Landeskirche Sachsens">KGO</abbr>).</p>
 
     <hr class="major" />
 
