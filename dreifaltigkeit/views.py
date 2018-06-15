@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
 
-from .models import Announcement, Event, FlatPage
+from .models import Announcement, Event, FlatPage as FlatPageModel
 
 THRESHOLD = 30  # Threshold in minutes
 
@@ -54,29 +54,34 @@ class Events(ListView):
     model = Event
 
 
-class Flatpage(TemplateView):
+class FlatPage(TemplateView):
     """
-    View for all flatpages (parish, music, youth).
+    View for all root and non-root flat pages.
     """
-    template_name = 'flatpage.html'
+    root = False
+    template_name = 'flat_page.html'
 
     def get_context_data(self, *args, **kwargs):
         """
-        Customized method: Adds flatpage instance to the context and sends
+        Customized method: Adds flat page instance to the context and sends
         HTTP 404 if page does not exist.
         """
         context = super().get_context_data(*args, **kwargs)
-        context['flatpage'] = get_object_or_404(
-            FlatPage, category=context['category'], url=context['page'])
+        if self.root:
+            category='{}_root'.format(settings.SITE_ID)
+        else:
+            category=context['category']
+        context['flat_page'] = get_object_or_404(
+            FlatPageModel, category=category, url=context['page'])
         return context
 
     def get(self, request, *args, **kwargs):
         """
-        Overridden method. Returns HTTP 301 if flatpage is only for redirect.
+        Overridden method. Returns HTTP 301 if flat page is only for redirect.
         """
         context = self.get_context_data(**kwargs)
-        if context['flatpage'].redirect:
-            return HttpResponsePermanentRedirect(context['flatpage'].redirect)
+        if context['flat_page'].redirect:
+            return HttpResponsePermanentRedirect(context['flat_page'].redirect)
         return self.render_to_response(context)
 
 

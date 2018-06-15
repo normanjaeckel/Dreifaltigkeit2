@@ -69,7 +69,7 @@
                                 <ul>
                                     {% for page in pages_gemeinde %}
                                         <li>
-                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -79,7 +79,7 @@
                                 <ul>
                                     {% for page in pages_kirchenmusik %}
                                         <li>
-                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -89,21 +89,23 @@
                                 <ul>
                                     {% for page in pages_kinderundjugend %}
                                         <li>
-                                            <a href="{% url 'flatpage' category=page.category page=page.url %}">{{ page.title }}</a>
+                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
                             </li>
-                            <li><a href="#">Ehrenamt</a></li>
-                            <li><a href="{% url 'donation' %}">Spenden / Kirchgeld</a></li>
-                            <li><a href="{% url 'links' %}">Links</a></li>
+                            {% for page in pages_parish_root %}
+                                <li>
+                                    <a href="{% url 'flat_page_root' page=page.url %}">{{ page.title }}</a>
+                                </li>
+                            {% endfor %}
                         {% else %}
                             <!-- SITE_ID == 'kindergarden' -->
-                            <li><a href="#">Konzept</a></li>
-                            <li><a href="#">Mitarbeitende</a></li>
-                            <li><a href="#">Anmeldung eines Kindes</a></li>
-                            <li><a href="#">Termine</a></li>
-                            <li><a href="#">Mitarbeit und Unterstützung</a></li>
+                            {% for page in pages_kindergarden_root %}
+                                <li>
+                                    <a href="{% url 'flat_page_root' page=page.url %}">{{ page.title }}</a>
+                                </li>
+                            {% endfor %}
                         {% endif %}
                         <li><a href="{% url 'imprint' %}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>

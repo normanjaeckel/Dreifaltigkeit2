@@ -12,7 +12,12 @@ from django.utils.translation import ugettext_lazy
 
 class FlatPage(models.Model):
     """
-    Model for flat pages for the three categories parish, music and youth.
+    Model for flat pages.
+
+    Every flat page belongs to one of five categories: The pages for parish_root
+    and kindergarden_root live at the root level of the menu. The pages for the
+    other three categories parish, music and youth live at a sublevel.
+
     The fields category, url, title, ordering and redirect are hidden in admin.
     The model instances are created via migration file.
     """
@@ -23,6 +28,8 @@ class FlatPage(models.Model):
             ('gemeinde', ugettext_lazy('Gemeinde')),
             ('kirchenmusik', ugettext_lazy('Kirchenmusik')),
             ('kinder-und-jugend', ugettext_lazy('Kinder und Jugend')),
+            ('parish_root', ugettext_lazy('Gemeinde Hauptmenü')),
+            ('kindergarden_root', ugettext_lazy('Kindergarten Hauptmenü')),
         ),
     )
 
@@ -44,6 +51,9 @@ class FlatPage(models.Model):
         ugettext_lazy('Weiterleitung'),
         blank=True,
         max_length=255,
+        help_text=ugettext_lazy(
+            'Wenn eine Weiterleitung eingerichtet ist, wird kein zusätzlicher '
+            'Inhalt angezeigt.'),
     )
 
     content = models.TextField(

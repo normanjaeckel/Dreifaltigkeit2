@@ -49,7 +49,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'dreifaltigkeit.context_processors.flatpages',
+                'dreifaltigkeit.context_processors.flat_pages',
                 'dreifaltigkeit.context_processors.site_id',
             ],
         },

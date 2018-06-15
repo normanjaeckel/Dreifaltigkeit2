@@ -22,10 +22,9 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('gottesdienste/', views.Services.as_view(), name='services'),
     path('termine/', views.Events.as_view(), name='events'),
-    path('spenden/', views.Imprint.as_view(), name='donation'),  # TODO: Change view.
-    path('links/', views.Imprint.as_view(), name='links'),  # TODO: Change view.
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
     path('admin/', admin.site.urls),
-    path('<category>/<page>/', views.Flatpage.as_view(), name='flatpage'),
+    path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
+    path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
 ]

@@ -4,9 +4,9 @@ from django.conf import settings
 from django.db import migrations
 
 
-def add_flatpages_parisch(apps, schema_editor):
+def add_flat_pages_parish(apps, schema_editor):
     """
-    Adds all default flatpages for the parish site.
+    Adds all default flat pages for the parish site.
     """
     pages = (
         # Gemeinde
@@ -34,6 +34,11 @@ def add_flatpages_parisch(apps, schema_editor):
         ('kinder-und-jugend', 'konfirmandenunterricht', 'Konfirmandenunterricht', 340, ''),
         ('kinder-und-jugend', 'junge-gemeinde', 'Junge Gemeinde', 350, ''),
         ('kinder-und-jugend', 'kindergarten', 'Kindergarten', 360, ''),
+
+        # Hauptmenü
+        ('parish_root', 'ehrenamt', 'Ehrenamt', 410, ''),
+        ('parish_root', 'spenden', 'Spenden / Kirchgeld', 420, ''),
+        ('parish_root', 'links', 'Links', 430, ''),
     )
 
     # We can't import the model directly as it may be a newer
@@ -49,11 +54,18 @@ def add_flatpages_parisch(apps, schema_editor):
         )
 
 
-def add_flatpages_kindergarden(apps, schema_editor):
+def add_flat_pages_kindergarden(apps, schema_editor):
     """
-    Adds all default flatpages for the kindergarden site.
+    Adds all default flat pages for the kindergarden site.
     """
-    pages = ()
+    pages = (
+        # Hauptmenü
+        ('kindergarden_root', 'konzept', 'Konzept', 110, ''),
+        ('kindergarden_root', 'mitarbeiter-innen', 'Mitarbeiter/innen', 120, ''),
+        ('kindergarden_root', 'anmeldung', 'Anmeldung eines Kindes', 130, ''),
+        ('kindergarden_root', 'termin', 'Termine', 140, ''),
+        ('kindergarden_root', 'mitarbeit', 'Mitarbeit und Unterstützung', 150, ''),
+    )
 
     # We can't import the model directly as it may be a newer
     # version than this migration expects. We use the historical version.
@@ -68,14 +80,14 @@ def add_flatpages_kindergarden(apps, schema_editor):
         )
 
 
-def add_flatpages(apps, schema_editor):
+def add_flat_pages(apps, schema_editor):
     """
-    Adds all default flatpages.
+    Adds all default flat pages.
     """
     if settings.SITE_ID == 'parish':
-        add_flatpages_parisch(apps, schema_editor)
+        add_flat_pages_parish(apps, schema_editor)
     elif settings.SITE_ID == 'kindergarden':
-        add_flatpages_kindergarden(apps, schema_editor)
+        add_flat_pages_kindergarden(apps, schema_editor)
     else:
         raise RuntimeError(
             "The settings variable SITE_ID has to be set. Use 'parish' or "
@@ -89,5 +101,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(add_flatpages),
+        migrations.RunPython(add_flat_pages),
     ]

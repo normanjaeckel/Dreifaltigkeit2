@@ -5,15 +5,15 @@ from django.conf import settings
 from .models import FlatPage
 
 
-def flatpages(request):
+def flat_pages(request):
     """
-    Context processor to add all flatpages to the context of all views.
-    Used for the main menu.
+    Context processor to add all root and non-root flat pages to the context of
+    all views. Used for the main menu.
     """
     context = defaultdict(list)
-    for flatpage in FlatPage.objects.all():
-        key = 'pages_' + flatpage.category.replace('-', '')
-        context[key].append(flatpage)
+    for flat_page in FlatPage.objects.all():
+        key = 'pages_' + flat_page.category.replace('-', '')
+        context[key].append(flat_page)
     return context
 
 
