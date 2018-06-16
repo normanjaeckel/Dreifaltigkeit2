@@ -24,7 +24,7 @@ class Home(TemplateView):
 
     def get_context_data(self, **context):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
-        next_service = Event.objects.filter(type='service', begin__gte=threshold).first()
+        next_service = Event.objects.filter(type='service', begin__gte=threshold).last()
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
         return super().get_context_data(
             next_service=next_service,
@@ -42,7 +42,7 @@ class Services(ListView):
 
     def get_queryset(self):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
-        return Event.objects.filter(Q(type='service') | Q(type='prayer'), begin__gte=threshold)
+        return Event.objects.filter(Q(type='service') | Q(type='prayer'), begin__gte=threshold).reverse()
 
 
 class Events(ListView):

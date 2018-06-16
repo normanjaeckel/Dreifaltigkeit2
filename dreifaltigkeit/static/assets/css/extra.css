@@ -26,3 +26,7 @@ ul.parish-contact li i {
 .image.left.big, .image.right.big {
     max-width: 50%;
 }
+
+#flatpage_form #id_content {
+    font-family: monospace;
+}

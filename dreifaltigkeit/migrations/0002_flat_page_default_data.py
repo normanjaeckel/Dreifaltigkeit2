@@ -63,7 +63,7 @@ def add_flat_pages_kindergarden(apps, schema_editor):
         ('kindergarden_root', 'konzept', 'Konzept', 110, ''),
         ('kindergarden_root', 'mitarbeiter-innen', 'Mitarbeiter/innen', 120, ''),
         ('kindergarden_root', 'anmeldung', 'Anmeldung eines Kindes', 130, ''),
-        ('kindergarden_root', 'termin', 'Termine', 140, ''),
+        ('kindergarden_root', 'termine', 'Termine', 140, ''),
         ('kindergarden_root', 'mitarbeit', 'Mitarbeit und Unterstützung', 150, ''),
     )
 

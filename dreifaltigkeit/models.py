@@ -59,6 +59,7 @@ class FlatPage(models.Model):
     content = models.TextField(
         ugettext_lazy('Inhalt'),
         blank=True,
+        default='<p>\n\n\n\n</p>',
         help_text=ugettext_lazy('Inhalt der Seite in HTML.'),
     )
 
@@ -103,7 +104,10 @@ class MonthlyText(models.Model):
 
     text = models.TextField(
         ugettext_lazy('Monatsspruch'),
-        help_text=ugettext_lazy('Der Monatsspruch erscheint nur auf der Gottesdienstseite.'),
+        help_text=ugettext_lazy(
+            'Der Monatsspruch der <a href="https://www.oeab.de/">Ökumenischen '
+            'Arbeitsgemeinschaft für Bibellesen</a> erscheint nur auf der '
+            'Gottesdienstseite. Kein HTML erlaubt.'),
     )
 
     verse = models.CharField(
@@ -187,7 +191,7 @@ class Event(models.Model):
     title = models.CharField(
         ugettext_lazy('Titel'),
         max_length=255,
-        help_text=ugettext_lazy('Kurzer Titel der Veranstaltung'),
+        help_text=ugettext_lazy('Kurzer Titel der Veranstaltung.'),
     )
 
     place = models.CharField(
@@ -197,13 +201,14 @@ class Event(models.Model):
         max_length=255,
         help_text=ugettext_lazy(
             'Ort der Veranstaltung, z. B. Trinitatiskirche, Markuskapelle, '
-            'Anbau der Trinitatiskirche, Gemeindehaus Dresdner Straße 59'),
+            'Anbau der Trinitatiskirche, Gemeindehaus Dresdner Straße 59.'),
     )
 
     content = models.TextField(
         ugettext_lazy('Inhalt'),
         blank=True,
-        help_text=ugettext_lazy('Beschreibung der Veranstaltung.'),
+        help_text=ugettext_lazy(
+            'Beschreibung der Veranstaltung. Kein HTML erlaubt.'),
     )
 
     begin = models.DateTimeField(
@@ -231,7 +236,7 @@ class Event(models.Model):
     )
 
     class Meta:
-        ordering = ('begin',)
+        ordering = ('-begin',)
         verbose_name = ugettext_lazy('Veranstaltung')
         verbose_name_plural = ugettext_lazy('Veranstaltungen')
         permissions = (
@@ -271,7 +276,8 @@ class Event(models.Model):
         result = None
         if self.type == 'service':
             for monthly_text in MonthlyText.objects.all():
-                if monthly_text.datetime.month == self.begin.month:
+                if (monthly_text.datetime.year == self.begin.year and
+                        monthly_text.datetime.month == self.begin.month):
                     result = monthly_text
                     break
         return result
@@ -284,12 +290,12 @@ class Announcement(models.Model):
     title = models.CharField(
         ugettext_lazy('Titel'),
         max_length=255,
-        help_text=ugettext_lazy('Kurzer Titel der Ankündigung'),
+        help_text=ugettext_lazy('Kurzer Titel der Ankündigung.'),
     )
 
     short_text = models.TextField(
         ugettext_lazy('Kurztext'),
-        help_text=ugettext_lazy('Kurzer Text. Erscheint auf der Startseite.'),
+        help_text=ugettext_lazy('Kurzer Text. Erscheint auf der Startseite. Kein HTML erlaubt.'),
     )
 
     long_text = models.TextField(
@@ -297,7 +303,8 @@ class Announcement(models.Model):
         blank=True,
         help_text=ugettext_lazy(
             'Längerer Text. Erscheint nur auf einer gesonderten Seite, die von '
-            'der Startseite aus erreichbar ist.'),
+            'der Startseite aus erreichbar ist. Kein HTML erlaubt. Leerzeilen '
+            'können verwendet werden.'),
     )
 
     end = models.DateTimeField(

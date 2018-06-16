@@ -5,6 +5,17 @@ from django.utils.translation import ugettext_lazy
 from .models import Announcement, Event, FlatPage, MediaFile, MonthlyText
 
 
+class FlatPageAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': ('assets/css/extra.css',)
+        }
+        js = (
+            'assets/js/jquery.min.js',
+            'assets/js/extra.js',
+        )
+
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'place', 'begin', 'type', )
 
@@ -13,7 +24,7 @@ class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('title', 'end', )
 
 
-admin.site.register(FlatPage)  # TODO: Hide some fields.
+admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(MonthlyText)
