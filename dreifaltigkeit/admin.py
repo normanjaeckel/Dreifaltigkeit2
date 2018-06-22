@@ -10,10 +10,16 @@ class FlatPageAdmin(admin.ModelAdmin):
         css = {
             'all': ('assets/css/extra.css',)
         }
-        js = (
-            'assets/js/jquery.min.js',
-            'assets/js/extra.js',
-        )
+
+    fields =  ('category', 'url', 'title', 'ordering', 'redirect', 'content',)
+    readonly_fields = ('category', 'url', 'title', 'ordering', 'redirect',)
+
+    def has_add_permission(self, request):
+        """
+        Overridden permission check method to disable all create views for
+        flat pages. New flat pages can only be added via command line.
+        """
+        return False
 
 
 class EventAdmin(admin.ModelAdmin):
