@@ -25,6 +25,7 @@ ALLOWED_HOSTS = []
 
 SITE_ID = 'parish'
 # SITE_ID = 'kindergarden'
+LINK_TO_OTHER_SITE = '#'
 
 WSGI_APPLICATION = 'dreifaltigkeit_wsgi.application'
 

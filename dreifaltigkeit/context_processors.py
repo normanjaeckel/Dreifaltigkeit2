@@ -19,7 +19,10 @@ def flat_pages(request):
 
 def site_id(request):
     """
-    Adds SITE_ID to the context of all views. Used to differentiate between
-    site for parish and kindergarden.
+    Adds SITE_ID and LINK_TO_OTHER_SITE to the context of all views. Used to
+    differentiate between site for parish and kindergarden.
     """
-    return {'SITE_ID': settings.SITE_ID}
+    return {
+        'SITE_ID': settings.SITE_ID,
+        'LINK_TO_OTHER_SITE': settings.LINK_TO_OTHER_SITE,
+    }
