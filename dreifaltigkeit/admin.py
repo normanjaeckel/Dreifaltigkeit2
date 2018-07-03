@@ -23,7 +23,10 @@ class FlatPageAdmin(admin.ModelAdmin):
 
 
 class EventAdmin(admin.ModelAdmin):
+    date_hierarchy = 'begin'
     list_display = ('title', 'place', 'begin', 'type', )
+    save_as = True
+    save_as_continue = False
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
