@@ -1,13 +1,14 @@
 import collections
 import datetime
 import json
+import locale
 
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import get_language, to_locale, ugettext_lazy
 
 
 class FlatPage(models.Model):
@@ -122,6 +123,14 @@ class MonthlyText(models.Model):
         verbose_name_plural = ugettext_lazy('Monatssprüche')
 
     def __str__(self):
+        if get_language() == 'de':
+            loc = 'de_DE'
+        elif get_language() == 'en':
+            loc = 'en_US'
+        else:
+            loc = None
+        if loc:
+            locale.setlocale(locale.LC_TIME, (loc, 'UTF-8'))
         return self.datetime.strftime('%B %Y')
 
     @property

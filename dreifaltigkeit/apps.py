@@ -1,4 +1,6 @@
 from django.apps import AppConfig
+from django.conf import settings
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy
 
 
@@ -7,4 +9,8 @@ class DreifaltigkeitAppConfig(AppConfig):
     Django application configuration for this website.
     """
     name = 'dreifaltigkeit'
-    verbose_name = ugettext_lazy('Homepage der Dreifaltigkeitskirchgemeinde')
+    verbose_name = format_lazy(
+        '{headline} ({site_id})',
+        headline=ugettext_lazy('Homepage der Dreifaltigkeitskirchgemeinde'),
+        site_id=settings.SITE_ID,
+    )
