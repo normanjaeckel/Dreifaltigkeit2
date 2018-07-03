@@ -33,10 +33,14 @@ class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('title', 'end', )
 
 
+class MonthlyTextAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'text', 'verse', )
+
+
 admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
-admin.site.register(MonthlyText)
+admin.site.register(MonthlyText, MonthlyTextAdmin)
 admin.site.register(MediaFile)
 
 description = ugettext_lazy('{app_name} Administration').format(
