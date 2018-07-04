@@ -31,7 +31,11 @@
             <a href="{% url 'services' %}" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
             <h3>Nächster Gottesdienst</h3>
             {% if next_service %}
-                <p>{{ next_service.begin|date:"l, j. F Y, H:i" }}<br />{{ next_service.place }}<br />{{ next_service.title }}: {{ next_service.content }}</p>
+                <p>
+                    {{ next_service.begin|date:"l, j. F Y, H:i" }}
+                    <br />{{ next_service.place }}
+                    <br />{{ next_service.title }}: {{ next_service.content }}
+                </p>
             {% else %}
                 <p>Wann und wo der nächste Gottesdienst in unserer Gemeinde stattfindet, erfahren Sie unter dem folgenden Link.</p>
             {% endif %}
@@ -47,6 +51,19 @@
                 <li><a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="button">Alle Markusboten</a></li>
             </ul>
         </article>
+        {% for coming_event in coming_events %}
+            <article>
+                <a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
+                <h3>Kommende Veranstaltung</h3>
+                <p>
+                    {{ coming_event.begin|date:"l, j. F Y, H:i" }}
+                    {% if coming_event.place %}
+                        <br />{{ coming_event.place }}
+                    {% endif %}
+                    <br />{{ coming_event.title }}{% if coming_event.content %}: {{ coming_event.content }}{% endif %}
+                </p>
+            </article>
+        {% endfor %}
         {% for announcement in announcements %}
             <article>
                 <a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>

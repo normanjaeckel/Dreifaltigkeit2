@@ -26,8 +26,22 @@ class Home(TemplateView):
         threshold = timezone.now() - timedelta(minutes=THRESHOLD)
         next_service = Event.objects.filter(type='service', begin__gte=threshold).last()
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
+        coming_events_queryset = (Event.objects
+            .exclude(type='service')
+            .exclude(on_home_before_begin=0)
+            .filter(begin__gte=threshold)
+            .reverse()
+        )
+        coming_events = []
+        for coming_event in coming_events_queryset:
+            time_to_show = timezone.now() + timedelta(
+                days=coming_event.on_home_before_begin)
+            if coming_event.begin <= time_to_show:
+                coming_events.append(coming_event)
+
         return super().get_context_data(
             next_service=next_service,
+            coming_events=coming_events,
             announcements=announcements,
             **context
         )
