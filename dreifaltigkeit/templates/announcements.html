@@ -11,7 +11,8 @@
         <h1>{{ announcement.title }}</h1>
     </header>
 
-    <span class="image main"><img src="{% static 'images/pic11.jpg' %}" alt="" /></span>
+    {% static 'images/pic11.jpg' as default_image %}
+    <span class="image main"><img src="{{ announcement.mediafile|default:default_image }}" alt="" /></span>
 
     {{ announcement.long_text|linebreaks }}
 

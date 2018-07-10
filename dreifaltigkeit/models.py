@@ -339,6 +339,14 @@ class Announcement(models.Model):
             'und ggf. über den gesonderten Link erreichbar.'),
     )
 
+    mediafile = models.ForeignKey(
+        verbose_name=ugettext_lazy('Bild'),
+        to='MediaFile',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
     def get_absolute_url(self):
         return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
 
