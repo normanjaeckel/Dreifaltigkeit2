@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 
@@ -28,3 +29,8 @@ urlpatterns = [
     path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
     path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
 ]
+
+# Pop URL pattern for "termine" because we do not want an event calender on
+# kindergarten site.
+if not settings.SITE_ID == 'parish':
+    urlpatterns.pop(2)
