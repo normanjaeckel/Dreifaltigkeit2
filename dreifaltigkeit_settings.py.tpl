@@ -30,11 +30,14 @@ LINK_TO_OTHER_SITE = '#'
 WSGI_APPLICATION = 'dreifaltigkeit_wsgi.application'
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) and media
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), 'deployment', 'static')
+
+MEDIA_ROOT = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 'deployment', 'media', SITE_ID)
 
 
 # Database
