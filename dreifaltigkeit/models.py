@@ -285,12 +285,17 @@ class Event(models.Model):
         Returns a string containing all data for the fullcalendar event object
         as JSON.
         """
-        return json.dumps({
+        data = {
             'title': self.get_type_display() + ': ' + self.title,
             'start': self.begin.isoformat(),
             'end': self.end.isoformat(),
-            'color': EventTypes().event_types[self.type]['color']
-        })
+            'color': EventTypes().event_types[self.type]['color'],
+        }
+        if self.type in ('service', 'prayer'):
+            data['url'] = reverse('services')
+        elif self.content:
+            data['url'] = reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+        return json.dumps(data)
 
     @property
     def monthly_text(self):

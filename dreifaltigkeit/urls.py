@@ -24,6 +24,7 @@ urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('gottesdienste/', views.Services.as_view(), name='services'),
     path('termine/', views.Events.as_view(), name='events'),
+    path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
     path('admin/', admin.site.urls),

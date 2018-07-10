@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>{{ event.title }}</h1>
+    </header>
+
+    {% static 'images/pic11.jpg' as default_image %}
+    <span class="image main"><img src="{{ default_image }}" alt="" /></span>
+
+    <p>{{ event.begin }} Uhr &middot; {{ event.place }}</p>
+
+    <p>{{ event.content }}</p>
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}

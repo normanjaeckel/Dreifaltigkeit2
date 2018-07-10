@@ -68,6 +68,25 @@ class Events(ListView):
     model = Event
 
 
+class SingleEvent(DetailView):
+    """
+    View for a single event.
+    """
+    template_name = 'single_event.html'
+    model = Event
+
+    def get_object(self):
+        """
+        Customized method: Send HTTP 404 if event type is service or prayer or
+        there is no event content.
+        """
+        event = super().get_object()
+        if event.type in ('service', 'prayer') or not event.content:
+            message = 'Event {} is a service or prayer or has no content.'.format(event.title)
+            raise Http404(message)
+        return event
+
+
 class FlatPage(TemplateView):
     """
     View for all root and non-root flat pages.
