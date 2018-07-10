@@ -11,8 +11,8 @@ class FlatPageAdmin(admin.ModelAdmin):
             'all': ('assets/css/extra.css',)
         }
 
-    fields =  ('category', 'url', 'title', 'ordering', 'redirect', 'content',)
-    readonly_fields = ('category', 'url', 'title', 'ordering', 'redirect',)
+    fields =  ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect', 'content',)
+    readonly_fields = ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect',)
 
     def has_add_permission(self, request):
         """

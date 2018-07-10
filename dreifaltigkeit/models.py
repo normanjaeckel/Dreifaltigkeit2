@@ -44,6 +44,15 @@ class FlatPage(models.Model):
         max_length=255,
     )
 
+    menu_title = models.CharField(
+        ugettext_lazy('Eintrag im Menü'),
+        blank=True,
+        max_length=255,
+        help_text=ugettext_lazy(
+            'Wenn hier nichts eingetragen ist, wird der Titel zugleich als '
+            'Bezeichnung im Menü verwendet.'),
+    )
+
     ordering = models.IntegerField(
         ugettext_lazy('Sortierung'),
     )
@@ -71,6 +80,13 @@ class FlatPage(models.Model):
 
     def __str__(self):
         return ' – '.join((self.get_category_display(), self.title))
+
+    def get_menu_title(self):
+        """
+        Returns the title used in the main menu. This is the menu_title. If
+        this field is empty, the title is returned.
+        """
+        return self.menu_title or self.title
 
 
 def validate_year_month_number(value):
