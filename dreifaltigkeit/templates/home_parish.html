@@ -64,9 +64,13 @@
                 </p>
             </article>
         {% endfor %}
+
+        {% static 'images/pic03.jpg' as default_image %}
         {% for announcement in announcements %}
             <article>
-                <a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
+                <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
+                    <img src="{{ announcement.mediafile|default:default_image }}" alt="" />
+                </a>
                 <h3>{{ announcement.title }}</h3>
                 <p>{{ announcement.short_text }}</p>
                 {% if announcement.long_text %}
