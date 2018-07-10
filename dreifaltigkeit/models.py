@@ -296,10 +296,10 @@ class Event(models.Model):
     def monthly_text(self):
         """
         Returns the model instance of the monthly text if this event is a
-        service.
+        service or a prayer.
         """
         result = None
-        if self.type == 'service':
+        if self.type in ('service', 'prayer'):
             for monthly_text in MonthlyText.objects.all():
                 if (monthly_text.datetime.year == self.begin.year and
                         monthly_text.datetime.month == self.begin.month):
