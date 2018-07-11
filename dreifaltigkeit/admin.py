@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy
 
-from .models import Announcement, CurrentMarkusbote, Event, FlatPage, MediaFile, MonthlyText
+from .models import Announcement, CurrentMarkusbote, Event, FlatPage, MediaFile, MonthlyText, YearlyText
 
 
 class FlatPageAdmin(admin.ModelAdmin):
@@ -31,6 +31,10 @@ class EventAdmin(admin.ModelAdmin):
 
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'end', )
+
+
+class YearlyTextAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'text', 'verse', )
 
 
 class MonthlyTextAdmin(admin.ModelAdmin):
@@ -81,6 +85,7 @@ class CurrentMarkusboteAdmin(admin.ModelAdmin):
 admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
+admin.site.register(YearlyText, YearlyTextAdmin)
 admin.site.register(MonthlyText, MonthlyTextAdmin)
 admin.site.register(MediaFile, MediaFileAdmin)
 admin.site.register(CurrentMarkusbote, CurrentMarkusboteAdmin)

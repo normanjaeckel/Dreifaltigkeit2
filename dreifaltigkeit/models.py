@@ -5,6 +5,7 @@ import locale
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.formats import localize
@@ -104,6 +105,41 @@ def validate_year_month_number(value):
         raise ValidationError(ugettext_lazy(
             'Die letzten beiden Ziffern (Monatszahl) müssen zwischen 01 und '
             '12 liegen.'))
+
+
+class YearlyText(models.Model):
+    """
+    Model for yearly texts by the "Ökumenische Arbeitsgemeinschaft für
+    Bibellesen – ÖAB" in Berlin.
+    """
+    year = models.IntegerField(
+        ugettext_lazy('Jahr'),
+        validators=[MinValueValidator(2018), MaxValueValidator(2199)],
+        unique=True,
+        help_text=ugettext_lazy('Eingabe als vierstellige Zahl.'),
+    )
+
+    text = models.TextField(
+        ugettext_lazy('Jahreslosung'),
+        help_text=ugettext_lazy(
+            'Die Jahreslosung der <a href="https://www.oeab.de/">'
+            'Ökumenischen Arbeitsgemeinschaft für Bibellesen</a> '
+            'erscheint nur auf der Gottesdienstseite. Kein HTML erlaubt.'),
+    )
+
+    verse = models.CharField(
+        ugettext_lazy('Bibelstelle'),
+        max_length=255,
+        help_text=ugettext_lazy('Beispiel: Joh 19,30.'),
+    )
+
+    class Meta:
+        ordering = ('-year',)
+        verbose_name = ugettext_lazy('Jahreslosung')
+        verbose_name_plural = ugettext_lazy('Jahreslosungen')
+
+    def __str__(self):
+        return str(self.year)
 
 
 class MonthlyText(models.Model):

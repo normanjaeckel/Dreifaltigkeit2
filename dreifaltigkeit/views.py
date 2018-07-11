@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, TemplateView
 
-from .models import Announcement, CurrentMarkusbote, Event, FlatPage as FlatPageModel
+from .models import Announcement, CurrentMarkusbote, Event, FlatPage as FlatPageModel, YearlyText
 
 
 class Home(TemplateView):
@@ -21,13 +21,21 @@ class Home(TemplateView):
         return ['home_{}.html'.format(settings.SITE_ID)]
 
     def get_context_data(self, **context):
+        try:
+            yearly_text = YearlyText.objects.get(year=timezone.now().year)
+        except YearlyText.DoesNotExist:
+            yearly_text = None
+
         threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
         next_service = Event.objects.filter(type='service', begin__gte=threshold).last()
+
         try:
             current_markusbote = CurrentMarkusbote.objects.get()
         except CurrentMarkusbote.DoesNotExist:
             current_markusbote = None
+
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
+
         coming_events_queryset = (Event.objects
             .exclude(type='service')
             .exclude(on_home_before_begin=0)
@@ -42,6 +50,7 @@ class Home(TemplateView):
                 coming_events.append(coming_event)
 
         return super().get_context_data(
+            yearly_text=yearly_text,
             next_service=next_service,
             current_markusbote=current_markusbote,
             coming_events=coming_events,

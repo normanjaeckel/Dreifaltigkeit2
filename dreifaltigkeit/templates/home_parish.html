@@ -11,6 +11,9 @@
             <h1>Herzlich willkommen<br /> </h1>
             <p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
+        {% if yearly_text %}
+            <blockquote>{{ yearly_text.text }}<br />{{ yearly_text.verse}}</blockquote>
+        {% endif %}
         <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. Unsere <a href="{% url 'flat_page' category='gemeinde' page='mitarbeiter-innen' %}">Mitarbeiterinnen und Mitarbeiter</a> helfen Ihnen gern weiter.</p>
         <ul class="actions">
             <li><a href="{% url 'events' %}" class="button big">Alle Termine im Überblick</a></li>
