@@ -9,8 +9,6 @@ from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import Announcement, Event, FlatPage as FlatPageModel
 
-THRESHOLD = 30  # Threshold in minutes
-
 
 class Home(TemplateView):
     """
@@ -23,7 +21,7 @@ class Home(TemplateView):
         return ['home_{}.html'.format(settings.SITE_ID)]
 
     def get_context_data(self, **context):
-        threshold = timezone.now() - timedelta(minutes=THRESHOLD)
+        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
         next_service = Event.objects.filter(type='service', begin__gte=threshold).last()
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
         coming_events_queryset = (Event.objects
@@ -55,7 +53,7 @@ class Services(ListView):
     context_object_name = 'services'
 
     def get_queryset(self):
-        threshold = timezone.now() - timedelta(minutes=THRESHOLD)
+        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
         return Event.objects.filter(Q(type='service') | Q(type='prayer'), begin__gte=threshold).reverse()
 
 

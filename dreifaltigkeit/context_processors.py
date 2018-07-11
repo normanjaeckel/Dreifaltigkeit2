@@ -26,3 +26,12 @@ def site_id(request):
         'SITE_ID': settings.SITE_ID,
         'LINK_TO_OTHER_SITE': settings.LINK_TO_OTHER_SITE,
     }
+
+
+def truncate_length(request):
+    """
+    Adds number of chars to the context used to truncate event content.
+    """
+    return {
+        'TRUNCATE_LENGTH': settings.TRUNCATE_LENGTH,
+    }

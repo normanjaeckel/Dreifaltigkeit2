@@ -25,7 +25,7 @@
                     <blockquote>{{ service.monthly_text.text }}<br />{{ service.monthly_text.verse }}</blockquote>
                 {% endif %}
             {% endifchanged %}
-            <dt>{{ service.begin }} Uhr &middot; {{ service.place }} &middot; {{service.get_type_display }}</dt>
+            <dt id="event-{{ service.pk }}">{{ service.begin }} Uhr &middot; {{ service.place }} &middot; {{service.get_type_display }}</dt>
             <dd>
                 <p>{{service.title }}: {{ service.content }}</p>
             </dd>

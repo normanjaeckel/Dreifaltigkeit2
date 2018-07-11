@@ -3,11 +3,12 @@ import datetime
 import json
 import locale
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 from django.utils.formats import localize
-from django.utils.timezone import localtime
+from django.utils.timezone import localtime, now
 from django.utils.translation import get_language, to_locale, ugettext_lazy
 
 
@@ -241,7 +242,7 @@ class Event(models.Model):
     )
 
     duration = models.PositiveIntegerField(
-        ugettext_lazy('Dauer in Minuten'),
+        ugettext_lazy('Dauer (Angabe in Minuten)'),
         null=True,
         blank=True,
         help_text=ugettext_lazy(
@@ -250,7 +251,7 @@ class Event(models.Model):
     )
 
     on_home_before_begin = models.PositiveIntegerField(
-        ugettext_lazy('Auf der Startseite (in Tagen)'),
+        ugettext_lazy('Auf der Startseite (Angabe in Tagen)'),
         default=0,
         help_text=ugettext_lazy(
             'Die Veranstaltung erscheint so viele Tage vor Beginn auf der '
@@ -274,6 +275,9 @@ class Event(models.Model):
     def __str__(self):
         return ' – '.join((localize(localtime(self.begin)), self.title))
 
+    def get_absolute_url(self):
+        return reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+
     @property
     def end(self):
         duration = self.duration or 0
@@ -292,9 +296,12 @@ class Event(models.Model):
             'color': EventTypes().event_types[self.type]['color'],
         }
         if self.type in ('service', 'prayer'):
-            data['url'] = reverse('services')
+            threshold = now() - datetime.timedelta(minutes=settings.THRESHOLD)
+            if self.begin >= threshold:
+                data['url'] = '{}#event-{}'.format(
+                    reverse('services'), self.pk)
         elif self.content:
-            data['url'] = reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+            data['url'] = self.get_absolute_url()
         return json.dumps(data)
 
     @property

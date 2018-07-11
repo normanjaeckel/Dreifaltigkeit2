@@ -52,6 +52,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'dreifaltigkeit.context_processors.flat_pages',
                 'dreifaltigkeit.context_processors.site_id',
+                'dreifaltigkeit.context_processors.truncate_length',
             ],
         },
     },
@@ -103,3 +104,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
+
+
+# Custom settings
+
+THRESHOLD = 30  # Threshold for event begin in minutes
+
+TRUNCATE_LENGTH = 120  # Truncate event content in characters

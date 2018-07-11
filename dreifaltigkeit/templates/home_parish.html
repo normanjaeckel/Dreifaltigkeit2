@@ -53,15 +53,22 @@
         </article>
         {% for coming_event in coming_events %}
             <article>
-                <a href="#" class="image"><img src="{% static 'images/pic03.jpg' %}" alt="" /></a>
+                <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">
+                    <img src="{% static 'images/pic03.jpg' %}" alt="" />
+                </a>
                 <h3>Kommende Veranstaltung</h3>
                 <p>
                     {{ coming_event.begin|date:"l, j. F Y, H:i" }}
                     {% if coming_event.place %}
                         <br />{{ coming_event.place }}
                     {% endif %}
-                    <br />{{ coming_event.title }}{% if coming_event.content %}: {{ coming_event.content }}{% endif %}
+                    <br />{{ coming_event.title }}{% if coming_event.content %}: {{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}{% endif %}
                 </p>
+                {% if coming_event.content|length > TRUNCATE_LENGTH %}
+                    <ul class="actions">
+                        <li><a href="{{ coming_event.get_absolute_url }}" class="button">Weitere Informationen</a></li>
+                    </ul>
+                {% endif %}
             </article>
         {% endfor %}
 
