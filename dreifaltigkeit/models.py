@@ -282,8 +282,10 @@ class Event(models.Model):
                 result = '{}#termin-{}'.format(reverse('services'), self.pk)
             else:
                 result = reverse('services')
-        else:
+        elif self.content:
             result = reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+        else:
+            result = None
         return result
 
     @property
