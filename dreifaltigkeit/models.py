@@ -399,3 +399,42 @@ class MediaFile(models.Model):
 
     def __str__(self):
         return self.mediafile.url
+
+
+class CurrentMarkusbote(models.Model):
+    """
+    Model for the current Markusbote. Can have zero or one instance.
+    """
+    file = models.ForeignKey(
+        verbose_name=ugettext_lazy('Datei'),
+        to=MediaFile,
+        on_delete=models.PROTECT,
+        help_text=ugettext_lazy(
+            'Der aktuelle Markusbote muss zuerst hochgeladen werden. Dann '
+            'steht er hier zur Auswahl.'),
+    )
+
+    months = models.CharField(
+        ugettext_lazy('Monate'),
+        max_length=255,
+        help_text=ugettext_lazy('Beispiel: Oktober-November 2018'),
+    )
+
+    class Meta:
+        verbose_name = ugettext_lazy('Aktueller Markusbote')
+        verbose_name_plural = ugettext_lazy('Aktueller Markusbote')
+
+    def __str__(self):
+        return self.months
+
+    def clean(self):
+        """
+        Throw ValidationError if you try to save more than one model
+        instance. See: http://stackoverflow.com/a/6436008
+        """
+        model = self.__class__
+        if (model.objects.count() > 0 and
+                self.id != model.objects.get().id):
+            raise ValidationError(ugettext_lazy(
+                'Es kann gleichzeitig nur einen aktuellen Markusboten '
+                'geben.'))

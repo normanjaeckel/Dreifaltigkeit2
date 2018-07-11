@@ -43,14 +43,16 @@
                 <li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
             </ul>
         </article>
-        <article>
-            <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
-            <h3>Aktueller Markusbote</h3>
-            <p>Hier finden Sie den aktuellen <a href="#">Markusboten</a> als PDF zum Download.</p>
-            <ul class="actions">
-                <li><a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="button">Alle Markusboten</a></li>
-            </ul>
-        </article>
+        {% if current_markusbote %}
+            <article>
+                <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+                <h3>Aktueller Markusbote</h3>
+                <p>Hier finden Sie den aktuellen <a href="{{ current_markusbote.file }}">Markusboten (Ausgabe {{ current_markusbote.months }})</a> als PDF zum Download.</p>
+                <ul class="actions">
+                    <li><a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="button">Alle Markusboten</a></li>
+                </ul>
+            </article>
+        {% endif %}
         {% for coming_event in coming_events %}
             <article>
                 <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">

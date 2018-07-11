@@ -2,7 +2,7 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy
 
-from .models import Announcement, Event, FlatPage, MediaFile, MonthlyText
+from .models import Announcement, CurrentMarkusbote, Event, FlatPage, MediaFile, MonthlyText
 
 
 class FlatPageAdmin(admin.ModelAdmin):
@@ -60,11 +60,30 @@ class MediaFileAdmin(admin.ModelAdmin):
         return super().has_change_permission(request, obj)
 
 
+class CurrentMarkusboteAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'mediafile_url', )
+
+    def mediafile_url(self, obj):
+        """
+        Returns the URL to the file.
+        """
+        return obj.file.mediafile.url
+    mediafile_url.short_description = ugettext_lazy('Adresse (URL)')
+
+    def has_add_permission(self, request):
+        """
+        Don't allow addition of more than one model instance in Django admin.
+        See: http://stackoverflow.com/a/12469482
+        """
+        return self.model.objects.count() == 0
+
+
 admin.site.register(FlatPage, FlatPageAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(MonthlyText, MonthlyTextAdmin)
 admin.site.register(MediaFile, MediaFileAdmin)
+admin.site.register(CurrentMarkusbote, CurrentMarkusboteAdmin)
 
 description = ugettext_lazy('{app_name} Administration').format(
     app_name=apps.get_app_config('dreifaltigkeit').verbose_name)
