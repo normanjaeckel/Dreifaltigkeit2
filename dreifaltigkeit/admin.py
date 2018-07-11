@@ -30,7 +30,7 @@ class EventAdmin(admin.ModelAdmin):
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
-    list_display = ('title', 'end', )
+    list_display = ('__str__', 'end', )
 
 
 class MonthlyTextAdmin(admin.ModelAdmin):

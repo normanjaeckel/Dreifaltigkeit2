@@ -23,3 +23,10 @@
 </section>
 
 {% endblock %}
+
+
+{% block admin_link %}
+
+<a href="{% url 'admin:dreifaltigkeit_event_change' event.pk %}">Termin bearbeiten</a>
+
+{% endblock %}

@@ -21,3 +21,10 @@
 </section>
 
 {% endblock %}
+
+
+{% block admin_link %}
+
+<a href="{% url 'admin:dreifaltigkeit_announcement_change' announcement.pk %}">Ankündigung bearbeiten</a>
+
+{% endblock %}

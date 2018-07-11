@@ -109,6 +109,9 @@
                         {% endif %}
                         <li><a href="{% url 'imprint' %}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
+                        {% if user.is_staff %}
+                            <li>{% block admin_link %}{% endblock %}</li>
+                        {% endif %}
                     </ul>
                 </nav>
 
@@ -177,7 +180,11 @@
 
                 <!-- Footer -->
                 <footer id="footer">
-                    <p class="copyright">&copy; Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle Rechte vorbehalten. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                    <p class="copyright">
+                        &copy; Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig.
+                        Alle Rechte vorbehalten.
+                        Design: <a href="https://html5up.net">HTML5 UP</a>.
+                    </p>
                 </footer>
 
             </div>

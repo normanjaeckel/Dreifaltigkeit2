@@ -363,6 +363,9 @@ class Announcement(models.Model):
         blank=True,
     )
 
+    def __str__(self):
+        return self.title
+
     def get_absolute_url(self):
         return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
 

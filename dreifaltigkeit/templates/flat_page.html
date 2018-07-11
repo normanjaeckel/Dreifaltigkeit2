@@ -20,3 +20,10 @@
 </section>
 
 {% endblock %}
+
+
+{% block admin_link %}
+
+<a href="{% url 'admin:dreifaltigkeit_flatpage_change' flat_page.pk %}">Seite bearbeiten</a>
+
+{% endblock %}
