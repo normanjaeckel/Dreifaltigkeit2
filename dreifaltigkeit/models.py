@@ -276,7 +276,15 @@ class Event(models.Model):
         return ' – '.join((localize(localtime(self.begin)), self.title))
 
     def get_absolute_url(self):
-        return reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+        if self.type in ('service', 'prayer'):
+            threshold = now() - datetime.timedelta(minutes=settings.THRESHOLD)
+            if self.begin >= threshold:
+                result = '{}#termin-{}'.format(reverse('services'), self.pk)
+            else:
+                result = reverse('services')
+        else:
+            result = reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
+        return result
 
     @property
     def end(self):
@@ -294,14 +302,8 @@ class Event(models.Model):
             'start': self.begin.isoformat(),
             'end': self.end.isoformat(),
             'color': EventTypes().event_types[self.type]['color'],
+            'url': self.get_absolute_url(),
         }
-        if self.type in ('service', 'prayer'):
-            threshold = now() - datetime.timedelta(minutes=settings.THRESHOLD)
-            if self.begin >= threshold:
-                data['url'] = '{}#event-{}'.format(
-                    reverse('services'), self.pk)
-        elif self.content:
-            data['url'] = self.get_absolute_url()
         return json.dumps(data)
 
     @property
