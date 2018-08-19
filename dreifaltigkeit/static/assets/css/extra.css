@@ -30,3 +30,11 @@ ul.parish-contact li i {
 #flatpage_form #id_content {
     font-family: monospace;
 }
+
+.gruppen-und-kreise {
+  list-style: none;
+}
+
+.gruppen-und-kreise li {
+  padding-bottom: 0.5em;
+}
