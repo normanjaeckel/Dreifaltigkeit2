@@ -35,7 +35,7 @@ class AnnouncementFeed(Feed):
         if type(item) == Event:
             item_title = ' – '.join((item.title, localize(localtime(item.begin))))
         else:
-            # type(item) = Announcement
+            # type(item) == Announcement
             item_title = item.title
         return item_title
 
@@ -52,7 +52,7 @@ class AnnouncementFeed(Feed):
                     item_description += ': '
                 item_description += item.content
         else:
-            # type(item) = Announcement
+            # type(item) == Announcement
             item_description = item.short_text
         return item_description
 
@@ -65,9 +65,18 @@ class AnnouncementFeed(Feed):
         if type(item) == Event:
             item_link = item.get_absolute_url() or self.link()
         else:
-            # type(item) = Announcement
+            # type(item) == Announcement
             if item.long_text:
                 item_link = item.get_absolute_url()
             else:
                 item_link = self.link()
         return item_link
+
+    def item_guid(self, item):
+        """
+        Customized GUID for the item: We use the auto filled uuid field for
+        this.
+        """
+        return item.uuid
+
+    item_guid_is_permalink = False

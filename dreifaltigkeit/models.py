@@ -2,6 +2,7 @@ import collections
 import datetime
 import json
 import locale
+import uuid
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -326,6 +327,11 @@ class Event(models.Model):
             'hier eingestellt ist.'),
     )
 
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+    )
+
     class Meta:
         ordering = ('-begin',)
         verbose_name = ugettext_lazy('Veranstaltung')
@@ -428,16 +434,21 @@ class Announcement(models.Model):
         blank=True,
     )
 
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+    )
 
     class Meta:
         ordering = ('-end',)
         verbose_name = ugettext_lazy('Ankündigung')
         verbose_name_plural = ugettext_lazy('Ankündigungen')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
 
 
 class MediaFile(models.Model):
