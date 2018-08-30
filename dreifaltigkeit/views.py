@@ -36,24 +36,11 @@ class Home(TemplateView):
 
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
 
-        coming_events_queryset = (Event.objects
-            .exclude(type='service')
-            .exclude(on_home_before_begin=0)
-            .filter(begin__gte=threshold)
-            .reverse()
-        )
-        coming_events = []
-        for coming_event in coming_events_queryset:
-            time_to_show = timezone.now() + timedelta(
-                days=coming_event.on_home_before_begin)
-            if coming_event.begin <= time_to_show:
-                coming_events.append(coming_event)
-
         return super().get_context_data(
             yearly_text=yearly_text,
             next_service=next_service,
             current_markusbote=current_markusbote,
-            coming_events=coming_events,
+            coming_events=Event.objects.get_coming_events(),
             announcements=announcements,
             **context
         )
@@ -113,9 +100,9 @@ class FlatPage(TemplateView):
         """
         context = super().get_context_data(*args, **kwargs)
         if self.root:
-            category='{}_root'.format(settings.SITE_ID)
+            category = '{}_root'.format(settings.SITE_ID)
         else:
-            category=context['category']
+            category = context['category']
         context['flat_page'] = get_object_or_404(
             FlatPageModel, category=category, url=context['page'])
         return context

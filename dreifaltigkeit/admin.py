@@ -2,7 +2,8 @@ from django.apps import apps
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy
 
-from .models import Announcement, CurrentMarkusbote, Event, FlatPage, MediaFile, MonthlyText, YearlyText
+from .models import (Announcement, CurrentMarkusbote, Event, FlatPage,
+                     MediaFile, MonthlyText, YearlyText)
 
 
 class FlatPageAdmin(admin.ModelAdmin):
@@ -11,7 +12,7 @@ class FlatPageAdmin(admin.ModelAdmin):
             'all': ('assets/css/extra.css',)
         }
 
-    fields =  ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect', 'content',)
+    fields = ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect', 'content',)
     readonly_fields = ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect',)
 
     def has_add_permission(self, request):

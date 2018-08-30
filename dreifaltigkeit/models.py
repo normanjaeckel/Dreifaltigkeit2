@@ -10,7 +10,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
-from django.utils.translation import get_language, to_locale, ugettext_lazy
+from django.utils.translation import get_language, ugettext_lazy
 
 
 class FlatPage(models.Model):
@@ -234,12 +234,41 @@ class EventTypes:
             yield name, event_type['verbose_name']
 
 
+class EventManager(models.Manager):
+    """
+    Customized model manager to provide extra manager methods.
+    """
+    def get_coming_events(self):
+        """
+        Returns a special filtered and sorted list with coming events for home
+        view and RSS feed.
+        """
+        threshold = now() - datetime.timedelta(minutes=settings.THRESHOLD)
+        coming_events_queryset = (
+            self
+            .exclude(type='service')
+            .exclude(on_home_before_begin=0)
+            .filter(begin__gte=threshold)
+            .reverse()
+        )
+        coming_events = []
+        for coming_event in coming_events_queryset:
+            time_to_show = now() + datetime.timedelta(
+                days=coming_event.on_home_before_begin)
+            if coming_event.begin <= time_to_show:
+                coming_events.append(coming_event)
+
+        return coming_events
+
+
 class Event(models.Model):
     """
     Model for events.
 
     Most important field is the type of the event.
     """
+    objects = EventManager()
+
     type = models.CharField(
         ugettext_lazy('Veranstaltungstyp'),
         max_length=255,

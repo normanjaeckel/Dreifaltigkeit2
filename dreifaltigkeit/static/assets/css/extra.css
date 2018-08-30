@@ -11,6 +11,13 @@
     text-align: center;
 }
 
+/* RSS icon in header on home view */
+.major h2 a.rss-icon {
+    color: #7f888f;
+    margin-left: 0.5em;
+    font-size: 0.7143em;
+}
+
 ul.parish-contact {
     clear: both;
 }

@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
+from .feeds import AnnouncementFeed
 
 urlpatterns = [
     path('', views.Home.as_view(), name='home'),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
+    path('ankuendigung/feed.rss', AnnouncementFeed(), name='announcement_feed'),
     path('admin/', admin.site.urls),
     path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
     path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
