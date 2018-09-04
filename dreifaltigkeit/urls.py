@@ -37,7 +37,7 @@ urlpatterns = [
 # Pop URL pattern for "termine" because we do not want an event calender on
 # kindergarten site.
 if not settings.SITE_ID == 'parish':
-    urlpatterns.pop(2)
+    urlpatterns.pop(3)
 
 # This line does only work during development (DEBUG = True)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/#serving-files-uploaded-by-a-user-during-development
