@@ -28,7 +28,7 @@ urlpatterns = [
     path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
-    path('ankuendigung/feed.rss', AnnouncementFeed(), name='announcement_feed'),
+    path('ankuendigung/feed.rss', AnnouncementFeed(), name='announcement_feed'),  #TODO: Change URL (because the feed also contains events)
     path('admin/', admin.site.urls),
     path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
     path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
