@@ -19,16 +19,16 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
-from .feeds import AnnouncementFeed
+from .feeds import ParishFeed
 
 urlpatterns = [
     path('', views.Home.as_view(), name='home'),
+    path('feed.rss', ParishFeed(), name='feed'),
     path('gottesdienste/', views.Services.as_view(), name='services'),
     path('termine/', views.Events.as_view(), name='events'),
     path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
-    path('ankuendigung/feed.rss', AnnouncementFeed(), name='announcement_feed'),  #TODO: Change URL (because the feed also contains events)
     path('admin/', admin.site.urls),
     path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
     path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy
 from .models import Announcement, Event
 
 
-class AnnouncementFeed(Feed):
+class ParishFeed(Feed):
     """
     RSS Feed for coming events and announcements.
     """
