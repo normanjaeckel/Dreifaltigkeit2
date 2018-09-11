@@ -8,7 +8,7 @@
 <section id="banner">
     <div class="content">
         <header>
-            <h1>Herzlich willkommen<br /> </h1>
+            <h1>Willkommen</h1>
             <p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
         {% if yearly_text %}
@@ -16,7 +16,7 @@
         {% endif %}
         <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen. Unsere <a href="{% url 'flat_page' category='gemeinde' page='mitarbeiter-innen' %}">Mitarbeiterinnen und Mitarbeiter</a> helfen Ihnen gern weiter.</p>
         <ul class="actions">
-            <li><a href="{% url 'events' %}" class="button big">Unsere Termine im Überblick</a></li>
+            <li><a href="#aktuelles" class="button big icon fa-chevron-down">Aktuelles</a></li>
         </ul>
     </div>
     <span class="image object">
@@ -25,7 +25,7 @@
 </section>
 
 <!-- Section -->
-<section>
+<section id="aktuelles">
     <header class="major">
         <h2>
             Aktuelle Termine und Informationen
@@ -43,7 +43,7 @@
                     <br />{{ next_service.title }}: {{ next_service.content }}
                 </p>
             {% else %}
-                <p>Wann und wo der nächste Gottesdienst in unserer Gemeinde stattfindet, erfahren Sie unter dem folgenden Link.</p>
+                <p>Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link.</p>
             {% endif %}
             <ul class="actions">
                 <li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
@@ -59,6 +59,14 @@
                 </ul>
             </article>
         {% endif %}
+        <article>
+            <a href="{% url 'events' %}" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
+            <h3>Veranstaltungen im Überblick</h3>
+            <p>Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen.</p>
+            <ul class="actions">
+                <li><a href="{% url 'events' %}" class="button">Zum Kalender</a></li>
+            </ul>
+        </article>
         {% for coming_event in coming_events %}
             <article>
                 <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">
