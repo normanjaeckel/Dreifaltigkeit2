@@ -9,6 +9,13 @@
     }
 }
 
+@media screen and (min-width: 737px) {
+    #header .title-box {
+        max-width: 15em;
+        margin: 0 auto;
+    }
+}
+
 #header .logo {
     text-align: center;
 }
