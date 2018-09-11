@@ -1,3 +1,5 @@
+/* Main header with links to parish, kindergarden and quarter project */
+
 @media screen and (max-width: 736px) {
     #header .logo {
         margin-bottom: 0.5em;
@@ -11,12 +13,29 @@
     text-align: center;
 }
 
+
+/* Header for main menu */
+
+@media screen and (min-width: 1281px) {
+  nav#menu header {
+    display:none;
+  }
+  nav#menu ul {
+    margin-top:5em;
+  }
+}
+
+
 /* RSS icon in header on home view */
+
 .major h2 a.rss-icon {
     color: #7f888f;
     margin-left: 0.5em;
     font-size: 0.7143em;
 }
+
+
+/* Contact info for parish staff flat page */
 
 ul.parish-contact {
     clear: both;
@@ -30,13 +49,8 @@ ul.parish-contact li i {
     color: #f56a6a;
 }
 
-.image.left.big, .image.right.big {
-    max-width: 50%;
-}
 
-#flatpage_form #id_content {
-    font-family: monospace;
-}
+/* Special list for parish groups flat page */
 
 .gruppen-und-kreise {
   list-style: none;
@@ -44,4 +58,18 @@ ul.parish-contact li i {
 
 .gruppen-und-kreise li {
   padding-bottom: 0.5em;
+}
+
+
+/* Images for services and imprint page */
+
+.image.left.big, .image.right.big {
+    max-width: 50%;
+}
+
+
+/* Django admin */
+
+#flatpage_form #id_content {
+    font-family: monospace;
 }
