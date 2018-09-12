@@ -1,4 +1,5 @@
 {% load static %}
+{% load dreifaltigkeit_tags %}
 
 <!DOCTYPE HTML>
 <!--
@@ -41,7 +42,7 @@
                         {% else %}
                             <!-- SITE_ID == 'kindergarden' -->
                             <a href="{{ LINK_TO_OTHER_SITE }}" class="logo 4u 12u$(small)">
-                              <div class="title-box">Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig<div>
+                              <div class="title-box">Ev.-Luth. Dreifaltigkeits&shy;kirchgemeinde Leipzig</div>
                             </a>
                             <a href="/" class="logo 4u 12u$(small)"><strong>Trinitatiskindergarten</strong></a>
                             <a href="http://www.dresdner59.de/" class="logo 4u$ 12u$(small)">Stadtteilprojekt Dresdner59</a>
@@ -69,7 +70,7 @@
                             <li><a href="{% url 'services' %}">Gottesdienste</a></li>
                             <li><a href="{% url 'events' %}">Termine und Veranstaltungen</a></li>
                             <li>
-                                <span class="opener">Gemeinde</span>
+                                <span class="opener {% possibly_active 'gemeinde' %}">Gemeinde</span>
                                 <ul>
                                     {% for page in pages_gemeinde %}
                                         <li>
@@ -79,7 +80,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <span class="opener">Kirchenmusik</span>
+                                <span class="opener {% possibly_active 'kirchenmusik' %}">Kirchenmusik</span>
                                 <ul>
                                     {% for page in pages_kirchenmusik %}
                                         <li>
@@ -89,7 +90,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <span class="opener">Kinder und Jugend</span>
+                                <span class="opener {% possibly_active 'kinder-und-jugend' %}">Kinder und Jugend</span>
                                 <ul>
                                     {% for page in pages_kinderundjugend %}
                                         <li>
