@@ -276,7 +276,7 @@ class Event(models.Model):
         choices=EventTypes().get_choices(),
         default='default',
         help_text=ugettext_lazy(
-            'Gottesdienste und Konzerte werden auf den besonderen Seite '
+            'Gottesdienste und Andachten werden auf der besonderen Seite '
             'zusätzlich angezeigt.'),
     )
 
@@ -325,6 +325,15 @@ class Event(models.Model):
             'Startseite erscheinen soll. Der nächste Gottesdienste und das '
             'nächste Konzert erscheinen immer auf der Startseite, egal, was '
             'hier eingestellt ist.'),
+    )
+
+    for_kids = models.BooleanField(
+        ugettext_lazy('Gottesdienst mit Kindergottesdienst'),
+        blank=True,
+        help_text=ugettext_lazy(
+            'Nur bei Gottesdiensten kann hier eingestellt werden, ob das '
+            'Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses '
+            'Feld keine Auswirkungen.'),
     )
 
     uuid = models.UUIDField(

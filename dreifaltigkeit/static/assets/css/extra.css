@@ -42,6 +42,15 @@
 }
 
 
+/* Logo for kids service */
+
+.kids-logo {
+    vertical-align: text-top;
+    margin-top: -0.8em;
+    margin-left: 0.5em;
+}
+
+
 /* Contact info for parish staff flat page */
 
 ul.parish-contact {

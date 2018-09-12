@@ -27,7 +27,14 @@
             {% endifchanged %}
             <dt id="termin-{{ service.pk }}">{{ service.begin }} Uhr &middot; {{ service.place }} &middot; {{service.get_type_display }}</dt>
             <dd>
-                <p>{{service.title }}: {{ service.content }}</p>
+                <p>
+                    {{ service.title }}: {{ service.content }}
+                    {% if service.for_kids %}
+                        <span class="image kids-logo" title="Kindergottesdienst">
+                            <img src="{% static 'images/Kindergottesdienst_Logo.jpg' %}" alt="Kindergottesdienst" />
+                        </span>
+                    {% endif %}
+                </p>
             </dd>
         {% empty %}
             <dt>Gottesdienste in der Trinitatiskirche oder der Markuskapelle</dt>
