@@ -74,7 +74,7 @@
                                 <ul>
                                     {% for page in pages_gemeinde %}
                                         <li>
-                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.get_menu_title }}</a>
+                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -84,7 +84,7 @@
                                 <ul>
                                     {% for page in pages_kirchenmusik %}
                                         <li>
-                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.get_menu_title }}</a>
+                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -94,21 +94,21 @@
                                 <ul>
                                     {% for page in pages_kinderundjugend %}
                                         <li>
-                                            <a href="{% url 'flat_page' category=page.category page=page.url %}">{{ page.get_menu_title }}</a>
+                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
                             </li>
                             {% for page in pages_parish_root %}
                                 <li>
-                                    <a href="{% url 'flat_page_root' page=page.url %}">{{ page.get_menu_title }}</a>
+                                    <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                 </li>
                             {% endfor %}
                         {% else %}
                             <!-- SITE_ID == 'kindergarden' -->
                             {% for page in pages_kindergarden_root %}
                                 <li>
-                                    <a href="{% url 'flat_page_root' page=page.url %}">{{ page.get_menu_title }}</a>
+                                    <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                 </li>
                             {% endfor %}
                         {% endif %}

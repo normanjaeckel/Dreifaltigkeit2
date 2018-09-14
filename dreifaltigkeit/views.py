@@ -80,8 +80,8 @@ class SingleEvent(DetailView):
         there is no event content.
         """
         event = super().get_object()
-        if event.type in ('service', 'prayer') or not event.content:
-            message = 'Event {} is a service or prayer or has no content.'.format(event.title)
+        if event.type in ('service', 'prayer') or event.flat_page or not event.content:
+            message = 'Event {} is a service or prayer, has a flat page or has no content.'.format(event.title)
             raise Http404(message)
         return event
 

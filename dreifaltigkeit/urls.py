@@ -30,7 +30,7 @@ urlpatterns = [
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
     path('admin/', admin.site.urls),
-    path('<category>/<page>/', views.FlatPage.as_view(), name='flat_page'),
+    path('<category>/<path:page>/', views.FlatPage.as_view(), name='flat_page'),
     path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
 ]
 

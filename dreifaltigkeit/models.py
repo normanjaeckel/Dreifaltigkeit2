@@ -22,8 +22,11 @@ class FlatPage(models.Model):
     and kindergarden_root live at the root level of the menu. The pages for the
     other three categories parish, music and youth live at a sublevel.
 
-    The fields category, url, title, ordering and redirect are hidden in admin.
-    The model instances are created via migration file.
+    Flat pages containing a slash in their URL live at a lower level and to not
+    appear in main menu.
+
+    The fields category, url, title, ordering and redirect are readonly in
+    admin. The model instances are created via migration file.
     """
     category = models.CharField(
         ugettext_lazy('Kategorie'),
@@ -82,7 +85,17 @@ class FlatPage(models.Model):
         verbose_name_plural = ugettext_lazy('Statische Seiten')
 
     def __str__(self):
-        return ' – '.join((self.get_category_display(), self.title))
+        result = self.get_category_display()
+        if not self.is_in_menu():
+            result += ' – _____'
+        return ' – '.join((result, self.title))
+
+    def get_absolute_url(self):
+        if self.category in ('parish_root', 'kindergarden_root'):
+            url = reverse('flat_page_root', kwargs={'page': self.url})
+        else:
+            url = reverse('flat_page', kwargs={'category': self.category, 'page': self.url})
+        return url
 
     def get_menu_title(self):
         """
@@ -90,6 +103,12 @@ class FlatPage(models.Model):
         this field is empty, the title is returned.
         """
         return self.menu_title or self.title
+
+    def is_in_menu(self):
+        """
+        Returns True if URL does not contain a slash so it is not a subpage.
+        """
+        return self.url.find('/') == -1
 
 
 def validate_year_month_number(value):
@@ -258,7 +277,6 @@ class EventManager(models.Manager):
                 days=coming_event.on_home_before_begin)
             if coming_event.begin <= time_to_show:
                 coming_events.append(coming_event)
-
         return coming_events
 
 
@@ -277,7 +295,8 @@ class Event(models.Model):
         default='default',
         help_text=ugettext_lazy(
             'Gottesdienste und Andachten werden auf der besonderen Seite '
-            'zusätzlich angezeigt.'),
+            'zusätzlich angezeigt. Außerdem beeinflusst der Typ die Farbe im '
+            'Kalender.'),
     )
 
     title = models.CharField(
@@ -301,6 +320,19 @@ class Event(models.Model):
         blank=True,
         help_text=ugettext_lazy(
             'Beschreibung der Veranstaltung. Kein HTML erlaubt.'),
+    )
+
+    flat_page = models.ForeignKey(
+        verbose_name=ugettext_lazy('Statische Seite'),
+        to='FlatPage',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text=ugettext_lazy(
+            'Zusätzliche Verlinkung auf eine statische Seite. Wenn angegeben, '
+            'hat der Termin an sich keine eigene Seite mehr und der Inhalt '
+            'kann ggf. nicht erreicht werden. Nicht möglich für Gottesdienste '
+            'und Andachten.'),
     )
 
     begin = models.DateTimeField(
@@ -362,6 +394,8 @@ class Event(models.Model):
                 result = '{}#termin-{}'.format(reverse('services'), self.pk)
             else:
                 result = reverse('services')
+        elif self.flat_page:
+            result = self.flat_page.get_absolute_url()
         elif self.content:
             result = reverse('single_event', args=[str(self.id)])  # TODO: Check if this must be str(...)
         else:

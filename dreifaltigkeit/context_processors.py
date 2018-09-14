@@ -8,12 +8,14 @@ from .models import FlatPage
 def flat_pages(request):
     """
     Context processor to add all root and non-root flat pages to the context of
-    all views. Used for the main menu.
+    all views. Used for the main menu. Flat pages that are not in the menu are
+    excluded.
     """
     context = defaultdict(list)
     for flat_page in FlatPage.objects.all():
-        key = 'pages_' + flat_page.category.replace('-', '')
-        context[key].append(flat_page)
+        if flat_page.is_in_menu():
+            key = 'pages_' + flat_page.category.replace('-', '')
+            context[key].append(flat_page)
     return context
 
 
