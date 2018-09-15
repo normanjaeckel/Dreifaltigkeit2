@@ -32,6 +32,12 @@
   }
 }
 
+/* Active links in main menu */
+
+#menu ul a.active {
+    color: #f56a6a;
+}
+
 
 /* RSS icon in header on home view */
 

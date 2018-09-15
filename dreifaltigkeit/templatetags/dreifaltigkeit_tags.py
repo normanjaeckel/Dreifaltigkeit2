@@ -12,3 +12,13 @@ def possibly_active(context, category):
     """
     if context.request.path.startswith('/' + category):
         return 'active'
+
+
+@register.simple_tag(takes_context=True)
+def possibly_link_active(context, path):
+    """
+    Returns CSS class 'active' for menu items if the respective path is
+    requested.
+    """
+    if context.request.path == path:
+        return 'active'

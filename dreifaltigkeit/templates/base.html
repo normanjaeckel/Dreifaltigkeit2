@@ -65,16 +65,18 @@
                         <h2>Menü</h2>
                     </header>
                     <ul>
-                        <li><a href="/">Startseite</a></li>
+                        <li><a class="{% possibly_link_active '/' %}" href="/">Startseite</a></li>
                         {% if SITE_ID == 'parish' %}
-                            <li><a href="{% url 'services' %}">Gottesdienste</a></li>
-                            <li><a href="{% url 'events' %}">Termine und Veranstaltungen</a></li>
+                            {% url 'services' as url_services %}
+                            <li><a class="{% possibly_link_active url_services %}" href="{{ url_services }}">Gottesdienste</a></li>
+                            {% url 'events' as url_events %}
+                            <li><a class="{% possibly_link_active url_events %}" href="{{ url_events }}">Termine und Veranstaltungen</a></li>
                             <li>
                                 <span class="opener {% possibly_active 'gemeinde' %}">Gemeinde</span>
                                 <ul>
                                     {% for page in pages_gemeinde %}
                                         <li>
-                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
+                                            <a class="{% possibly_link_active page.get_absolute_url %}" href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -84,7 +86,7 @@
                                 <ul>
                                     {% for page in pages_kirchenmusik %}
                                         <li>
-                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
+                                            <a class="{% possibly_link_active page.get_absolute_url %}" href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
@@ -94,25 +96,26 @@
                                 <ul>
                                     {% for page in pages_kinderundjugend %}
                                         <li>
-                                            <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
+                                            <a class="{% possibly_link_active page.get_absolute_url %}" href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                         </li>
                                     {% endfor %}
                                 </ul>
                             </li>
                             {% for page in pages_parish_root %}
                                 <li>
-                                    <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
+                                    <a class="{% possibly_link_active page.get_absolute_url %}" href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                 </li>
                             {% endfor %}
                         {% else %}
                             <!-- SITE_ID == 'kindergarden' -->
                             {% for page in pages_kindergarden_root %}
                                 <li>
-                                    <a href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
+                                    <a class="{% possibly_link_active page.get_absolute_url %}" href="{{ page.get_absolute_url }}">{{ page.get_menu_title }}</a>
                                 </li>
                             {% endfor %}
                         {% endif %}
-                        <li><a href="{% url 'imprint' %}">Impressum</a></li>
+                        {% url 'imprint' as url_imprint %}
+                        <li><a class="{% possibly_link_active url_imprint %}" href="{{ url_imprint }}">Impressum</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
                         {% if user.is_staff %}
                             <li>{% block admin_link %}{% endblock %}</li>
