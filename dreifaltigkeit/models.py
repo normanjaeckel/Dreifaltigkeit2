@@ -359,6 +359,14 @@ class Event(models.Model):
             'hier eingestellt ist.'),
     )
 
+    mediafile = models.ForeignKey(
+        verbose_name=ugettext_lazy('Bild'),
+        to='MediaFile',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
     for_kids = models.BooleanField(
         ugettext_lazy('Gottesdienst mit Kindergottesdienst'),
         blank=True,

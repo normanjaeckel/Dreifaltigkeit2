@@ -11,12 +11,16 @@
         <h1>{{ event.title }}</h1>
     </header>
 
-    {% static 'images/pic11.jpg' as default_image %}
-    <span class="image main"><img src="{{ default_image }}" alt="" /></span>
-
-    <p>{{ event.begin }} Uhr &middot; {{ event.place }}</p>
-
-    <p>{{ event.content }}</p>
+    <div class="row">
+      <div class="6u 12u$(small)">
+          <p>{{ event.begin }} Uhr &middot; {{ event.place }}</p>
+          <p>{{ event.content }}</p>
+      </div>
+      <div class="6u 12u$(small)">
+          {% static 'images/Rosette.jpg' as default_image %}
+          <span class="image fit "><img src="{{ event.mediafile|default:default_image }}" alt="" /></span>
+      </div>
+    </div>
 
     <hr class="major" />
 

@@ -20,7 +20,7 @@
         </ul>
     </div>
     <span class="image object">
-        <img src="{% static 'images/Trinitatiskirche_01.jpg' %}" title="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto Ralf Mäkert" alt="" />
+        <img src="{% static 'images/Trinitatiskirche_01.jpg' %}" title="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto Ralf Mäkert" alt="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto Ralf Mäkert" />
     </span>
 </section>
 
@@ -34,7 +34,9 @@
     </header>
     <div class="posts">
         <article>
-            <a href="{% url 'services' %}" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
+            <a href="{% url 'services' %}" class="image">
+                <img src="{% static 'images/Altar_02.jpg' %}" title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto Lutz Schober" alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto Lutz Schober" />
+            </a>
             <h3>Nächster Gottesdienst</h3>
             {% if next_service %}
                 <p>
@@ -49,9 +51,12 @@
                 <li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
             </ul>
         </article>
+
         {% if current_markusbote %}
             <article>
-                <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image"><img src="{% static 'images/pic02.jpg' %}" alt="" /></a>
+                <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image">
+                    <img src="{% static 'images/Markusbote_Schriftzug.jpg' %}" title="Schriftzug des Markusboten, erste Ausgabe März 1907" alt="Schriftzug des Markusboten, erste Ausgabe März 1907" />
+                </a>
                 <h3>Aktueller Markusbote</h3>
                 <p>Hier finden Sie den aktuellen <a href="{{ current_markusbote.file }}">Markusboten (Ausgabe {{ current_markusbote.months }})</a> als PDF zum Download.</p>
                 <ul class="actions">
@@ -59,18 +64,24 @@
                 </ul>
             </article>
         {% endif %}
+
         <article>
-            <a href="{% url 'events' %}" class="image"><img src="{% static 'images/pic01.jpg' %}" alt="" /></a>
+            <a href="{% url 'events' %}" class="image">
+                <img src="{% static 'images/Trinitatiskirche_02.jpg' %}" title="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto Lutz Schober" alt="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto Lutz Schober" />
+            </a>
             <h3>Veranstaltungen im Überblick</h3>
             <p>Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen.</p>
             <ul class="actions">
                 <li><a href="{% url 'events' %}" class="button">Zum Kalender</a></li>
             </ul>
         </article>
+
+        {% static 'images/Rosette.jpg' as default_image %}
+
         {% for coming_event in coming_events %}
             <article>
                 <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">
-                    <img src="{% static 'images/pic03.jpg' %}" alt="" />
+                    <img src="{{ coming_event.mediafile|default:default_image }}" alt="" />
                 </a>
                 <h3>Kommende Veranstaltung</h3>
                 <p>
@@ -88,7 +99,6 @@
             </article>
         {% endfor %}
 
-        {% static 'images/pic03.jpg' as default_image %}
         {% for announcement in announcements %}
             <article>
                 <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
@@ -103,6 +113,7 @@
                 {% endif %}
             </article>
         {% endfor %}
+
     </div>
 
     <hr class="major" />

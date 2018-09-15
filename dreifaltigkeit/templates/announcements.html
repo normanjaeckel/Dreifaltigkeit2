@@ -11,10 +11,15 @@
         <h1>{{ announcement.title }}</h1>
     </header>
 
-    {% static 'images/pic11.jpg' as default_image %}
-    <span class="image main"><img src="{{ announcement.mediafile|default:default_image }}" alt="" /></span>
-
-    {{ announcement.long_text|linebreaks }}
+    <div class="row">
+      <div class="6u 12u$(small)">
+          {{ announcement.long_text|linebreaks }}
+      </div>
+      <div class="6u 12u$(small)">
+          {% static 'images/Rosette.jpg' as default_image %}
+          <span class="image fit "><img src="{{ announcement.mediafile|default:default_image }}" alt="" /></span>
+      </div>
+    </div>
 
     <hr class="major" />
 
