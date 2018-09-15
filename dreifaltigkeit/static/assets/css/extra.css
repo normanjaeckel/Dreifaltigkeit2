@@ -77,6 +77,13 @@ ul.parish-contact li i {
 }
 
 
+/* Smallspace rule for bank account numbers */
+
+.smallspace {
+  margin-right: 0.2em;
+}
+
+
 /* Images for services and imprint page */
 
 .image.left.big, .image.right.big {
