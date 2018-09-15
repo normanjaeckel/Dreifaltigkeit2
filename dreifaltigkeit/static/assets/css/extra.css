@@ -66,13 +66,13 @@ ul.parish-contact li i {
 }
 
 
-/* Special list for parish groups flat page */
+/* Special list for some flat page */
 
-.gruppen-und-kreise {
+.custom-list {
   list-style: none;
 }
 
-.gruppen-und-kreise li {
+.custom-list li {
   padding-bottom: 0.5em;
 }
 
