@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
 from django.utils.translation import ugettext_lazy
+from django_ical.views import ICalFeed
 
 from .models import Announcement, Event
 
@@ -29,8 +30,8 @@ class ParishFeed(Feed):
 
     def item_title(self, item):
         """
-        Customized title: For events we use the title and the date. For
-        announcements we use the title.
+        Customized title for the item: For events we use the title and the date.
+        For announcements we use the title.
         """
         if type(item) == Event:
             item_title = ' – '.join((item.title, localize(localtime(item.begin))))
@@ -41,9 +42,9 @@ class ParishFeed(Feed):
 
     def item_description(self, item):
         """
-        Customized description: For events we use place and content. For
-        announcements we use the short text. People can read the long text by
-        following the link.
+        Customized description for the item: For events we use place and
+        content. For announcements we use the short text. People can read the
+        long text by following the link.
         """
         if type(item) == Event:
             item_description = item.place
@@ -80,3 +81,69 @@ class ParishFeed(Feed):
         return item.uuid
 
     item_guid_is_permalink = False
+
+
+class EventFeed(ICalFeed):
+    """
+    ICal feed of all events that are shown in calendar.
+    """
+
+    # This is a Formal Public Identifiers according to ISO/IEC 9070:1991,
+    # see RFC 5545 p. 78.
+    product_id = '-//Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig//Kalender//DE'
+
+    title = ugettext_lazy('Termine der Dreifaltigkeitskirchgemeinde')
+
+    description = ugettext_lazy(
+        'Besondere Termine und Veranstaltungen der Ev.-Luth. '
+        'Dreifaltigkeitskirchgemeinde Leipzig.')
+
+    def link(self):
+        return reverse('events')
+
+    def items(self):
+        return Event.objects.all()
+
+    def item_title(self, item):
+        """
+        We just use event title field.
+        """
+        return item.title
+
+    def item_description(self, item):
+        """
+        Customized description for the item: We just use event content field.
+        """
+        return item.content
+
+    def item_link(self, item):
+        """
+        Customized link for the item: We just use event get_absolute_url()
+        method.
+        """
+        return item.get_absolute_url() or self.link()
+
+    def item_guid(self, item):
+        """
+        Customized GUID for the item: We use the auto filled uuid field for
+        this.
+        """
+        return item.uuid
+
+    def item_start_datetime(self, item):
+        """
+        We just use event begin field.
+        """
+        return item.begin
+
+    def item_end_datetime(self, item):
+        """
+        We just use event end property.
+        """
+        return item.end
+
+    def item_location(self, item):
+        """
+        We just use event place field as location.
+        """
+        return item.place
