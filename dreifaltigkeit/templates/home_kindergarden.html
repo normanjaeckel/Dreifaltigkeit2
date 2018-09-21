@@ -11,10 +11,13 @@
             <h1>Willkommen</h1>
             <p>auf der Webseite des Trinitatiskindergartens der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
-        <p>Wir begrüßen Sie auf unserer Webseite. WEITERER KURZER TEXT</p>
+        <p>Unser Kindergarten nimmt bis zu 49 Kinder von 2 bis 6 Jahren in altersgemischten Gruppen auf. Die Erzieherinnen und Erzieher arbeiten nach den pädagogischen Schwerpunkten der naturnahen und religiösen Erziehung und streben besonders eine gesunde Ernährung der Kinder an. Wir feiern die Feste des Kirchenjahres und arbeiten den Eltern und der Gemeinde eng zusammen.</p>
+        <ul class="actions">
+            <li><a href="#aktuelles" class="button big icon fa-chevron-down">Aktuelles</a></li>
+        </ul>
     </div>
     <span class="image object">
-        <img src="{% static 'images/pic01.jpg' %}" alt="" />
+        <img src="{% static 'images/Kindergarten_01.jpg' %}" title="Wandbild an der Giebelseite Kohlgartenweg 3 in Leipzig, Foto: Lutz Schober" alt="Wandbild an der Giebelseite Kohlgartenweg 3 in Leipzig, Foto: Lutz Schober" />
     </span>
 </section>
 
@@ -24,7 +27,9 @@
         <h2>Aktuelle Termine und Informationen</h2>
     </header>
     <div class="posts">
-        {% static 'images/pic01.jpg' as default_image %}
+
+        {% static 'images/Rosette.jpg' as default_image %}
+
         {% for announcement in announcements %}
             <article>
                 <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
@@ -39,6 +44,7 @@
                 {% endif %}
             </article>
         {% endfor %}
+
     </div>
 
     <hr class="major" />
