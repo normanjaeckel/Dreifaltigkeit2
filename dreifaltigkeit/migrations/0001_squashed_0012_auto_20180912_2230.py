@@ -15,6 +15,7 @@ def add_flat_pages_parish(apps, schema_editor):
     pages = (
         # Gemeinde
         ('gemeinde', 'gruppen', 'Gruppen und Kreise', '', 110, ''),
+        ('gemeinde', 'gruppen/bildungskreis', 'Bildungskreis', '', 115, ''),
         ('gemeinde', 'mitarbeiter-innen', 'Mitarbeiter/innen', '', 120, ''),
         ('gemeinde', 'kirchenvorstand', 'Kirchenvorstand', '', 130, ''),
         ('gemeinde', 'markusbote', 'Markusbote', '', 140, ''),
