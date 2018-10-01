@@ -16,15 +16,15 @@ from dreifaltigkeit.general_settings import *  # noqa
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: Keep the secret key used in production secret!
-SECRET_KEY = {{ secret_key }}
+SECRET_KEY = '$secret_key'
 
 # SECURITY WARNING: Don't run with debug turned on in production!
-DEBUG = {{ debug }}  # True or False
+DEBUG = $debug  # True or False
 
-ALLOWED_HOSTS = {{ allowed_hosts }}  # List of hosts, e. g. ['*']
+ALLOWED_HOSTS = ['$host']  # List of hosts, e. g. ['*']
 
-SITE_ID = {{ site_id }}  # 'parish' or 'kindergarden'
-LINK_TO_OTHER_SITE = {{ link_to_other site }}  # URL or at least '#'
+SITE_ID = '$site_id'  # 'parish' or 'kindergarden'
+LINK_TO_OTHER_SITE = '$link_to_other_site'  # URL or at least '#'
 
 WSGI_APPLICATION = 'dreifaltigkeit_wsgi.application'
 
@@ -42,8 +42,10 @@ MEDIA_ROOT = os.path.join(
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-{{ databases }}
+$databases
 
+# Database settings templates
+#
 # Development
 #
 # DATABASES = {
@@ -55,7 +57,7 @@ MEDIA_ROOT = os.path.join(
 #         ),
 #     }
 # }
-
+#
 # Production
 #
 # DATABASES = {
