@@ -51,6 +51,7 @@ TEMPLATES = [
                 'dreifaltigkeit.context_processors.flat_pages',
                 'dreifaltigkeit.context_processors.site_id',
                 'dreifaltigkeit.context_processors.truncate_length',
+                'dreifaltigkeit.context_processors.default_images',
             ],
         },
     },
@@ -103,6 +104,19 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
+DEFAULT_IMAGES = [
+    'images/Rosette.jpg',
+    'images/Altar_03.jpg',
+    'images/Altar_04.jpg',
+    'images/Orgel_03.jpg',
+    'images/Turm_01.jpg',
+    'images/Turm_02.jpg',
+    'images/Turm_03.jpg',
+    'images/Turm_04.jpg',
+    'images/Trinitatis_01.jpg',
+    'images/Trinitatis_02.jpg',
+    'images/Trinitatis_03.jpg',
+]
 
 # Custom settings
 

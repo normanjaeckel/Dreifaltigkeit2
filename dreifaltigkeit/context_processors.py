@@ -37,3 +37,13 @@ def truncate_length(request):
     return {
         'TRUNCATE_LENGTH': settings.TRUNCATE_LENGTH,
     }
+
+
+def default_images(request):
+    """
+    Adds all default images to the context. We use built in random filter to
+    get random default images.
+    """
+    return {
+        'DEFAULT_IMAGES': settings.DEFAULT_IMAGES,
+    }

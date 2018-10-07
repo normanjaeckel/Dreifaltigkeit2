@@ -28,7 +28,7 @@
     </header>
     <div class="posts">
 
-        {% static 'images/Rosette.jpg' as default_image %}
+        {% static DEFAULT_IMAGES|random as default_image %}
 
         {% for announcement in announcements %}
             <article>

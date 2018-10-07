@@ -17,7 +17,7 @@
           <p>{{ event.content }}</p>
       </div>
       <div class="6u 12u$(small)">
-          {% static 'images/Rosette.jpg' as default_image %}
+          {% static DEFAULT_IMAGES|random as default_image %}
           <span class="image fit "><img src="{{ event.mediafile|default:default_image }}" alt="" /></span>
       </div>
     </div>
