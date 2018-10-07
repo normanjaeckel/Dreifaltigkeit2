@@ -116,6 +116,8 @@ DEFAULT_IMAGES = [
     'images/Trinitatis_01.jpg',
     'images/Trinitatis_02.jpg',
     'images/Trinitatis_03.jpg',
+    'images/Trinitatis_04.jpg',
+    'images/Trinitatis_05.jpg',
 ]
 
 # Custom settings
