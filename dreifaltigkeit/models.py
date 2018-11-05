@@ -514,6 +514,16 @@ class MediaFile(models.Model):
             'sichtbar.'),
     )
 
+    text = models.TextField(
+        ugettext_lazy('Alternativ-Text'),
+        blank=True,
+        help_text=ugettext_lazy(
+            'Text, der als Alternativtext für Screenreader (Alt-Attribut) '
+            'sowie als Tooltip (Title-Attribute) verwendet wird, wenn das Bild '
+            'bei Veranstaltungen oder Ankündigungen eingebettet ist. Kein HTML '
+            'erlaubt.'),
+    )
+
     uploaded_on = models.DateTimeField(
         ugettext_lazy('Hochgeladen am'),
         auto_now_add=True,

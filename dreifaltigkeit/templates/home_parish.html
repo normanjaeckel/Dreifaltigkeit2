@@ -80,7 +80,9 @@
             <article>
                 {% static DEFAULT_IMAGES|random as default_image %}
                 <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">
-                    <img src="{{ coming_event.mediafile|default:default_image }}" alt="" />
+                    <img src="{{ coming_event.mediafile|default:default_image }}"
+                         alt="{% if coming_event.mediafile %}{{ coming_event.mediafile.text }}{% endif %}"
+                         title="{% if coming_event.mediafile %}{{ coming_event.mediafile.text }}{% endif %}" />
                 </a>
                 <h3>{{ coming_event.title }}</h3>
                 <p>
@@ -102,7 +104,9 @@
             <article>
                 {% static DEFAULT_IMAGES|random as default_image %}
                 <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
-                    <img src="{{ announcement.mediafile|default:default_image }}" alt="" />
+                    <img src="{{ announcement.mediafile|default:default_image }}"
+                         alt="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}"
+                         title="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}" />
                 </a>
                 <h3>{{ announcement.title }}</h3>
                 <p>{{ announcement.short_text }}</p>

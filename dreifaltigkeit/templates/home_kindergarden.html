@@ -33,7 +33,9 @@
         {% for announcement in announcements %}
             <article>
                 <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
-                    <img src="{{ announcement.mediafile|default:default_image }}" alt="" />
+                    <img src="{{ announcement.mediafile|default:default_image }}"
+                         alt="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}"
+                         title="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}" />
                 </a>
                 <h3>{{ announcement.title }}</h3>
                 <p>{{ announcement.short_text }}</p>

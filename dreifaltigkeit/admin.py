@@ -12,7 +12,10 @@ class FlatPageAdmin(admin.ModelAdmin):
             'all': ('assets/css/extra.css',)
         }
 
+    # The next line is only for ordering of fields because we use readonly
+    # fields.
     fields = ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect', 'content',)
+
     readonly_fields = ('category', 'url', 'title', 'menu_title', 'ordering', 'redirect',)
 
     def has_add_permission(self, request):
@@ -44,7 +47,11 @@ class MonthlyTextAdmin(admin.ModelAdmin):
 
 class MediaFileAdmin(admin.ModelAdmin):
     date_hierarchy = 'uploaded_on'
-    list_display = ('mediafile', 'uploaded_on', 'mediafile_url', )
+    list_display = ('uploaded_on', 'mediafile', 'mediafile_url', )
+
+    # The next line is only for ordering of fields because we use readonly
+    # fields.
+    fields = ('mediafile', 'text', )
 
     def mediafile_url(self, obj):
         """
@@ -53,16 +60,15 @@ class MediaFileAdmin(admin.ModelAdmin):
         return obj.mediafile.url
     mediafile_url.short_description = ugettext_lazy('Adresse (URL)')
 
-    def has_change_permission(self, request, obj=None):
+    def get_readonly_fields(self, request, obj=None):
         """
-        Returns the default value (True) if obj is None else False. This
-        indicates editing of objects of this type is permitted in general
-        but not for (every) specific object. This way we get the admin list
-        view but not the update (change) views.
+        Hook for specifying custom readonly fields.
+
+        If obj is None, we are in the create view. Here ere we want to edit the
+        mediafile field to upload a new file. In the update (change) view we do
+        not want this.
         """
-        if obj is not None:
-            return False
-        return super().has_change_permission(request, obj)
+        return ('mediafile',) if obj is not None else ()
 
 
 class CurrentMarkusboteAdmin(admin.ModelAdmin):

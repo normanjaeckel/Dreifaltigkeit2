@@ -17,7 +17,11 @@
       </div>
       <div class="6u 12u$(small)">
           {% static DEFAULT_IMAGES|random as default_image %}
-          <span class="image fit "><img src="{{ announcement.mediafile|default:default_image }}" alt="" /></span>
+          <span class="image fit ">
+              <img src="{{ announcement.mediafile|default:default_image }}"
+                   alt="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}"
+                   title="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}" />
+          </span>
       </div>
     </div>
 
