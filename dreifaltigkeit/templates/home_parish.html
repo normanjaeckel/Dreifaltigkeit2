@@ -65,17 +65,6 @@
             </article>
         {% endif %}
 
-        <article>
-            <a href="{% url 'events' %}" class="image">
-                <img src="{% static 'images/Trinitatiskirche_02.jpg' %}" title="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" alt="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" />
-            </a>
-            <h3>Veranstaltungen im Überblick</h3>
-            <p>Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen.</p>
-            <ul class="actions">
-                <li><a href="{% url 'events' %}" class="button">Zum Kalender</a></li>
-            </ul>
-        </article>
-
         {% for coming_event in coming_events %}
             <article>
                 {% static DEFAULT_IMAGES|random as default_image %}
@@ -99,6 +88,17 @@
                 {% endif %}
             </article>
         {% endfor %}
+
+        <article>
+            <a href="{% url 'events' %}" class="image">
+                <img src="{% static 'images/Trinitatiskirche_02.jpg' %}" title="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" alt="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" />
+            </a>
+            <h3>Veranstaltungen im Überblick</h3>
+            <p>Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen.</p>
+            <ul class="actions">
+                <li><a href="{% url 'events' %}" class="button">Zum Kalender</a></li>
+            </ul>
+        </article>
 
         {% for announcement in announcements %}
             <article>
