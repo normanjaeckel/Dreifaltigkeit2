@@ -48,6 +48,17 @@
 }
 
 
+/* Paragraphs in posts on home view */
+
+.posts p {
+  margin-bottom: 0.3em;
+}
+
+.posts p:last-of-type {
+  margin-bottom: 2em;
+}
+
+
 /* Logo for kids service */
 
 .kids-logo {

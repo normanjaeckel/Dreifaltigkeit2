@@ -42,7 +42,9 @@
                 <p>
                     {{ next_service.begin|date:"l, j. F Y, H:i" }}
                     <br />{{ next_service.place }}
-                    <br />{{ next_service.title }}: {{ next_service.content }}
+                </p>
+                <p>
+                    {{ next_service.title }}: {{ next_service.content }}
                 </p>
             {% else %}
                 <p>Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link.</p>
@@ -79,8 +81,8 @@
                     {% if coming_event.place %}
                         <br />{{ coming_event.place }}
                     {% endif %}
-                    {% if coming_event.content %}<br />{{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}{% endif %}
                 </p>
+                {% if coming_event.content %}<p>{{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}</p>{% endif %}
                 {% if coming_event.content|length > TRUNCATE_LENGTH %}
                     <ul class="actions">
                         <li><a href="{{ coming_event.get_absolute_url }}" class="button">Weitere Informationen</a></li>
