@@ -118,6 +118,7 @@ DEFAULT_IMAGES = [
     'images/Trinitatis_03.jpg',
     'images/Trinitatis_04.jpg',
     'images/Trinitatis_05.jpg',
+    'images/Markuskapelle_02.jpg',
 ]
 
 # Custom settings
