@@ -118,7 +118,7 @@ DEFAULT_IMAGES = [
     {'src': 'images/Trinitatis_03.jpg', 'text': 'Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
     {'src': 'images/Trinitatis_04.jpg', 'text': 'Fenster zum Anbau der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
     {'src': 'images/Trinitatis_05.jpg', 'text': 'Fassadenkreuz an der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Markuskapelle_02.jpg', 'text': 'Bleiglasfenster der Markuskapelle zu Leipzig Reudnitz, Foto: Manfred Maas'},
+    {'src': 'images/Markuskapelle_02.jpg', 'text': 'Bleiglasfenster der Markuskapelle zu Leipzig-Reudnitz, Foto: Manfred Maas'},
 ]
 
 # Custom settings
