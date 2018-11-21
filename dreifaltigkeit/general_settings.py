@@ -105,20 +105,20 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 DEFAULT_IMAGES = [
-    'images/Rosette.jpg',
-    'images/Altar_03.jpg',
-    'images/Altar_04.jpg',
-    'images/Orgel_03.jpg',
-    'images/Turm_01.jpg',
-    'images/Turm_02.jpg',
-    'images/Turm_03.jpg',
-    'images/Turm_04.jpg',
-    'images/Trinitatis_01.jpg',
-    'images/Trinitatis_02.jpg',
-    'images/Trinitatis_03.jpg',
-    'images/Trinitatis_04.jpg',
-    'images/Trinitatis_05.jpg',
-    'images/Markuskapelle_02.jpg',
+    {'src': 'images/Rosette.jpg', 'text': 'Rosette der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober'},
+    {'src': 'images/Altar_03.jpg', 'text': 'Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Erntegaben, Foto: Manfred Maas'},
+    {'src': 'images/Altar_04.jpg', 'text': 'Erntekranz am Lesepult der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Orgel_03.jpg', 'text': 'Spieltisch der Schuster-Orgel der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Turm_01.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Turm_02.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Turm_03.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Turm_04.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Trinitatis_01.jpg', 'text': 'Im Eingangsbereich der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Trinitatis_02.jpg', 'text': 'Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Trinitatis_03.jpg', 'text': 'Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Trinitatis_04.jpg', 'text': 'Fenster zum Anbau der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Trinitatis_05.jpg', 'text': 'Fassadenkreuz an der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
+    {'src': 'images/Markuskapelle_02.jpg', 'text': 'Bleiglasfenster der Markuskapelle zu Leipzig Reudnitz, Foto: Manfred Maas'},
 ]
 
 # Custom settings

@@ -28,22 +28,27 @@
     </header>
     <div class="posts">
 
-        {% static DEFAULT_IMAGES|random as default_image %}
-
         {% for announcement in announcements %}
             <article>
-                <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
-                    <img src="{{ announcement.mediafile|default:default_image }}"
-                         alt="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}"
-                         title="{% if announcement.mediafile %}{{ announcement.mediafile.text }}{% endif %}" />
-                </a>
-                <h3>{{ announcement.title }}</h3>
-                <p>{{ announcement.short_text }}</p>
-                {% if announcement.long_text %}
-                    <ul class="actions">
-                        <li><a href="{{ announcement.get_absolute_url }}" class="button">Weitere Informationen</a></li>
-                    </ul>
-                {% endif %}
+                {% with default_image=DEFAULT_IMAGES|random %}
+                    {% static default_image.src as default_image_src %}
+                    <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
+                        <img src="{{ announcement.mediafile|default:default_image_src }}"
+                           {% if announcement.mediafile %}
+                               alt="{{ announcement.mediafile.text }}" title="{{ announcement.mediafile.text }}"
+                           {% else %}
+                               alt="{{ default_image.text }}" title="{{ default_image.text }}"
+                           {% endif %}
+                        />
+                    </a>
+                    <h3>{{ announcement.title }}</h3>
+                    <p>{{ announcement.short_text }}</p>
+                    {% if announcement.long_text %}
+                        <ul class="actions">
+                            <li><a href="{{ announcement.get_absolute_url }}" class="button">Weitere Informationen</a></li>
+                        </ul>
+                    {% endif %}
+                {% endwith %}
             </article>
         {% endfor %}
 
