@@ -67,30 +67,24 @@
             </article>
         {% endif %}
 
-        {% for coming_event in coming_events %}
+        {% for article in articles %}
             <article>
                 {% with default_image=DEFAULT_IMAGES|random %}
                     {% static default_image.src as default_image_src %}
-                    <a {% if coming_event.content|length > TRUNCATE_LENGTH %} href="{{ coming_event.get_absolute_url }}" {% endif %} class="image">
-                        <img src="{{ coming_event.mediafile|default:default_image_src }}"
-                           {% if coming_event.mediafile %}
-                               alt="{{ coming_event.mediafile.text }}" title="{{ coming_event.mediafile.text }}"
+                    <a {% if article.has_link_on_home %} href="{{ article.get_absolute_url }}" {% endif %} class="image">
+                        <img src="{{ article.mediafile|default:default_image_src }}"
+                           {% if article.mediafile %}
+                               alt="{{ article.mediafile.text }}" title="{{ article.mediafile.text }}"
                            {% else %}
                                alt="{{ default_image.text }}" title="{{ default_image.text }}"
                            {% endif %}
                         />
                     </a>
-                    <h3>{{ coming_event.title }}</h3>
-                    <p>
-                        {{ coming_event.begin|date:"l, j. F Y, H:i" }}
-                        {% if coming_event.place %}
-                            <br />{{ coming_event.place }}
-                        {% endif %}
-                    </p>
-                    {% if coming_event.content %}<p>{{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}</p>{% endif %}
-                    {% if coming_event.content|length > TRUNCATE_LENGTH %}
+                    <h3>{{ article.title }}</h3>
+                    {{ article.more_text }}
+                    {% if article.has_link_on_home %}
                         <ul class="actions">
-                            <li><a href="{{ coming_event.get_absolute_url }}" class="button">Weitere Informationen</a></li>
+                            <li><a href="{{ article.get_absolute_url }}" class="button">Weitere Informationen</a></li>
                         </ul>
                     {% endif %}
                 {% endwith %}
@@ -107,30 +101,6 @@
                 <li><a href="{% url 'events' %}" class="button">Zum Kalender</a></li>
             </ul>
         </article>
-
-        {% for announcement in announcements %}
-            <article>
-                {% with default_image=DEFAULT_IMAGES|random %}
-                    {% static default_image.src as default_image_src %}
-                    <a {% if announcement.long_text %} href="{{ announcement.get_absolute_url }}" {% endif %} class="image">
-                        <img src="{{ announcement.mediafile|default:default_image_src }}"
-                           {% if announcement.mediafile %}
-                               alt="{{ announcement.mediafile.text }}" title="{{ announcement.mediafile.text }}"
-                           {% else %}
-                               alt="{{ default_image.text }}" title="{{ default_image.text }}"
-                           {% endif %}
-                        />
-                    </a>
-                    <h3>{{ announcement.title }}</h3>
-                    <p>{{ announcement.short_text }}</p>
-                    {% if announcement.long_text %}
-                        <ul class="actions">
-                            <li><a href="{{ announcement.get_absolute_url }}" class="button">Weitere Informationen</a></li>
-                        </ul>
-                    {% endif %}
-                {% endwith %}
-            </article>
-        {% endfor %}
 
     </div>
 

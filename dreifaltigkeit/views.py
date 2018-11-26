@@ -1,4 +1,5 @@
 from datetime import timedelta
+from itertools import chain
 
 from django.conf import settings
 from django.db.models import Q
@@ -34,14 +35,15 @@ class Home(TemplateView):
         except CurrentMarkusbote.DoesNotExist:
             current_markusbote = None
 
+        coming_events = Event.objects.get_coming_events()
         announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
+        articles = sorted(chain(coming_events, announcements), key=lambda article: article.time_sort)
 
         return super().get_context_data(
             yearly_text=yearly_text,
             next_service=next_service,
             current_markusbote=current_markusbote,
-            coming_events=Event.objects.get_coming_events(),
-            announcements=announcements,
+            articles=articles,
             **context
         )
 

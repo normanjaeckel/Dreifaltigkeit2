@@ -8,6 +8,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.template import Context, Template
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
@@ -416,6 +417,35 @@ class Event(models.Model):
         return self.begin + datetime.timedelta(minutes=duration)
 
     @property
+    def time_sort(self):
+        """
+        Returns the timestamp that is used for sorting different types of
+        objects that all appear on home view as article.
+        """
+        return self.begin
+
+    def has_link_on_home(self):
+        """
+        Returns True if this instance has a link to another page on home view.
+        """
+        return len(self.content) > settings.TRUNCATE_LENGTH
+
+    def more_text(self):
+        """
+        Returns additional text for the home view.
+        """
+        template = Template("""
+            <p>
+                {{ coming_event.begin|date:"l, j. F Y, H:i" }}
+                {% if coming_event.place %}
+                    <br />{{ coming_event.place }}
+                {% endif %}
+            </p>
+            {% if coming_event.content %}<p>{{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}</p>{% endif %}
+            """)
+        return template.render(Context({'coming_event': self, 'TRUNCATE_LENGTH': settings.TRUNCATE_LENGTH}))
+
+    @property
     def fc_data(self):
         """
         Returns a string containing all data for the fullcalendar event object
@@ -500,6 +530,27 @@ class Announcement(models.Model):
 
     def get_absolute_url(self):
         return reverse('announcement', args=[str(self.id)])  # TODO: Check if this must be str(...)
+
+    @property
+    def time_sort(self):
+        """
+        Returns the timestamp that is used for sorting different types of
+        objects that all appear on home view as article.
+        """
+        return self.end
+
+    def has_link_on_home(self):
+        """
+        Returns True if this instance has a link to another page on home view.
+        """
+        return bool(self.long_text)
+
+    def more_text(self):
+        """
+        Returns additional text for the home view.
+        """
+        template = Template('<p>{{ announcement.short_text }}</p>')
+        return template.render(Context({'announcement': self}))
 
 
 class MediaFile(models.Model):

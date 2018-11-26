@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.formats import localize
@@ -26,7 +28,10 @@ class ParishFeed(Feed):
         return reverse('home')
 
     def items(self):
-        return Event.objects.get_coming_events() + list(Announcement.objects.filter(end__gte=now()).reverse())
+        coming_events = Event.objects.get_coming_events()
+        announcements = Announcement.objects.filter(end__gte=now()).reverse()
+        articles = sorted(chain(coming_events, announcements), key=lambda article: article.time_sort)
+        return articles
 
     def item_title(self, item):
         """

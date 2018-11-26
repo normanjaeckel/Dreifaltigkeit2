@@ -30,15 +30,6 @@ def site_id(request):
     }
 
 
-def truncate_length(request):
-    """
-    Adds number of chars to the context used to truncate event content.
-    """
-    return {
-        'TRUNCATE_LENGTH': settings.TRUNCATE_LENGTH,
-    }
-
-
 def default_images(request):
     """
     Adds all default images to the context. We use built in random filter to
