@@ -428,7 +428,11 @@ class Event(models.Model):
         """
         Returns True if this instance has a link to another page on home view.
         """
-        return len(self.content) > settings.TRUNCATE_LENGTH
+        return (
+            self.type in ('service', 'prayer') or
+            self.flat_page or
+            (len(self.content) > settings.TRUNCATE_LENGTH)
+        )
 
     def more_text(self):
         """
