@@ -21,7 +21,7 @@
               {% static default_image.src as default_image_src %}
               <span class="image fit ">
                   <img src="{{ event.mediafile|default:default_image_src }}"
-                      {% if announcement.mediafile %}
+                      {% if event.mediafile %}
                           alt="{{ event.mediafile.text }}" title="{{ event.mediafile.text }}"
                       {% else %}
                           alt="{{ default_image.text }}" title="{{ default_image.text }}"
