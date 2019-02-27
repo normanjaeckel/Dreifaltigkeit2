@@ -103,11 +103,19 @@ class EventFeed(ICalFeed):
         'Besondere Termine und Veranstaltungen der Ev.-Luth. '
         'Dreifaltigkeitskirchgemeinde Leipzig.')
 
+    def __init__(self, event_type=None, *args, **kwargs):
+        self.event_type = event_type
+        return super().__init__(*args, **kwargs)
+
     def link(self):
         return reverse('events')
 
     def items(self):
-        return Event.objects.all()
+        if self.event_type is not None:
+            queryset = Event.objects.filter(type=self.event_type)
+        else:
+            queryset = Event.objects.all()
+        return queryset
 
     def item_title(self, item):
         """

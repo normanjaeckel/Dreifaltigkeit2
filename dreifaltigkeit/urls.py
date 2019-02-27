@@ -28,6 +28,7 @@ urlpatterns = [
     path('termine/', views.Events.as_view(), name='events'),
     path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
     path('termine.ics', EventFeed(), name='event_feed'),
+    path('termine-gottesdienste.ics', EventFeed(event_type='service'), name='event_feed_service'),
     path('impressum/', views.Imprint.as_view(), name='imprint'),
     path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
     path('admin/', admin.site.urls),
