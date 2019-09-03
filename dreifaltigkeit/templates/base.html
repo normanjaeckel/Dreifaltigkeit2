@@ -121,7 +121,7 @@
                             {% endfor %}
                         {% endif %}
                         {% url 'imprint' as url_imprint %}
-                        <li><a class="{% possibly_link_active url_imprint %}" href="{{ url_imprint }}">Impressum</a></li>
+                        <li><a class="{% possibly_link_active url_imprint %}" href="{{ url_imprint }}">Impressum / Datenschutz</a></li>
                         <li><a href="{% url 'admin:index' %}">Administration</a></li>
                         {% if user.is_staff %}
                             <li>{% block admin_link %}{% endblock %}</li>
