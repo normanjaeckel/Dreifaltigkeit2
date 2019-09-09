@@ -20,6 +20,22 @@
     text-align: center;
 }
 
+/* Last section and footer in main block */
+
+#main > .inner > section:last-of-type {
+  padding-bottom: 0em;
+}
+
+#footer-main .copyright {
+  color: #9fa3a6;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#footer-main .copyright a {
+  color: inherit;
+}
+
 
 /* Header for main menu */
 

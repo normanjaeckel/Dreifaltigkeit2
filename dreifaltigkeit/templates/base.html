@@ -58,6 +58,13 @@
 
                 {% block content %}{% endblock %}
 
+                <!-- Footer -->
+                <footer id="footer-main">
+                    <p class="copyright">
+                        <a href="{% url 'imprint' %}">Impressum &middot; Datenschutz</a>
+                    </p>
+                </footer>
+
             </div>
         </div>
 
@@ -192,7 +199,7 @@
                     {% endif %}
                 </section>
 
-                <!-- Footer -->
+                <!-- Footer in sidebar -->
                 <footer id="footer">
                     <p class="copyright">
                         &copy; Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig.
