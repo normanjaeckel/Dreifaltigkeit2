@@ -83,6 +83,10 @@
     margin-left: 0.5em;
 }
 
+.kids-logo img {
+  border-radius: 0;
+}
+
 
 /* Contact info for parish staff flat page */
 
