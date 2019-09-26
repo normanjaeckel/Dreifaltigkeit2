@@ -5,14 +5,16 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0004_auto_20181022_2242'),
-    ]
+    dependencies = [("dreifaltigkeit", "0004_auto_20181022_2242")]
 
     operations = [
         migrations.AddField(
-            model_name='mediafile',
-            name='text',
-            field=models.TextField(blank=True, help_text='Text, der als Alternativtext für Screenreader (Alt-Attribut) sowie als Tooltip (Title-Attribute) verwendet wird, wenn das Bild bei Veranstaltungen oder Ankündigungen eingebettet ist. Kein HTML erlaubt.', verbose_name='Alternativ-Text'),
-        ),
+            model_name="mediafile",
+            name="text",
+            field=models.TextField(
+                blank=True,
+                help_text="Text, der als Alternativtext für Screenreader (Alt-Attribut) sowie als Tooltip (Title-Attribute) verwendet wird, wenn das Bild bei Veranstaltungen oder Ankündigungen eingebettet ist. Kein HTML erlaubt.",
+                verbose_name="Alternativ-Text",
+            ),
+        )
     ]

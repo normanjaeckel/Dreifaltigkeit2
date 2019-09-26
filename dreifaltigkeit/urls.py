@@ -22,23 +22,27 @@ from . import views
 from .feeds import EventFeed, ParishFeed
 
 urlpatterns = [
-    path('', views.Home.as_view(), name='home'),
-    path('feed.rss', ParishFeed(), name='parish_feed'),
-    path('gottesdienste/', views.Services.as_view(), name='services'),
-    path('termine/', views.Events.as_view(), name='events'),
-    path('termine/<int:pk>/', views.SingleEvent.as_view(), name='single_event'),
-    path('termine.ics', EventFeed(), name='event_feed'),
-    path('termine-gottesdienste.ics', EventFeed(event_type='service'), name='event_feed_service'),
-    path('impressum/', views.Imprint.as_view(), name='imprint'),
-    path('ankuendigung/<int:pk>/', views.Announcements.as_view(), name='announcement'),
-    path('admin/', admin.site.urls),
-    path('<category>/<path:page>/', views.FlatPage.as_view(), name='flat_page'),
-    path('<page>/', views.FlatPage.as_view(root=True), name='flat_page_root'),
+    path("", views.Home.as_view(), name="home"),
+    path("feed.rss", ParishFeed(), name="parish_feed"),
+    path("gottesdienste/", views.Services.as_view(), name="services"),
+    path("termine/", views.Events.as_view(), name="events"),
+    path("termine/<int:pk>/", views.SingleEvent.as_view(), name="single_event"),
+    path("termine.ics", EventFeed(), name="event_feed"),
+    path(
+        "termine-gottesdienste.ics",
+        EventFeed(event_type="service"),
+        name="event_feed_service",
+    ),
+    path("impressum/", views.Imprint.as_view(), name="imprint"),
+    path("ankuendigung/<int:pk>/", views.Announcements.as_view(), name="announcement"),
+    path("admin/", admin.site.urls),
+    path("<category>/<path:page>/", views.FlatPage.as_view(), name="flat_page"),
+    path("<page>/", views.FlatPage.as_view(root=True), name="flat_page_root"),
 ]
 
 # Pop URL pattern for "termine" because we do not want an event calender on
 # kindergarten site.
-if not settings.SITE_ID == 'parish':
+if not settings.SITE_ID == "parish":
     urlpatterns.pop(3)
 
 # This line does only work during development (DEBUG = True)

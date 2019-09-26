@@ -6,19 +6,38 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0001_squashed_0012_auto_20180912_2230'),
-    ]
+    dependencies = [("dreifaltigkeit", "0001_squashed_0012_auto_20180912_2230")]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='flat_page',
-            field=models.ForeignKey(blank=True, help_text='Zusätzliche Verlinkung auf eine statische Seite. Wenn angegeben, hat der Termin an sich keine eigene Seite mehr und der Inhalt kann ggf. nicht erreicht werden. Nicht möglich für Gottesdienste und Andachten.', null=True, on_delete=django.db.models.deletion.SET_NULL, to='dreifaltigkeit.FlatPage', verbose_name='Statische Seite'),
+            model_name="event",
+            name="flat_page",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Zusätzliche Verlinkung auf eine statische Seite. Wenn angegeben, hat der Termin an sich keine eigene Seite mehr und der Inhalt kann ggf. nicht erreicht werden. Nicht möglich für Gottesdienste und Andachten.",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="dreifaltigkeit.FlatPage",
+                verbose_name="Statische Seite",
+            ),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='type',
-            field=models.CharField(choices=[('service', 'Gottesdienst'), ('prayer', 'Andacht'), ('concert', 'Konzert'), ('gathering', 'Treff'), ('period-of-reflection', 'Rüstzeit'), ('default', 'Sonstige Veranstaltung'), ('hidden', 'Nichtöffentliche Veranstaltung')], default='default', help_text='Gottesdienste und Andachten werden auf der besonderen Seite zusätzlich angezeigt. Außerdem beeinflusst der Typ die Farbe im Kalender.', max_length=255, verbose_name='Veranstaltungstyp'),
+            model_name="event",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("service", "Gottesdienst"),
+                    ("prayer", "Andacht"),
+                    ("concert", "Konzert"),
+                    ("gathering", "Treff"),
+                    ("period-of-reflection", "Rüstzeit"),
+                    ("default", "Sonstige Veranstaltung"),
+                    ("hidden", "Nichtöffentliche Veranstaltung"),
+                ],
+                default="default",
+                help_text="Gottesdienste und Andachten werden auf der besonderen Seite zusätzlich angezeigt. Außerdem beeinflusst der Typ die Farbe im Kalender.",
+                max_length=255,
+                verbose_name="Veranstaltungstyp",
+            ),
         ),
     ]

@@ -10,8 +10,8 @@ def possibly_active(context, category):
     requested. E. g. Request path '/gemeinde/foo/bar' returns 'active' for
     category 'gemeinde'.
     """
-    if context.request.path.startswith('/' + category):
-        return 'active'
+    if context.request.path.startswith("/" + category):
+        return "active"
 
 
 @register.simple_tag(takes_context=True)
@@ -21,4 +21,4 @@ def possibly_link_active(context, path):
     requested.
     """
     if context.request.path == path:
-        return 'active'
+        return "active"

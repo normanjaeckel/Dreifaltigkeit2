@@ -5,20 +5,36 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0011_flat_page_default_data_change'),
-    ]
+    dependencies = [("dreifaltigkeit", "0011_flat_page_default_data_change")]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='for_kids',
-            field=models.BooleanField(default=False, help_text='Nur bei Gottesdiensten kann hier eingestellt werden, ob das Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses Feld keine Auswirkungen.', verbose_name='Gottesdienst mit Kindergottesdienst'),
+            model_name="event",
+            name="for_kids",
+            field=models.BooleanField(
+                default=False,
+                help_text="Nur bei Gottesdiensten kann hier eingestellt werden, ob das Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses Feld keine Auswirkungen.",
+                verbose_name="Gottesdienst mit Kindergottesdienst",
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='event',
-            name='type',
-            field=models.CharField(choices=[('service', 'Gottesdienst'), ('prayer', 'Andacht'), ('concert', 'Konzert'), ('gathering', 'Treff'), ('period-of-reflection', 'Rüstzeit'), ('default', 'Sonstige Veranstaltung'), ('hidden', 'Nichtöffentliche Veranstaltung')], default='default', help_text='Gottesdienste und Andachten werden auf der besonderen Seite zusätzlich angezeigt.', max_length=255, verbose_name='Veranstaltungstyp'),
+            model_name="event",
+            name="type",
+            field=models.CharField(
+                choices=[
+                    ("service", "Gottesdienst"),
+                    ("prayer", "Andacht"),
+                    ("concert", "Konzert"),
+                    ("gathering", "Treff"),
+                    ("period-of-reflection", "Rüstzeit"),
+                    ("default", "Sonstige Veranstaltung"),
+                    ("hidden", "Nichtöffentliche Veranstaltung"),
+                ],
+                default="default",
+                help_text="Gottesdienste und Andachten werden auf der besonderen Seite zusätzlich angezeigt.",
+                max_length=255,
+                verbose_name="Veranstaltungstyp",
+            ),
         ),
     ]

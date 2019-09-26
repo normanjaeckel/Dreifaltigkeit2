@@ -9,13 +9,20 @@ def add_flat_pages_parish(apps, schema_editor):
     Adds new flat pages for the parish site.
     """
     pages = (
-        ('kirchenmusik', 'jugendchor', 'Jugendchor', '', 235, ''),
-        ('kinder-und-jugend', 'jugendchor', 'Jugendchor', '', 325, '/kirchenmusik/jugendchor/'),
+        ("kirchenmusik", "jugendchor", "Jugendchor", "", 235, ""),
+        (
+            "kinder-und-jugend",
+            "jugendchor",
+            "Jugendchor",
+            "",
+            325,
+            "/kirchenmusik/jugendchor/",
+        ),
     )
 
     # We can't import the model directly as it may be a newer
     # version than this migration expects. We use the historical version.
-    FlatPage = apps.get_model('dreifaltigkeit', 'FlatPage')
+    FlatPage = apps.get_model("dreifaltigkeit", "FlatPage")
     for category, url, title, menu_title, ordering, redirect in pages:
         FlatPage.objects.create(
             category=category,
@@ -31,24 +38,19 @@ def add_flat_pages(apps, schema_editor):
     """
     Adds new flat pages.
     """
-    if settings.SITE_ID == 'parish':
+    if settings.SITE_ID == "parish":
         add_flat_pages_parish(apps, schema_editor)
-    elif settings.SITE_ID == 'kindergarden':
+    elif settings.SITE_ID == "kindergarden":
         pass
     else:
         raise RuntimeError(
             "The settings variable SITE_ID has to be set. Use 'parish' or "
-            "'kindergarden'.")
+            "'kindergarden'."
+        )
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0003_auto_20180915_2136'),
-    ]
+    dependencies = [("dreifaltigkeit", "0003_auto_20180915_2136")]
 
-    operations = [
-        migrations.RunPython(
-            add_flat_pages,
-        ),
-    ]
+    operations = [migrations.RunPython(add_flat_pages)]

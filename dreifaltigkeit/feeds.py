@@ -14,23 +14,28 @@ class ParishFeed(Feed):
     """
     RSS Feed for coming events and announcements.
     """
-    title = ugettext_lazy('Aktuelles aus der Dreifaltigkeitskirchgemeinde')
+
+    title = ugettext_lazy("Aktuelles aus der Dreifaltigkeitskirchgemeinde")
 
     description = ugettext_lazy(
-        'Aktuelle Termine, Informationen und Ankündigungen der Ev.-Luth. '
-        'Dreifaltigkeitskirchgemeinde Leipzig.')
+        "Aktuelle Termine, Informationen und Ankündigungen der Ev.-Luth. "
+        "Dreifaltigkeitskirchgemeinde Leipzig."
+    )
 
     feed_copyright = ugettext_lazy(
-        'Copyright Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle '
-        'Rechte vorbehalten.')
+        "Copyright Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle "
+        "Rechte vorbehalten."
+    )
 
     def link(self):
-        return reverse('home')
+        return reverse("home")
 
     def items(self):
         coming_events = Event.objects.get_coming_events()
         announcements = Announcement.objects.filter(end__gte=now()).reverse()
-        articles = sorted(chain(coming_events, announcements), key=lambda article: article.time_sort)
+        articles = sorted(
+            chain(coming_events, announcements), key=lambda article: article.time_sort
+        )
         return articles
 
     def item_title(self, item):
@@ -39,7 +44,7 @@ class ParishFeed(Feed):
         For announcements we use the title.
         """
         if type(item) == Event:
-            item_title = ' – '.join((item.title, localize(localtime(item.begin))))
+            item_title = " – ".join((item.title, localize(localtime(item.begin))))
         else:
             # type(item) == Announcement
             item_title = item.title
@@ -55,7 +60,7 @@ class ParishFeed(Feed):
             item_description = item.place
             if item.content:
                 if item.place:
-                    item_description += ': '
+                    item_description += ": "
                 item_description += item.content
         else:
             # type(item) == Announcement
@@ -95,20 +100,21 @@ class EventFeed(ICalFeed):
 
     # This is a Formal Public Identifiers according to ISO/IEC 9070:1991,
     # see RFC 5545 p. 78.
-    product_id = '-//Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig//Kalender//DE'
+    product_id = "-//Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig//Kalender//DE"
 
-    title = ugettext_lazy('Termine der Dreifaltigkeitskirchgemeinde')
+    title = ugettext_lazy("Termine der Dreifaltigkeitskirchgemeinde")
 
     description = ugettext_lazy(
-        'Besondere Termine und Veranstaltungen der Ev.-Luth. '
-        'Dreifaltigkeitskirchgemeinde Leipzig.')
+        "Besondere Termine und Veranstaltungen der Ev.-Luth. "
+        "Dreifaltigkeitskirchgemeinde Leipzig."
+    )
 
     def __init__(self, event_type=None, *args, **kwargs):
         self.event_type = event_type
         return super().__init__(*args, **kwargs)
 
     def link(self):
-        return reverse('events')
+        return reverse("events")
 
     def items(self):
         if self.event_type is not None:

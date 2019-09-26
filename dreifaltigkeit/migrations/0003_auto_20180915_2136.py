@@ -6,19 +6,27 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0002_auto_20180914_2224'),
-    ]
+    dependencies = [("dreifaltigkeit", "0002_auto_20180914_2224")]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='mediafile',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='dreifaltigkeit.MediaFile', verbose_name='Bild'),
+            model_name="event",
+            name="mediafile",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="dreifaltigkeit.MediaFile",
+                verbose_name="Bild",
+            ),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='for_kids',
-            field=models.BooleanField(blank=True, help_text='Nur bei Gottesdiensten kann hier eingestellt werden, ob das Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses Feld keine Auswirkungen.', verbose_name='Gottesdienst mit Kindergottesdienst'),
+            model_name="event",
+            name="for_kids",
+            field=models.BooleanField(
+                blank=True,
+                help_text="Nur bei Gottesdiensten kann hier eingestellt werden, ob das Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses Feld keine Auswirkungen.",
+                verbose_name="Gottesdienst mit Kindergottesdienst",
+            ),
         ),
     ]

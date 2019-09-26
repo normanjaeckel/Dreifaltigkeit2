@@ -8,21 +8,24 @@ def change_flat_pages(apps, schema_editor):
     """
     Changes two parish flat pages.
     """
-    if settings.SITE_ID == 'parish':
+    if settings.SITE_ID == "parish":
         # We can't import the model directly as it may be a newer
         # version than this migration expects. We use the historical version.
-        FlatPage = apps.get_model('dreifaltigkeit', 'FlatPage')
+        FlatPage = apps.get_model("dreifaltigkeit", "FlatPage")
 
-        flat_page_1 = FlatPage.objects.get(category='kirchenmusik', url='floetenkreis')
+        flat_page_1 = FlatPage.objects.get(category="kirchenmusik", url="floetenkreis")
         flat_page_1.delete()
+    elif settings.SITE_ID == "kindergarden":
+        pass
+    else:
+        raise RuntimeError(
+            "The settings variable SITE_ID has to be set. Use 'parish' or "
+            "'kindergarden'."
+        )
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0008_yearlytext'),
-    ]
+    dependencies = [("dreifaltigkeit", "0008_yearlytext")]
 
-    operations = [
-        migrations.RunPython(change_flat_pages),
-    ]
+    operations = [migrations.RunPython(change_flat_pages)]

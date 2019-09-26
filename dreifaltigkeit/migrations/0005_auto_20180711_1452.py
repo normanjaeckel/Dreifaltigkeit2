@@ -5,19 +5,26 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0004_announcement_mediafile'),
-    ]
+    dependencies = [("dreifaltigkeit", "0004_announcement_mediafile")]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='duration',
-            field=models.PositiveIntegerField(blank=True, help_text='Wenn nichts angegeben ist, wird keine Zeit für das Ende der Veranstaltung angezeigt.', null=True, verbose_name='Dauer (Angabe in Minuten)'),
+            model_name="event",
+            name="duration",
+            field=models.PositiveIntegerField(
+                blank=True,
+                help_text="Wenn nichts angegeben ist, wird keine Zeit für das Ende der Veranstaltung angezeigt.",
+                null=True,
+                verbose_name="Dauer (Angabe in Minuten)",
+            ),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='on_home_before_begin',
-            field=models.PositiveIntegerField(default=0, help_text='Die Veranstaltung erscheint so viele Tage vor Beginn auf der Startseite. Wählen Sie 0, wenn die Veranstaltung niemals auf der Startseite erscheinen soll. Der nächste Gottesdienste und das nächste Konzert erscheinen immer auf der Startseite, egal, was hier eingestellt ist.', verbose_name='Auf der Startseite (Angabe in Tagen)'),
+            model_name="event",
+            name="on_home_before_begin",
+            field=models.PositiveIntegerField(
+                default=0,
+                help_text="Die Veranstaltung erscheint so viele Tage vor Beginn auf der Startseite. Wählen Sie 0, wenn die Veranstaltung niemals auf der Startseite erscheinen soll. Der nächste Gottesdienste und das nächste Konzert erscheinen immer auf der Startseite, egal, was hier eingestellt ist.",
+                verbose_name="Auf der Startseite (Angabe in Tagen)",
+            ),
         ),
     ]

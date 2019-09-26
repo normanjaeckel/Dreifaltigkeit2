@@ -15,45 +15,45 @@ from django.utils.translation import ugettext_lazy
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'dreifaltigkeit',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "dreifaltigkeit",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'dreifaltigkeit.urls'
+ROOT_URLCONF = "dreifaltigkeit.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'dreifaltigkeit.context_processors.flat_pages',
-                'dreifaltigkeit.context_processors.site_id',
-                'dreifaltigkeit.context_processors.default_images',
-            ],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "dreifaltigkeit.context_processors.flat_pages",
+                "dreifaltigkeit.context_processors.site_id",
+                "dreifaltigkeit.context_processors.default_images",
+            ]
         },
-    },
+    }
 ]
 
 
@@ -62,32 +62,23 @@ TEMPLATES = [
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'de-DE'
+LANGUAGE_CODE = "de-DE"
 
 # Operating system locales de_DE.UTF-8 and en_US.UTF-8 are required.
-LANGUAGES = [
-    ('de', ugettext_lazy('German')),
-    ('en', ugettext_lazy('English')),
-]
+LANGUAGES = [("de", ugettext_lazy("German")), ("en", ugettext_lazy("English"))]
 
-TIME_ZONE = 'Europe/Berlin'
+TIME_ZONE = "Europe/Berlin"
 
 USE_I18N = True
 
@@ -99,25 +90,67 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images) and media
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 
 DEFAULT_IMAGES = [
-    {'src': 'images/Rosette.jpg', 'text': 'Rosette der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober'},
-    {'src': 'images/Altar_03.jpg', 'text': 'Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Erntegaben, Foto: Manfred Maas'},
-    {'src': 'images/Altar_04.jpg', 'text': 'Erntekranz am Lesepult der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Orgel_03.jpg', 'text': 'Spieltisch der Schuster-Orgel der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Turm_01.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Turm_02.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Turm_03.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Turm_04.jpg', 'text': 'Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Trinitatis_01.jpg', 'text': 'Im Eingangsbereich der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Trinitatis_02.jpg', 'text': 'Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Trinitatis_03.jpg', 'text': 'Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Trinitatis_04.jpg', 'text': 'Fenster zum Anbau der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Trinitatis_05.jpg', 'text': 'Fassadenkreuz an der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel'},
-    {'src': 'images/Markuskapelle_02.jpg', 'text': 'Bleiglasfenster der Markuskapelle zu Leipzig-Reudnitz, Foto: Manfred Maas'},
+    {
+        "src": "images/Rosette.jpg",
+        "text": "Rosette der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober",
+    },
+    {
+        "src": "images/Altar_03.jpg",
+        "text": "Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Erntegaben, Foto: Manfred Maas",
+    },
+    {
+        "src": "images/Altar_04.jpg",
+        "text": "Erntekranz am Lesepult der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Orgel_03.jpg",
+        "text": "Spieltisch der Schuster-Orgel der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Turm_01.jpg",
+        "text": "Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Turm_02.jpg",
+        "text": "Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Turm_03.jpg",
+        "text": "Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Turm_04.jpg",
+        "text": "Turm der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Trinitatis_01.jpg",
+        "text": "Im Eingangsbereich der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Trinitatis_02.jpg",
+        "text": "Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Trinitatis_03.jpg",
+        "text": "Fensterbild der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Trinitatis_04.jpg",
+        "text": "Fenster zum Anbau der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Trinitatis_05.jpg",
+        "text": "Fassadenkreuz an der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Norman Jäckel",
+    },
+    {
+        "src": "images/Markuskapelle_02.jpg",
+        "text": "Bleiglasfenster der Markuskapelle zu Leipzig-Reudnitz, Foto: Manfred Maas",
+    },
 ]
 
 # Custom settings

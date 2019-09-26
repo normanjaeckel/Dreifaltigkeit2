@@ -8,27 +8,37 @@ def change_flat_pages(apps, schema_editor):
     """
     Changes a kindergarden flat page.
     """
-    if settings.SITE_ID == 'kindergarden':
+    if settings.SITE_ID == "kindergarden":
         # We can't import the model directly as it may be a newer
         # version than this migration expects. We use the historical version.
-        FlatPage = apps.get_model('dreifaltigkeit', 'FlatPage')
-        flat_page = FlatPage.objects.get(url='konzept')
-        flat_page.title = 'Pädagogisches Konzept'
-        flat_page.menu_title = 'Konzept'
+        FlatPage = apps.get_model("dreifaltigkeit", "FlatPage")
+        flat_page = FlatPage.objects.get(url="konzept")
+        flat_page.title = "Pädagogisches Konzept"
+        flat_page.menu_title = "Konzept"
         flat_page.save()
+    elif settings.SITE_ID == "parish":
+        pass
+    else:
+        raise RuntimeError(
+            "The settings variable SITE_ID has to be set. Use 'parish' or "
+            "'kindergarden'."
+        )
 
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0002_flat_page_default_data'),
-    ]
+    dependencies = [("dreifaltigkeit", "0002_flat_page_default_data")]
 
     operations = [
         migrations.AddField(
-            model_name='flatpage',
-            name='menu_title',
-            field=models.CharField(blank=True, help_text='Wenn hier nichts eingetragen ist, wird der Titel zugleich als Bezeichnung im Menü verwendet.', max_length=255, verbose_name='Eintrag im Menü'),
+            model_name="flatpage",
+            name="menu_title",
+            field=models.CharField(
+                blank=True,
+                help_text="Wenn hier nichts eingetragen ist, wird der Titel zugleich als Bezeichnung im Menü verwendet.",
+                max_length=255,
+                verbose_name="Eintrag im Menü",
+            ),
         ),
         migrations.RunPython(change_flat_pages),
     ]

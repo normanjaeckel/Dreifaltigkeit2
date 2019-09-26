@@ -6,14 +6,18 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0003_flatpage_menu_title'),
-    ]
+    dependencies = [("dreifaltigkeit", "0003_flatpage_menu_title")]
 
     operations = [
         migrations.AddField(
-            model_name='announcement',
-            name='mediafile',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='dreifaltigkeit.MediaFile', verbose_name='Bild'),
-        ),
+            model_name="announcement",
+            name="mediafile",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="dreifaltigkeit.MediaFile",
+                verbose_name="Bild",
+            ),
+        )
     ]

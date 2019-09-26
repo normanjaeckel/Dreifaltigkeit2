@@ -6,21 +6,42 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0006_flat_page_default_data_change'),
-    ]
+    dependencies = [("dreifaltigkeit", "0006_flat_page_default_data_change")]
 
     operations = [
         migrations.CreateModel(
-            name='CurrentMarkusbote',
+            name="CurrentMarkusbote",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('months', models.CharField(help_text='Beispiel: Oktober-November 2018', max_length=255, verbose_name='Monate')),
-                ('file', models.ForeignKey(help_text='Der aktuelle Markusbote muss zuerst hochgeladen werden. Dann steht er hier zur Auswahl.', on_delete=django.db.models.deletion.PROTECT, to='dreifaltigkeit.MediaFile', verbose_name='Datei')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "months",
+                    models.CharField(
+                        help_text="Beispiel: Oktober-November 2018",
+                        max_length=255,
+                        verbose_name="Monate",
+                    ),
+                ),
+                (
+                    "file",
+                    models.ForeignKey(
+                        help_text="Der aktuelle Markusbote muss zuerst hochgeladen werden. Dann steht er hier zur Auswahl.",
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="dreifaltigkeit.MediaFile",
+                        verbose_name="Datei",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Aktueller Markusbote',
-                'verbose_name_plural': 'Aktueller Markusbote',
+                "verbose_name": "Aktueller Markusbote",
+                "verbose_name_plural": "Aktueller Markusbote",
             },
-        ),
+        )
     ]

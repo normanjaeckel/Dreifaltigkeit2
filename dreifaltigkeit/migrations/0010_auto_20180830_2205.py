@@ -10,8 +10,8 @@ def change_uuid(apps, schema_editor):
     """
     # We can't import the model directly as it may be a newer
     # version than this migration expects. We use the historical version.
-    Announcement = apps.get_model('dreifaltigkeit', 'Announcement')
-    Event = apps.get_model('dreifaltigkeit', 'Event')
+    Announcement = apps.get_model("dreifaltigkeit", "Announcement")
+    Event = apps.get_model("dreifaltigkeit", "Event")
     for item in list(Announcement.objects.all()) + list(Event.objects.all()):
         item.uuid = uuid.uuid4()
         item.save()
@@ -19,19 +19,17 @@ def change_uuid(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('dreifaltigkeit', '0009_flat_page_delete_floetenkreis'),
-    ]
+    dependencies = [("dreifaltigkeit", "0009_flat_page_delete_floetenkreis")]
 
     operations = [
         migrations.AddField(
-            model_name='announcement',
-            name='uuid',
+            model_name="announcement",
+            name="uuid",
             field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.AddField(
-            model_name='event',
-            name='uuid',
+            model_name="event",
+            name="uuid",
             field=models.UUIDField(default=uuid.uuid4, editable=False),
         ),
         migrations.RunPython(change_uuid),

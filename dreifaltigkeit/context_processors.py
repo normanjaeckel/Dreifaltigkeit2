@@ -14,7 +14,7 @@ def flat_pages(request):
     context = defaultdict(list)
     for flat_page in FlatPage.objects.all():
         if flat_page.is_in_menu():
-            key = 'pages_' + flat_page.category.replace('-', '')
+            key = "pages_" + flat_page.category.replace("-", "")
             context[key].append(flat_page)
     return context
 
@@ -25,8 +25,8 @@ def site_id(request):
     differentiate between site for parish and kindergarden.
     """
     return {
-        'SITE_ID': settings.SITE_ID,
-        'LINK_TO_OTHER_SITE': settings.LINK_TO_OTHER_SITE,
+        "SITE_ID": settings.SITE_ID,
+        "LINK_TO_OTHER_SITE": settings.LINK_TO_OTHER_SITE,
     }
 
 
@@ -35,6 +35,4 @@ def default_images(request):
     Adds all default images to the context. We use built in random filter to
     get random default images.
     """
-    return {
-        'DEFAULT_IMAGES': settings.DEFAULT_IMAGES,
-    }
+    return {"DEFAULT_IMAGES": settings.DEFAULT_IMAGES}

@@ -8,9 +8,10 @@ class DreifaltigkeitAppConfig(AppConfig):
     """
     Django application configuration for this website.
     """
-    name = 'dreifaltigkeit'
+
+    name = "dreifaltigkeit"
     verbose_name = format_lazy(
-        '{headline} ({site_id})',
-        headline=ugettext_lazy('Homepage der Dreifaltigkeitskirchgemeinde'),
+        "{headline} ({site_id})",
+        headline=ugettext_lazy("Homepage der Dreifaltigkeitskirchgemeinde"),
         site_id=settings.SITE_ID,
     )
