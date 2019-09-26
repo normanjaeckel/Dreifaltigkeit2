@@ -14,7 +14,7 @@
     <div class="row">
       <div class="6u 12u$(small)">
           <p>{{ event.begin }} Uhr &middot; {{ event.place }}</p>
-          <p>{{ event.content }}</p>
+          {{ event.content|linebreaks }}
       </div>
       <div class="6u 12u$(small)">
           {% with default_image=DEFAULT_IMAGES|random %}
