@@ -43,9 +43,10 @@ class Home(TemplateView):
             current_markusbote = None
 
         coming_events = Event.objects.get_coming_events()
-        announcements = Announcement.objects.filter(end__gte=timezone.now()).reverse()
+        coming_announcements = Announcement.objects.get_coming_announcements()
         articles = sorted(
-            chain(coming_events, announcements), key=lambda article: article.time_sort
+            chain(coming_events, coming_announcements),
+            key=lambda article: article.time_sort,
         )
 
         return super().get_context_data(

@@ -32,9 +32,10 @@ class ParishFeed(Feed):
 
     def items(self):
         coming_events = Event.objects.get_coming_events()
-        announcements = Announcement.objects.filter(end__gte=now()).reverse()
+        coming_announcements = Announcement.objects.get_coming_announcements()
         articles = sorted(
-            chain(coming_events, announcements), key=lambda article: article.time_sort
+            chain(coming_events, coming_announcements),
+            key=lambda article: article.time_sort,
         )
         return articles
 

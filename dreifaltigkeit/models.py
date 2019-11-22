@@ -499,10 +499,33 @@ class Event(models.Model):
         return result
 
 
+class AnnouncementManager(models.Manager):
+    """
+    Customized model manager to provide extra manager methods.
+    """
+
+    def get_coming_announcements(self):
+        """
+        Returns a special filtered and sorted list with coming announcements for
+        home view and RSS feed.
+        """
+        coming_announcements_queryset = self.filter(end__gte=now()).reverse()
+        coming_announcements = []
+        for coming_announcement in coming_announcements_queryset:
+            time_to_show = now() + datetime.timedelta(
+                days=coming_announcement.on_home_before_end
+            )
+            if coming_announcement.end <= time_to_show:
+                coming_announcements.append(coming_announcement)
+        return coming_announcements
+
+
 class Announcement(models.Model):
     """
     Model for announcements for home view.
     """
+
+    objects = AnnouncementManager()
 
     title = models.CharField(
         ugettext_lazy("Titel"),
@@ -532,6 +555,16 @@ class Announcement(models.Model):
         help_text=ugettext_lazy(
             "Bis zu diesem Zeitpunkt ist die Ankündigung auf der Startseite "
             "und ggf. über den gesonderten Link erreichbar."
+        ),
+    )
+
+    on_home_before_end = models.PositiveIntegerField(
+        ugettext_lazy("Auf der Startseite (Angabe in Tagen)"),
+        default=30,
+        help_text=ugettext_lazy(
+            "Die Ankündigung erscheint so viele Tage vor ihrem Ende auf der "
+            "Startseite. Die Einstellung ermöglicht eine verzögerte "
+            "Veröffentlichung."
         ),
     )
 
