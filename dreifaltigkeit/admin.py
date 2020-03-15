@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy
 
 from .models import (
     Announcement,
+    ClericalWordAudioFile,
     CurrentMarkusbote,
     Event,
     FlatPage,
@@ -85,6 +86,33 @@ class MediaFileAdmin(admin.ModelAdmin):
         return ("mediafile",) if obj is not None else ()
 
 
+class ClericalWordAudioFileAdmin(admin.ModelAdmin):
+    date_hierarchy = "pubdate"
+    list_display = ("title", "pubdate", "file", "file_url")
+
+    # The next line is only for ordering of fields because we use readonly
+    # fields.
+    fields = ("file", "title", "description", "mime_type")
+
+    def file_url(self, obj):
+        """
+        Returns the URL to the uploaded file.
+        """
+        return obj.file.url
+
+    file_url.short_description = ugettext_lazy("Adresse (URL)")
+
+    def get_readonly_fields(self, request, obj=None):
+        """
+        Hook for specifying custom readonly fields.
+
+        If obj is None, we are in the create view. Here ere we want to edit the
+        mediafile field to upload a new file. In the update (change) view we do
+        not want this.
+        """
+        return ("file",) if obj is not None else ()
+
+
 class CurrentMarkusboteAdmin(admin.ModelAdmin):
     list_display = ("__str__", "mediafile_url")
 
@@ -110,6 +138,7 @@ admin.site.register(Announcement, AnnouncementAdmin)
 admin.site.register(YearlyText, YearlyTextAdmin)
 admin.site.register(MonthlyText, MonthlyTextAdmin)
 admin.site.register(MediaFile, MediaFileAdmin)
+admin.site.register(ClericalWordAudioFile, ClericalWordAudioFileAdmin)
 admin.site.register(CurrentMarkusbote, CurrentMarkusboteAdmin)
 
 description = ugettext_lazy("{app_name} Administration").format(

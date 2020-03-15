@@ -7,7 +7,7 @@ from django.utils.timezone import localtime, now
 from django.utils.translation import ugettext_lazy
 from django_ical.views import ICalFeed
 
-from .models import Announcement, Event
+from .models import Announcement, ClericalWordAudioFile, Event
 
 
 class ParishFeed(Feed):
@@ -167,3 +167,76 @@ class EventFeed(ICalFeed):
         We just use event place field as location.
         """
         return item.place
+
+
+class ClericalWordFeed(Feed):
+    """
+    Clerical word for services site.
+    """
+
+    title = ugettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
+
+    description = ugettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
+
+    feed_copyright = ugettext_lazy(
+        "Copyright Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle "
+        "Rechte vorbehalten."
+    )
+
+    def link(self):
+        return reverse("services")
+
+    def items(self):
+        return ClericalWordAudioFile.objects.all()
+
+    def item_title(self, item):
+        """
+        We just use audio file title field.
+        """
+        return item.title
+
+    def item_description(self, item):
+        """
+        Customized description for the item: We just use audio file description
+        field.
+        """
+        return item.description
+
+    def item_link(self, item):
+        """
+        We use the link to the audio file given by the storage backend.
+        """
+        return self.item_enclosure_url(item)
+
+    def item_enclosure_url(self, item):
+        """
+        We use the link to the audio file given by the storage backend.
+        """
+        return item.file.url
+
+    def item_enclosure_length(self, item):
+        """
+        We use the filesize of the audio file given by the storage backend.
+        """
+        return item.file.size
+
+    def item_enclosure_mime_type(self, item):
+        """
+        We just use audio file mime_type field.
+        """
+        return item.mime_type
+
+    def item_pubdate(self, item):
+        """
+        We use the auto filled timestamp field.
+        """
+        return item.pubdate
+
+    def item_guid(self, item):
+        """
+        Customized GUID for the item: We use the auto filled uuid field for
+        this.
+        """
+        return item.uuid
+
+    item_guid_is_permalink = False

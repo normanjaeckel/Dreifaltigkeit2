@@ -622,7 +622,7 @@ class MediaFile(models.Model):
         ugettext_lazy("Datei"),
         max_length=255,
         help_text=ugettext_lazy(
-            "Achtung: Hochgeladene Dateien sind für jeden im Internet " "sichtbar."
+            "Achtung: Hochgeladene Dateien sind für jeden im Internet sichtbar."
         ),
     )
 
@@ -687,6 +687,56 @@ class CurrentMarkusbote(models.Model):
         if model.objects.count() > 0 and self.id != model.objects.get().id:
             raise ValidationError(
                 ugettext_lazy(
-                    "Es kann gleichzeitig nur einen aktuellen Markusboten " "geben."
+                    "Es kann gleichzeitig nur einen aktuellen Markusboten geben."
                 )
             )
+
+
+class ClericalWordAudioFile(models.Model):
+    """
+    Model for clerical word audio files.
+    """
+
+    file = models.FileField(
+        ugettext_lazy("Audio-Datei"),
+        max_length=255,
+        help_text=ugettext_lazy(
+            "Achtung: Hochgeladene Dateien sind für jeden im Internet sichtbar."
+        ),
+    )
+
+    title = models.CharField(
+        ugettext_lazy("Titel"),
+        max_length=255,
+        help_text=ugettext_lazy("Kurzer Titel des Beitrags."),
+    )
+
+    description = models.TextField(
+        ugettext_lazy("Beschreibung des Beitrags"),
+        blank=True,
+        help_text=ugettext_lazy("Kein HTML erlaubt."),
+    )
+
+    mime_type = models.CharField(
+        ugettext_lazy("MIME-Type (Internet Media Type)"),
+        max_length=255,
+        default="audio/mpeg",
+        help_text=ugettext_lazy(
+            "Dieser Wert ist ggf. an das Dateiformat anzupassen (z. B. in "
+            "audio/mp4, audio/ogg, audio/wav)."
+        ),
+    )
+
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+
+    pubdate = models.DateTimeField(
+        ugettext_lazy("Veröffentlicht am"), auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ("-pubdate",)
+        verbose_name = ugettext_lazy("Geistliches Wort Audio-Datei")
+        verbose_name_plural = ugettext_lazy("Geistliches Wort Audio-Dateien")
+
+    def __str__(self):
+        return self.file.url
