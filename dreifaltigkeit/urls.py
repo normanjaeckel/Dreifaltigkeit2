@@ -25,8 +25,9 @@ urlpatterns = [
     path("", views.Home.as_view(), name="home"),
     path("feed.rss", ParishFeed(), name="parish_feed"),
     path("gottesdienste/", views.Services.as_view(), name="services"),
+    path("geistliches-wort/", views.ClericalWordPage.as_view(), name="clerical_word"),
     path(
-        "gottesdienste/geistliches-wort.rss",
+        "geistliches-wort/feed.rss",
         ClericalWordFeed(),
         name="clerical_word_feed",
     ),

@@ -184,7 +184,7 @@ class ClericalWordFeed(Feed):
     )
 
     def link(self):
-        return reverse("services")
+        return reverse("clerical_word")
 
     def items(self):
         return ClericalWordAudioFile.objects.all()

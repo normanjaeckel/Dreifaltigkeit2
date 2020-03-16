@@ -10,6 +10,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 
 from .models import (
     Announcement,
+    ClericalWordAudioFile,
     CurrentMarkusbote,
     Event,
     FlatPage as FlatPageModel,
@@ -71,6 +72,15 @@ class Services(ListView):
         return Event.objects.filter(
             Q(type="service") | Q(type="prayer"), begin__gte=threshold
         ).reverse()
+
+
+class ClericalWordPage(ListView):
+    """
+    View for all clerical word audio files.
+    """
+
+    model = ClericalWordAudioFile
+    template_name = "clerical_word.html"
 
 
 class Events(ListView):

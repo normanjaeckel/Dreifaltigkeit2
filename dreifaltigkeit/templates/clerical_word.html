@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- Content -->
+<section>
+
+    <header class="main">
+        <h1>Geistliches Wort</h1>
+    </header>
+
+    <p><span class="image right big"><img src="{% static 'images/Altar_01.jpg' %}" title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>Auf dieser Seite finden Sie von Zeit zu Zeit ein geistliches Wort aus unserer Gemeinde.</p>
+    <p>Den Link zum <a href="{% url 'clerical_word_feed' %}">RSS-Feed</a> können Sie in Ihrer Podcast-App verwenden.</p>
+
+    <hr class="major" />
+
+    <dl class="clerical-word-list">
+        {% for clericalwordaudiofile in clericalwordaudiofile_list %}
+            <dt id="beitrag-{{ clericalwordaudiofile.pk }}">{{ clericalwordaudiofile.title }}</dt>
+            <dd>
+                <p>{{ clericalwordaudiofile.description }}</p>
+                <audio src="{{ clericalwordaudiofile.file.url }}" controls>
+                    Ihr Browser kann dieses Tondokument nicht wiedergeben. Sie können es unter <a href="{{ clericalwordaudiofile.file.url }}">diesem Link</a> abrufen.
+                </audio>
+            </dd>
+        {% empty %}
+            <dt>Im Moment sind keine Beiträge verfügbar.</dt>
+        {% endfor %}
+    </dl>
+
+    <hr class="major" />
+
+</section>
+
+{% endblock %}

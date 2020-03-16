@@ -88,6 +88,13 @@
 }
 
 
+/* Clerical word list */
+
+.clerical-word-list dd {
+  margin-bottom: 2em;
+}
+
+
 /* Contact info for parish staff flat page */
 
 ul.parish-contact {
