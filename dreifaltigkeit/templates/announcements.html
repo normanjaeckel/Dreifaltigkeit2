@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load dreifaltigkeit_filters %}
 
 {% block content %}
 
@@ -13,7 +14,7 @@
 
     <div class="row">
       <div class="6u 12u$(small)">
-          {{ announcement.long_text|linebreaks }}
+          {{ announcement.long_text|linkify|linebreaks }}
       </div>
       <div class="6u 12u$(small)">
           {% with default_image=DEFAULT_IMAGES|random %}

@@ -609,7 +609,7 @@ class Announcement(models.Model):
         """
         Returns additional text for the home view.
         """
-        template = Template("<p>{{ announcement.short_text }}</p>")
+        template = Template("{% load dreifaltigkeit_filters %}<p>{{ announcement.short_text|linkify }}</p>")
         return template.render(Context({"announcement": self}))
 
 
