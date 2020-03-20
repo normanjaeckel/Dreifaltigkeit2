@@ -7,13 +7,13 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-regex = re.compile(r"https?://\S+")
+regex = re.compile(r"\[(.+)\]\((https?://.+)\)")
 
 @register.filter(needs_autoescape=True)
 @stringfilter
 def linkify(value, autoescape=True):
     """
-    Adds a tag to http or https URL.
+    Adds an anchor tag to URL marked in markdown style.
     """
 
     if autoescape:
@@ -23,7 +23,7 @@ def linkify(value, autoescape=True):
     value = esc(value)
 
     def replace(link):
-        return f'<a href="{link.group(0)}">{link.group(0)}</a>'
+        return f'<a href="{link.group(2)}">{link.group(1)}</a>'
 
     result = regex.sub(replace, value)
     return mark_safe(result)

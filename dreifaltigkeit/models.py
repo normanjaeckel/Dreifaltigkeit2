@@ -536,7 +536,8 @@ class Announcement(models.Model):
     short_text = models.TextField(
         ugettext_lazy("Kurztext"),
         help_text=ugettext_lazy(
-            "Kurzer Text. Erscheint auf der Startseite. Kein HTML erlaubt."
+            "Kurzer Text. Erscheint auf der Startseite. Kein HTML erlaubt. "
+            "Links im Markdown-Stil sind möglich, d. h. [Text](URL)."
         ),
     )
 
@@ -546,7 +547,8 @@ class Announcement(models.Model):
         help_text=ugettext_lazy(
             "Längerer Text. Erscheint nur auf einer gesonderten Seite, die von "
             "der Startseite aus erreichbar ist. Kein HTML erlaubt. Leerzeilen "
-            "können verwendet werden."
+            "können verwendet werden. Links im Markdown-Stil sind möglich, d. "
+            "h. [Text](URL)."
         ),
     )
 
