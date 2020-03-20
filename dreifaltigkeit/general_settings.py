@@ -94,6 +94,9 @@ STATIC_URL = "/static/"
 
 MEDIA_URL = "/media/"
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 8388608
+#DATA_UPLOAD_MAX_MEMORY_SIZE = 8388608
+
 DEFAULT_IMAGES = [
     {
         "src": "images/Rosette.jpg",
