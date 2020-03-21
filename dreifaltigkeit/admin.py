@@ -92,7 +92,7 @@ class ClericalWordAudioFileAdmin(admin.ModelAdmin):
 
     # The next line is only for ordering of fields because we use readonly
     # fields.
-    fields = ("file", "title", "description", "mime_type")
+    fields = ("file", "title", "description", "mediafile", "mime_type")
 
     def file_url(self, obj):
         """
@@ -106,7 +106,7 @@ class ClericalWordAudioFileAdmin(admin.ModelAdmin):
         """
         Hook for specifying custom readonly fields.
 
-        If obj is None, we are in the create view. Here ere we want to edit the
+        If obj is None, we are in the create view. Here we want to edit the
         mediafile field to upload a new file. In the update (change) view we do
         not want this.
         """

@@ -11,7 +11,19 @@
         <h1>Geistliches Wort</h1>
     </header>
 
-    <p><span class="image right big"><img src="{% static 'images/Altar_01.jpg' %}" title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>Auf dieser Seite finden Sie von Zeit zu Zeit ein geistliches Wort aus unserer Gemeinde.</p>
+    {% static 'images/Altar_01.jpg' as default_image_src%}
+
+    <p>
+      <span class="image right big">
+        <img src="{{ clericalwordaudiofile_list.0.mediafile|default:default_image_src }}"
+            {% if clericalwordaudiofile_list.0.mediafile %}
+                alt="{{ clericalwordaudiofile_list.0.mediafile.text }}" title="{{ clericalwordaudiofile_list.0.mediafile.text }}"
+            {% else %}
+                alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
+                title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
+            {% endif %}
+        />
+      </span>Auf dieser Seite finden Sie von Zeit zu Zeit ein geistliches Wort aus unserer Gemeinde.</p>
     <p>Den Link zum <a href="{% url 'clerical_word_feed' %}">RSS-Feed</a> können Sie in Ihrer Podcast-App verwenden.</p>
 
     <hr class="major" />

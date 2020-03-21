@@ -719,6 +719,14 @@ class ClericalWordAudioFile(models.Model):
         help_text=ugettext_lazy("Kein HTML erlaubt."),
     )
 
+    mediafile = models.ForeignKey(
+        verbose_name=ugettext_lazy("Bild"),
+        to="MediaFile",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
     mime_type = models.CharField(
         ugettext_lazy("MIME-Type (Internet Media Type)"),
         max_length=255,
