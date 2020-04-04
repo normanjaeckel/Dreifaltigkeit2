@@ -92,7 +92,7 @@ class ClericalWordAudioFileAdmin(admin.ModelAdmin):
 
     # The next line is only for ordering of fields because we use readonly
     # fields.
-    fields = ("file", "title", "description", "mediafile", "mime_type")
+    fields = ("file", "title", "description", "mediafile", "mime_type", "hidden")
 
     def file_url(self, obj):
         """
