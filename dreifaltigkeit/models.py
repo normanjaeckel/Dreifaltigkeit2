@@ -737,6 +737,14 @@ class ClericalWordAudioFile(models.Model):
         ),
     )
 
+    hidden = models.BooleanField(
+        ugettext_lazy("Versteckt"),
+        blank=True,
+        help_text=ugettext_lazy(
+            "Hiermit kann der Beitrag auf der Seite ausgeblendet werden."
+        )
+    )
+
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     pubdate = models.DateTimeField(
