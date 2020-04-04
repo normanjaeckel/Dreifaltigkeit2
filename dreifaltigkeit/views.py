@@ -79,7 +79,7 @@ class ClericalWordPage(ListView):
     View for all clerical word audio files.
     """
 
-    model = ClericalWordAudioFile
+    queryset = ClericalWordAudioFile.objects.all().exclude(hidden=True)
     template_name = "clerical_word.html"
 
 

@@ -187,7 +187,7 @@ class ClericalWordFeed(Feed):
         return reverse("clerical_word")
 
     def items(self):
-        return ClericalWordAudioFile.objects.all()
+        return ClericalWordAudioFile.objects.all().exclude(hidden=True)
 
     def item_title(self, item):
         """
