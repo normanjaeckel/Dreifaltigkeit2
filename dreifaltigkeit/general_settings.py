@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+import re
 from django.utils.translation import ugettext_lazy
 
 # Application definition
@@ -161,3 +162,5 @@ DEFAULT_IMAGES = [
 THRESHOLD = 30  # Threshold for event begin in minutes
 
 TRUNCATE_LENGTH = 120  # Truncate event content in characters
+
+LINKIFY_REGEX = re.compile(r"\[([^\]]+)\]\((https?://[^\)]+)\)")

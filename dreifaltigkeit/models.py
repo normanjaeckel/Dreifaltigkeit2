@@ -453,13 +453,14 @@ class Event(models.Model):
         """
         template = Template(
             """
+            {% load dreifaltigkeit_filters %}
             <p>
                 {{ coming_event.begin|date:"l, j. F Y, H:i" }}
                 {% if coming_event.place %}
                     <br />{{ coming_event.place }}
                 {% endif %}
             </p>
-            {% if coming_event.content %}<p>{{ coming_event.content|truncatechars:TRUNCATE_LENGTH }}</p>{% endif %}
+            {% if coming_event.content %}<p>{{ coming_event.content|truncatechars:TRUNCATE_LENGTH|linkify }}</p>{% endif %}
             """
         )
         return template.render(

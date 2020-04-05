@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load dreifaltigkeit_filters %}
 
 {% block content %}
 
@@ -29,7 +30,7 @@
             <dt id="termin-{{ service.pk }}">{{ service.begin }} Uhr &middot; {{ service.place }} &middot; {{service.get_type_display }}</dt>
             <dd>
                 <p>
-                    {{ service.title }}: {{ service.content }}
+                    {{ service.title }}: {{ service.content|linkify }}
                     {% if service.for_kids %}
                         <span class="image kids-logo" title="Kindergottesdienst">
                             <img src="{% static 'images/Kindergottesdienst_Logo.jpg' %}" alt="Kindergottesdienst" />

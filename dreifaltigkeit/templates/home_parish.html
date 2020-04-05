@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load dreifaltigkeit_filters %}
 
 {% block content %}
 
@@ -46,7 +47,7 @@
                     <br />{{ next_service.place }}
                 </p>
                 <p>
-                    {{ next_service.title }}: {{ next_service.content }}
+                    {{ next_service.title }}: {{ next_service.content|linkify }}
                 </p>
             {% else %}
                 <p>Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link.</p>
