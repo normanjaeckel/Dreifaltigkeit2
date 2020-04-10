@@ -1,6 +1,9 @@
+from django import forms
 from django.apps import apps
+from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext, ugettext_lazy
 
 from .models import (
     Announcement,
@@ -40,11 +43,38 @@ class FlatPageAdmin(admin.ModelAdmin):
         return False
 
 
+class EventAdminForm(forms.ModelForm):
+    """
+    This form is for custom validation of content field. If one uses markdown
+    style links, these links should not overlap the position in the string
+    according to TRUNCATE_LENGTH because then we can not truncate the string
+    properly.
+    """
+
+    def clean_content(self):
+        content = self.cleaned_data["content"]
+        for match in settings.LINKIFY_REGEX.finditer(content):
+            if (
+                match.start() < settings.TRUNCATE_LENGTH - 1
+                and match.end() >= settings.TRUNCATE_LENGTH
+            ):
+                raise ValidationError(
+                    ugettext(
+                        "Ein Link in der Form [Text](URL) ist an der gegebenen "
+                        "Stelle nicht zulässig. Bitte verschieben Sie den Link "
+                        "im Text nach vorn oder hinten."
+                    ),
+                    code="linkify_error_bad_position",
+                )
+        return content
+
+
 class EventAdmin(admin.ModelAdmin):
     date_hierarchy = "begin"
     list_display = ("title", "place", "begin", "type", "on_home_before_begin")
     save_as = True
     save_as_continue = False
+    form = EventAdminForm
 
 
 class AnnouncementAdmin(admin.ModelAdmin):
