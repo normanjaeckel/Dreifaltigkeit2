@@ -6,14 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dreifaltigkeit', '0012_clericalwordaudiofile_mediafile'),
+        ("dreifaltigkeit", "0012_clericalwordaudiofile_mediafile"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='clericalwordaudiofile',
-            name='hidden',
-            field=models.BooleanField(blank=True, default=False, help_text='Hiermit kann der Beitrag auf der Seite ausgeblendet werden.', verbose_name='Versteckt'),
+            model_name="clericalwordaudiofile",
+            name="hidden",
+            field=models.BooleanField(
+                blank=True,
+                default=False,
+                help_text="Hiermit kann der Beitrag auf der Seite ausgeblendet werden.",
+                verbose_name="Versteckt",
+            ),
             preserve_default=False,
         ),
     ]

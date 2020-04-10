@@ -29,10 +29,11 @@ def add_flat_page(apps, schema_editor):
             "'kindergarden'."
         )
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dreifaltigkeit', '0009_clericalwordaudiofile'),
+        ("dreifaltigkeit", "0009_clericalwordaudiofile"),
     ]
 
     operations = [migrations.RunPython(add_flat_page)]

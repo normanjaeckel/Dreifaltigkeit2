@@ -332,7 +332,10 @@ class Event(models.Model):
     content = models.TextField(
         ugettext_lazy("Inhalt"),
         blank=True,
-        help_text=ugettext_lazy("Beschreibung der Veranstaltung. Kein HTML erlaubt."),
+        help_text=ugettext_lazy(
+            "Beschreibung der Veranstaltung. Kein HTML erlaubt. Links im "
+            "Markdown-Stil sind mit Einschränkungen möglich, d. h. [Text](URL)."
+        ),
     )
 
     flat_page = models.ForeignKey(
@@ -612,7 +615,9 @@ class Announcement(models.Model):
         """
         Returns additional text for the home view.
         """
-        template = Template("{% load dreifaltigkeit_filters %}<p>{{ announcement.short_text|linkify }}</p>")
+        template = Template(
+            "{% load dreifaltigkeit_filters %}<p>{{ announcement.short_text|linkify }}</p>"
+        )
         return template.render(Context({"announcement": self}))
 
 
@@ -743,7 +748,7 @@ class ClericalWordAudioFile(models.Model):
         blank=True,
         help_text=ugettext_lazy(
             "Hiermit kann der Beitrag auf der Seite ausgeblendet werden."
-        )
+        ),
     )
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)

@@ -7,13 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dreifaltigkeit', '0011_auto_20200320_2120'),
+        ("dreifaltigkeit", "0011_auto_20200320_2120"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='clericalwordaudiofile',
-            name='mediafile',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='dreifaltigkeit.MediaFile', verbose_name='Bild'),
+            model_name="clericalwordaudiofile",
+            name="mediafile",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="dreifaltigkeit.MediaFile",
+                verbose_name="Bild",
+            ),
         ),
     ]
