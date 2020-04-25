@@ -1,6 +1,7 @@
 from itertools import chain
 
-from django.contrib.syndication.views import Feed
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.syndication.views import Feed, add_domain
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
@@ -183,6 +184,13 @@ class ClericalWordFeed(Feed):
         "Rechte vorbehalten."
     )
 
+    def get_object(self, request, *args, **kwargs):
+        """
+        Helper method: Just store request into self.request.
+        """
+        self.request = request
+        return super().get_object(request, *args, **kwargs)
+
     def link(self):
         return reverse("clerical_word")
 
@@ -210,9 +218,12 @@ class ClericalWordFeed(Feed):
 
     def item_enclosure_url(self, item):
         """
-        We use the link to the audio file given by the storage backend.
+        We use the link to the audio file given by the storage backend. We also
+        add current domain because Django has a little bug here.
         """
-        return item.file.url
+        current_site = get_current_site(self.request)
+        url = item.file.url
+        return add_domain(current_site.domain, url, self.request.is_secure())
 
     def item_enclosure_length(self, item):
         """
