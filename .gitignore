@@ -20,3 +20,6 @@ deployment/
 
 # Private development data
 private/
+
+# Special page
+dreifaltigkeit/templates/special_page.html

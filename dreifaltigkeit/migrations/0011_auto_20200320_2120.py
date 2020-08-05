@@ -5,9 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("dreifaltigkeit", "0010_flat_page_default_data"),
-    ]
+    dependencies = [("dreifaltigkeit", "0010_flat_page_default_data")]
 
     operations = [
         migrations.AlterField(

@@ -176,3 +176,11 @@ class Announcements(DetailView):
             )
             raise Http404(message)
         return announcement
+
+
+class SpecialPage(TemplateView):
+    """
+    Prepared class for special pages. Use flat page template and customized it.
+    """
+
+    pass

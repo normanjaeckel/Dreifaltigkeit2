@@ -5,9 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("dreifaltigkeit", "0012_clericalwordaudiofile_mediafile"),
-    ]
+    dependencies = [("dreifaltigkeit", "0012_clericalwordaudiofile_mediafile")]
 
     operations = [
         migrations.AddField(
@@ -20,5 +18,5 @@ class Migration(migrations.Migration):
                 verbose_name="Versteckt",
             ),
             preserve_default=False,
-        ),
+        )
     ]

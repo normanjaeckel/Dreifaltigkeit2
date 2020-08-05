@@ -26,7 +26,7 @@ urlpatterns = [
     path("feed.rss", ParishFeed(), name="parish_feed"),
     path("gottesdienste/", views.Services.as_view(), name="services"),
     path("geistliches-wort/", views.ClericalWordPage.as_view(), name="clerical_word"),
-    path("geistliches-wort/feed.rss", ClericalWordFeed(), name="clerical_word_feed",),
+    path("geistliches-wort/feed.rss", ClericalWordFeed(), name="clerical_word_feed"),
     path("termine/", views.Events.as_view(), name="events"),
     path("termine/<int:pk>/", views.SingleEvent.as_view(), name="single_event"),
     path("termine.ics", EventFeed(), name="event_feed"),
@@ -38,6 +38,7 @@ urlpatterns = [
     path("impressum/", views.Imprint.as_view(), name="imprint"),
     path("ankuendigung/<int:pk>/", views.Announcements.as_view(), name="announcement"),
     path("admin/", admin.site.urls),
+    path("kv-wahl-2020/", views.SpecialPage.as_view(template_name="special_page.html")),
     path("<category>/<path:page>/", views.FlatPage.as_view(), name="flat_page"),
     path("<page>/", views.FlatPage.as_view(root=True), name="flat_page_root"),
 ]
