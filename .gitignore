@@ -22,4 +22,4 @@ deployment/
 private/
 
 # Special page
-dreifaltigkeit/templates/special_page.html
+dreifaltigkeit/templates/special_page*
