@@ -38,10 +38,11 @@ urlpatterns = [
     path("impressum/", views.Imprint.as_view(), name="imprint"),
     path("ankuendigung/<int:pk>/", views.Announcements.as_view(), name="announcement"),
     path("admin/", admin.site.urls),
-    path("kv-wahl-2020/", views.SpecialPage.as_view(template_name="special_page.html")),
-    path(
-        "bauarbeiten/", views.SpecialPage.as_view(template_name="special_page_1.html")
-    ),
+    # path("kv-wahl-2020/", views.SpecialPage.as_view(template_name="special_page.html")),
+    # path(
+    #    "bauarbeiten/", views.SpecialPage.as_view(template_name="special_page_1.html")
+    # ),
+    path("robots.txt", views.SpecialPage.as_view(template_name="robots.txt"))
     path("<category>/<path:page>/", views.FlatPage.as_view(), name="flat_page"),
     path("<page>/", views.FlatPage.as_view(root=True), name="flat_page_root"),
 ]
