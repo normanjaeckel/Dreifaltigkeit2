@@ -144,7 +144,7 @@
                         <h2>Kontakt</h2>
                     </header>
                     {% if SITE_ID == 'parish' %}
-                        <p>Schreiben Sie uns gern eine E-Mail oder rufen Sie zu den Sprechzeiten im Pfarramt an.</p>
+                        <p>Schreiben Sie uns gern eine E-Mail oder rufen Sie zu den Sprechzeiten im Pfarramt an. Unsere <a href="{% url 'flat_page' category='gemeinde' page='mitarbeiter-innen' %}">Mitarbeiterinnen und Mitarbeiter</a> helfen Ihnen gern weiter.</p>
                         <ul class="contact">
                             <li class="fa-envelope-o" title="E-Mail-Adresse">
                                 <span class="sr-only">E-Mail-Adresse</span>
@@ -152,7 +152,7 @@
                             </li>
                             <li class="fa-user" title="Ansprechpartner">
                                 <span class="sr-only">Ansprechpartner</span>
-                                <a href="/gemeinde/mitarbeiter-innen/">Pfarrer Hans-Christian Moosdorf<br />Pfarrer Stephan Vorwergk</a>
+                                <a href="{% url 'flat_page' category='gemeinde' page='mitarbeiter-innen' %}">Pfarrer Hans-Christian Moosdorf<br />Pfarrer Stephan Vorwergk</a>
                             </li>
                             <li class="fa-home" title="Adresse">
                                 <span class="sr-only">Adresse</span>
@@ -166,7 +166,7 @@
                                 <span class="sr-only">Telefax</span>
                                 (0341) 6810695
                             </li>
-                            <li class="fa-calendar" title="Öffnungszeiten Pfarramt">
+                            <li class="fa-calendar" title="Sprechzeiten">
                                 Sprechzeiten Pfarramt:<br />Dienstag 16:00 bis 18:00 Uhr<br />Mittwoch 16:00 bis 18:00 Uhr<br />Freitag 9:00 bis 11:00 Uhr
                             </li>
                         </ul>
