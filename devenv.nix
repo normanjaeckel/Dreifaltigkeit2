@@ -13,6 +13,11 @@
 
   services.postgres = {
     enable = true;
+    initialDatabases = [
+      { name = "dreifaltigkeit_parish"; }
+      { name = "dreifaltigkeit_kindergarden"; }
+    ];
+    initdbArgs = [ "--username=dreifaltigkeit" "--locale=C" "--encoding=UTF8" ];
   };
 
   # https://devenv.sh/basics/

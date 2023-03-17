@@ -3,7 +3,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext, ugettext_lazy
+from django.utils.translation import gettext, gettext_lazy
 
 from .models import (
     Announcement,
@@ -59,7 +59,7 @@ class EventAdminForm(forms.ModelForm):
                 and match.end() >= settings.TRUNCATE_LENGTH
             ):
                 raise ValidationError(
-                    ugettext(
+                    gettext(
                         "Ein Link in der Form [Text](URL) ist an der gegebenen "
                         "Stelle nicht zulässig. Bitte verschieben Sie den Link "
                         "im Text nach vorn oder hinten."
@@ -103,7 +103,7 @@ class MediaFileAdmin(admin.ModelAdmin):
         """
         return obj.mediafile.url
 
-    mediafile_url.short_description = ugettext_lazy("Adresse (URL)")
+    mediafile_url.short_description = gettext_lazy("Adresse (URL)")
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -130,7 +130,7 @@ class ClericalWordAudioFileAdmin(admin.ModelAdmin):
         """
         return obj.file.url
 
-    file_url.short_description = ugettext_lazy("Adresse (URL)")
+    file_url.short_description = gettext_lazy("Adresse (URL)")
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -152,7 +152,7 @@ class CurrentMarkusboteAdmin(admin.ModelAdmin):
         """
         return obj.file.mediafile.url
 
-    mediafile_url.short_description = ugettext_lazy("Adresse (URL)")
+    mediafile_url.short_description = gettext_lazy("Adresse (URL)")
 
     def has_add_permission(self, request):
         """
@@ -171,7 +171,7 @@ admin.site.register(MediaFile, MediaFileAdmin)
 admin.site.register(ClericalWordAudioFile, ClericalWordAudioFileAdmin)
 admin.site.register(CurrentMarkusbote, CurrentMarkusboteAdmin)
 
-description = ugettext_lazy("{app_name} Administration").format(
+description = gettext_lazy("{app_name} Administration").format(
     app_name=apps.get_app_config("dreifaltigkeit").verbose_name
 )
 

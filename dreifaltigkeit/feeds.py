@@ -5,7 +5,7 @@ from django.contrib.syndication.views import Feed, add_domain
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from django_ical.views import ICalFeed
 
 from .models import Announcement, ClericalWordAudioFile, Event
@@ -16,14 +16,14 @@ class ParishFeed(Feed):
     RSS Feed for coming events and announcements.
     """
 
-    title = ugettext_lazy("Aktuelles aus der Dreifaltigkeitskirchgemeinde")
+    title = gettext_lazy("Aktuelles aus der Dreifaltigkeitskirchgemeinde")
 
-    description = ugettext_lazy(
+    description = gettext_lazy(
         "Aktuelle Termine, Informationen und Ankündigungen der Ev.-Luth. "
         "Dreifaltigkeitskirchgemeinde Leipzig."
     )
 
-    feed_copyright = ugettext_lazy(
+    feed_copyright = gettext_lazy(
         "Copyright Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle "
         "Rechte vorbehalten."
     )
@@ -104,9 +104,9 @@ class EventFeed(ICalFeed):
     # see RFC 5545 p. 78.
     product_id = "-//Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig//Kalender//DE"
 
-    title = ugettext_lazy("Termine der Dreifaltigkeitskirchgemeinde")
+    title = gettext_lazy("Termine der Dreifaltigkeitskirchgemeinde")
 
-    description = ugettext_lazy(
+    description = gettext_lazy(
         "Besondere Termine und Veranstaltungen der Ev.-Luth. "
         "Dreifaltigkeitskirchgemeinde Leipzig."
     )
@@ -175,11 +175,11 @@ class ClericalWordFeed(Feed):
     Clerical word for services site.
     """
 
-    title = ugettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
+    title = gettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
 
-    description = ugettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
+    description = gettext_lazy("Geistliches Wort aus der Dreifaltigkeitskirchgemeinde")
 
-    feed_copyright = ugettext_lazy(
+    feed_copyright = gettext_lazy(
         "Copyright Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig. Alle "
         "Rechte vorbehalten."
     )

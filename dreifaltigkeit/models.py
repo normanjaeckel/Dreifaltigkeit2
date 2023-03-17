@@ -12,7 +12,7 @@ from django.template import Context, Template
 from django.urls import reverse
 from django.utils.formats import localize
 from django.utils.timezone import localtime, now
-from django.utils.translation import get_language, ugettext_lazy
+from django.utils.translation import get_language, gettext_lazy
 
 
 class FlatPage(models.Model):
@@ -31,54 +31,54 @@ class FlatPage(models.Model):
     """
 
     category = models.CharField(
-        ugettext_lazy("Kategorie"),
+        gettext_lazy("Kategorie"),
         max_length=255,
         choices=(
-            ("gemeinde", ugettext_lazy("Gemeinde")),
-            ("kirchenmusik", ugettext_lazy("Kirchenmusik")),
-            ("kinder-und-jugend", ugettext_lazy("Kinder und Jugend")),
-            ("parish_root", ugettext_lazy("Gemeinde Hauptmenü")),
-            ("kindergarden_root", ugettext_lazy("Kindergarten Hauptmenü")),
+            ("gemeinde", gettext_lazy("Gemeinde")),
+            ("kirchenmusik", gettext_lazy("Kirchenmusik")),
+            ("kinder-und-jugend", gettext_lazy("Kinder und Jugend")),
+            ("parish_root", gettext_lazy("Gemeinde Hauptmenü")),
+            ("kindergarden_root", gettext_lazy("Kindergarten Hauptmenü")),
         ),
     )
 
-    url = models.CharField(ugettext_lazy("URL"), max_length=255)
+    url = models.CharField(gettext_lazy("URL"), max_length=255)
 
-    title = models.CharField(ugettext_lazy("Titel"), max_length=255)
+    title = models.CharField(gettext_lazy("Titel"), max_length=255)
 
     menu_title = models.CharField(
-        ugettext_lazy("Eintrag im Menü"),
+        gettext_lazy("Eintrag im Menü"),
         blank=True,
         max_length=255,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Wenn hier nichts eingetragen ist, wird der Titel zugleich als "
             "Bezeichnung im Menü verwendet."
         ),
     )
 
-    ordering = models.IntegerField(ugettext_lazy("Sortierung"))
+    ordering = models.IntegerField(gettext_lazy("Sortierung"))
 
     redirect = models.CharField(
-        ugettext_lazy("Weiterleitung"),
+        gettext_lazy("Weiterleitung"),
         blank=True,
         max_length=255,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Wenn eine Weiterleitung eingerichtet ist, wird kein zusätzlicher "
             "Inhalt angezeigt."
         ),
     )
 
     content = models.TextField(
-        ugettext_lazy("Inhalt"),
+        gettext_lazy("Inhalt"),
         blank=True,
         default="<p>\n\n\n\n</p>",
-        help_text=ugettext_lazy("Inhalt der Seite in HTML."),
+        help_text=gettext_lazy("Inhalt der Seite in HTML."),
     )
 
     class Meta:
         ordering = ("ordering",)
-        verbose_name = ugettext_lazy("Statische Seite")
-        verbose_name_plural = ugettext_lazy("Statische Seiten")
+        verbose_name = gettext_lazy("Statische Seite")
+        verbose_name_plural = gettext_lazy("Statische Seiten")
 
     def __str__(self):
         result = self.get_category_display()
@@ -114,17 +114,17 @@ def validate_year_month_number(value):
     Validator for month field of MonthlyText model.
     """
     if not 99999 < value < 1000000:
-        raise ValidationError(ugettext_lazy("Die Zahl muss sechsstellig sein."))
+        raise ValidationError(gettext_lazy("Die Zahl muss sechsstellig sein."))
     if not 2017 < int(str(value)[:4]) < 2200:
         raise ValidationError(
-            ugettext_lazy(
+            gettext_lazy(
                 "Die ersten vier Ziffern (Jahreszahl) müssen zwischen 2018 und "
                 "2199 liegen."
             )
         )
     if not 0 < int(str(value)[-2:]) < 13:
         raise ValidationError(
-            ugettext_lazy(
+            gettext_lazy(
                 "Die letzten beiden Ziffern (Monatszahl) müssen zwischen 01 und "
                 "12 liegen."
             )
@@ -138,15 +138,15 @@ class YearlyText(models.Model):
     """
 
     year = models.IntegerField(
-        ugettext_lazy("Jahr"),
+        gettext_lazy("Jahr"),
         validators=[MinValueValidator(2018), MaxValueValidator(2199)],
         unique=True,
-        help_text=ugettext_lazy("Eingabe als vierstellige Zahl."),
+        help_text=gettext_lazy("Eingabe als vierstellige Zahl."),
     )
 
     text = models.TextField(
-        ugettext_lazy("Jahreslosung"),
-        help_text=ugettext_lazy(
+        gettext_lazy("Jahreslosung"),
+        help_text=gettext_lazy(
             'Die Jahreslosung der <a href="https://www.oeab.de/">'
             "Ökumenischen Arbeitsgemeinschaft für Bibellesen</a> "
             "erscheint nur auf der Gottesdienstseite. Kein HTML erlaubt."
@@ -154,15 +154,15 @@ class YearlyText(models.Model):
     )
 
     verse = models.CharField(
-        ugettext_lazy("Bibelstelle"),
+        gettext_lazy("Bibelstelle"),
         max_length=255,
-        help_text=ugettext_lazy("Beispiel: Joh 19,30."),
+        help_text=gettext_lazy("Beispiel: Joh 19,30."),
     )
 
     class Meta:
         ordering = ("-year",)
-        verbose_name = ugettext_lazy("Jahreslosung")
-        verbose_name_plural = ugettext_lazy("Jahreslosungen")
+        verbose_name = gettext_lazy("Jahreslosung")
+        verbose_name_plural = gettext_lazy("Jahreslosungen")
 
     def __str__(self):
         return str(self.year)
@@ -175,18 +175,18 @@ class MonthlyText(models.Model):
     """
 
     month = models.IntegerField(
-        ugettext_lazy("Monat"),
+        gettext_lazy("Monat"),
         validators=[validate_year_month_number],
         unique=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Eingabe als sechsstellige Zahl bestehend aus Jahr und Monat "
             "z. B. 201307 für Juli 2013."
         ),
     )
 
     text = models.TextField(
-        ugettext_lazy("Monatsspruch"),
-        help_text=ugettext_lazy(
+        gettext_lazy("Monatsspruch"),
+        help_text=gettext_lazy(
             'Der Monatsspruch der <a href="https://www.oeab.de/">Ökumenischen '
             "Arbeitsgemeinschaft für Bibellesen</a> erscheint nur auf der "
             "Gottesdienstseite. Kein HTML erlaubt."
@@ -194,15 +194,15 @@ class MonthlyText(models.Model):
     )
 
     verse = models.CharField(
-        ugettext_lazy("Bibelstelle"),
+        gettext_lazy("Bibelstelle"),
         max_length=255,
-        help_text=ugettext_lazy("Beispiel: Joh 19,30."),
+        help_text=gettext_lazy("Beispiel: Joh 19,30."),
     )
 
     class Meta:
         ordering = ("-month",)
-        verbose_name = ugettext_lazy("Monatsspruch")
-        verbose_name_plural = ugettext_lazy("Monatssprüche")
+        verbose_name = gettext_lazy("Monatsspruch")
+        verbose_name_plural = gettext_lazy("Monatssprüche")
 
     def __str__(self):
         if get_language() == "de":
@@ -231,31 +231,31 @@ class EventTypes:
     def __init__(self):
         self.event_types = collections.OrderedDict()
         self.event_types["service"] = {
-            "verbose_name": ugettext_lazy("Gottesdienst"),
+            "verbose_name": gettext_lazy("Gottesdienst"),
             "color": "darkorange",
         }
         self.event_types["prayer"] = {
-            "verbose_name": ugettext_lazy("Andacht"),
+            "verbose_name": gettext_lazy("Andacht"),
             "color": "red",
         }
         self.event_types["concert"] = {
-            "verbose_name": ugettext_lazy("Konzert"),
+            "verbose_name": gettext_lazy("Konzert"),
             "color": "green",
         }
         self.event_types["gathering"] = {
-            "verbose_name": ugettext_lazy("Treff"),
+            "verbose_name": gettext_lazy("Treff"),
             "color": "darkcyan",
         }
         self.event_types["period-of-reflection"] = {
-            "verbose_name": ugettext_lazy("Rüstzeit"),
+            "verbose_name": gettext_lazy("Rüstzeit"),
             "color": "forestgreen",
         }
         self.event_types["default"] = {
-            "verbose_name": ugettext_lazy("Sonstige Veranstaltung"),
+            "verbose_name": gettext_lazy("Sonstige Veranstaltung"),
             "color": "grey",
         }
         self.event_types["hidden"] = {
-            "verbose_name": ugettext_lazy("Nichtöffentliche Veranstaltung"),
+            "verbose_name": gettext_lazy("Nichtöffentliche Veranstaltung"),
             "color": "grey",
         }
 
@@ -301,11 +301,11 @@ class Event(models.Model):
     objects = EventManager()
 
     type = models.CharField(
-        ugettext_lazy("Veranstaltungstyp"),
+        gettext_lazy("Veranstaltungstyp"),
         max_length=255,
         choices=EventTypes().get_choices(),
         default="default",
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Gottesdienste und Andachten werden auf der besonderen Seite "
             "zusätzlich angezeigt. Außerdem beeinflusst der Typ die Farbe im "
             "Kalender."
@@ -313,38 +313,38 @@ class Event(models.Model):
     )
 
     title = models.CharField(
-        ugettext_lazy("Titel"),
+        gettext_lazy("Titel"),
         max_length=255,
-        help_text=ugettext_lazy("Kurzer Titel der Veranstaltung."),
+        help_text=gettext_lazy("Kurzer Titel der Veranstaltung."),
     )
 
     place = models.CharField(
-        ugettext_lazy("Ort"),
+        gettext_lazy("Ort"),
         blank=True,
         default="Trinitatiskirche",
         max_length=255,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Ort der Veranstaltung, z. B. Trinitatiskirche, Markuskapelle, "
             "Anbau der Trinitatiskirche, Gemeindehaus Dresdner Straße 59."
         ),
     )
 
     content = models.TextField(
-        ugettext_lazy("Inhalt"),
+        gettext_lazy("Inhalt"),
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Beschreibung der Veranstaltung. Kein HTML erlaubt. Links im "
             "Markdown-Stil sind mit Einschränkungen möglich, d. h. [Text](URL)."
         ),
     )
 
     flat_page = models.ForeignKey(
-        verbose_name=ugettext_lazy("Statische Seite"),
+        verbose_name=gettext_lazy("Statische Seite"),
         to="FlatPage",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Zusätzliche Verlinkung auf eine statische Seite. Wenn angegeben, "
             "hat der Termin an sich keine eigene Seite mehr und der Inhalt "
             "kann ggf. nicht erreicht werden. Nicht möglich für Gottesdienste "
@@ -352,22 +352,22 @@ class Event(models.Model):
         ),
     )
 
-    begin = models.DateTimeField(ugettext_lazy("Beginn"))
+    begin = models.DateTimeField(gettext_lazy("Beginn"))
 
     duration = models.PositiveIntegerField(
-        ugettext_lazy("Dauer (Angabe in Minuten)"),
+        gettext_lazy("Dauer (Angabe in Minuten)"),
         null=True,
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Wenn nichts angegeben ist, wird keine Zeit für das Ende der "
             "Veranstaltung angezeigt."
         ),
     )
 
     on_home_before_begin = models.PositiveIntegerField(
-        ugettext_lazy("Auf der Startseite (Angabe in Tagen)"),
+        gettext_lazy("Auf der Startseite (Angabe in Tagen)"),
         default=0,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Die Veranstaltung erscheint so viele Tage vor Beginn auf der "
             "Startseite. Wählen Sie 0, wenn die Veranstaltung niemals auf der "
             "Startseite erscheinen soll. Der nächste Gottesdienste und das "
@@ -377,7 +377,7 @@ class Event(models.Model):
     )
 
     mediafile = models.ForeignKey(
-        verbose_name=ugettext_lazy("Bild"),
+        verbose_name=gettext_lazy("Bild"),
         to="MediaFile",
         on_delete=models.SET_NULL,
         null=True,
@@ -385,9 +385,9 @@ class Event(models.Model):
     )
 
     for_kids = models.BooleanField(
-        ugettext_lazy("Gottesdienst mit Kindergottesdienst"),
+        gettext_lazy("Gottesdienst mit Kindergottesdienst"),
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Nur bei Gottesdiensten kann hier eingestellt werden, ob das "
             "Kindergottesdienst-Logo angezeigt werden soll. Sonst hat dieses "
             "Feld keine Auswirkungen."
@@ -398,12 +398,12 @@ class Event(models.Model):
 
     class Meta:
         ordering = ("-begin",)
-        verbose_name = ugettext_lazy("Veranstaltung")
-        verbose_name_plural = ugettext_lazy("Veranstaltungen")
+        verbose_name = gettext_lazy("Veranstaltung")
+        verbose_name_plural = gettext_lazy("Veranstaltungen")
         permissions = (
             (
                 "can_see_hidden_events",
-                ugettext_lazy("Darf nichtöffentliche Veranstaltungen sehen"),
+                gettext_lazy("Darf nichtöffentliche Veranstaltungen sehen"),
             ),
         )
 
@@ -532,23 +532,23 @@ class Announcement(models.Model):
     objects = AnnouncementManager()
 
     title = models.CharField(
-        ugettext_lazy("Titel"),
+        gettext_lazy("Titel"),
         max_length=255,
-        help_text=ugettext_lazy("Kurzer Titel der Ankündigung."),
+        help_text=gettext_lazy("Kurzer Titel der Ankündigung."),
     )
 
     short_text = models.TextField(
-        ugettext_lazy("Kurztext"),
-        help_text=ugettext_lazy(
+        gettext_lazy("Kurztext"),
+        help_text=gettext_lazy(
             "Kurzer Text. Erscheint auf der Startseite. Kein HTML erlaubt. "
             "Links im Markdown-Stil sind möglich, d. h. [Text](URL)."
         ),
     )
 
     long_text = models.TextField(
-        ugettext_lazy("Text"),
+        gettext_lazy("Text"),
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Längerer Text. Erscheint nur auf einer gesonderten Seite, die von "
             "der Startseite aus erreichbar ist. Kein HTML erlaubt. Leerzeilen "
             "können verwendet werden. Links im Markdown-Stil sind möglich, d. "
@@ -557,17 +557,17 @@ class Announcement(models.Model):
     )
 
     end = models.DateTimeField(
-        ugettext_lazy("Ende"),
-        help_text=ugettext_lazy(
+        gettext_lazy("Ende"),
+        help_text=gettext_lazy(
             "Bis zu diesem Zeitpunkt ist die Ankündigung auf der Startseite "
             "und ggf. über den gesonderten Link erreichbar."
         ),
     )
 
     on_home_before_end = models.PositiveIntegerField(
-        ugettext_lazy("Auf der Startseite (Angabe in Tagen)"),
+        gettext_lazy("Auf der Startseite (Angabe in Tagen)"),
         default=30,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Die Ankündigung erscheint so viele Tage vor ihrem Ende auf der "
             "Startseite. Die Einstellung ermöglicht eine verzögerte "
             "Veröffentlichung."
@@ -575,7 +575,7 @@ class Announcement(models.Model):
     )
 
     mediafile = models.ForeignKey(
-        verbose_name=ugettext_lazy("Bild"),
+        verbose_name=gettext_lazy("Bild"),
         to="MediaFile",
         on_delete=models.SET_NULL,
         null=True,
@@ -586,8 +586,8 @@ class Announcement(models.Model):
 
     class Meta:
         ordering = ("-end",)
-        verbose_name = ugettext_lazy("Ankündigung")
-        verbose_name_plural = ugettext_lazy("Ankündigungen")
+        verbose_name = gettext_lazy("Ankündigung")
+        verbose_name_plural = gettext_lazy("Ankündigungen")
 
     def __str__(self):
         return self.title
@@ -627,17 +627,17 @@ class MediaFile(models.Model):
     """
 
     mediafile = models.FileField(
-        ugettext_lazy("Datei"),
+        gettext_lazy("Datei"),
         max_length=255,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Achtung: Hochgeladene Dateien sind für jeden im Internet sichtbar."
         ),
     )
 
     text = models.TextField(
-        ugettext_lazy("Alternativ-Text"),
+        gettext_lazy("Alternativ-Text"),
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Text, der als Alternativtext für Screenreader (Alt-Attribut) "
             "sowie als Tooltip (Title-Attribute) verwendet wird, wenn das Bild "
             "bei Veranstaltungen oder Ankündigungen eingebettet ist. Kein HTML "
@@ -646,13 +646,13 @@ class MediaFile(models.Model):
     )
 
     uploaded_on = models.DateTimeField(
-        ugettext_lazy("Hochgeladen am"), auto_now_add=True
+        gettext_lazy("Hochgeladen am"), auto_now_add=True
     )
 
     class Meta:
         ordering = ("-uploaded_on",)
-        verbose_name = ugettext_lazy("Datei")
-        verbose_name_plural = ugettext_lazy("Dateien")
+        verbose_name = gettext_lazy("Datei")
+        verbose_name_plural = gettext_lazy("Dateien")
 
     def __str__(self):
         return self.mediafile.url
@@ -664,24 +664,24 @@ class CurrentMarkusbote(models.Model):
     """
 
     file = models.ForeignKey(
-        verbose_name=ugettext_lazy("Datei"),
+        verbose_name=gettext_lazy("Datei"),
         to=MediaFile,
         on_delete=models.PROTECT,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Der aktuelle Markusbote muss zuerst hochgeladen werden. Dann "
             "steht er hier zur Auswahl."
         ),
     )
 
     months = models.CharField(
-        ugettext_lazy("Monate"),
+        gettext_lazy("Monate"),
         max_length=255,
-        help_text=ugettext_lazy("Beispiel: Oktober-November 2018"),
+        help_text=gettext_lazy("Beispiel: Oktober-November 2018"),
     )
 
     class Meta:
-        verbose_name = ugettext_lazy("Aktueller Markusbote")
-        verbose_name_plural = ugettext_lazy("Aktueller Markusbote")
+        verbose_name = gettext_lazy("Aktueller Markusbote")
+        verbose_name_plural = gettext_lazy("Aktueller Markusbote")
 
     def __str__(self):
         return self.months
@@ -694,7 +694,7 @@ class CurrentMarkusbote(models.Model):
         model = self.__class__
         if model.objects.count() > 0 and self.id != model.objects.get().id:
             raise ValidationError(
-                ugettext_lazy(
+                gettext_lazy(
                     "Es kann gleichzeitig nur einen aktuellen Markusboten geben."
                 )
             )
@@ -706,27 +706,27 @@ class ClericalWordAudioFile(models.Model):
     """
 
     file = models.FileField(
-        ugettext_lazy("Audio-Datei"),
+        gettext_lazy("Audio-Datei"),
         max_length=255,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Achtung: Hochgeladene Dateien sind für jeden im Internet sichtbar."
         ),
     )
 
     title = models.CharField(
-        ugettext_lazy("Titel"),
+        gettext_lazy("Titel"),
         max_length=255,
-        help_text=ugettext_lazy("Kurzer Titel des Beitrags."),
+        help_text=gettext_lazy("Kurzer Titel des Beitrags."),
     )
 
     description = models.TextField(
-        ugettext_lazy("Beschreibung des Beitrags"),
+        gettext_lazy("Beschreibung des Beitrags"),
         blank=True,
-        help_text=ugettext_lazy("Kein HTML erlaubt."),
+        help_text=gettext_lazy("Kein HTML erlaubt."),
     )
 
     mediafile = models.ForeignKey(
-        verbose_name=ugettext_lazy("Bild"),
+        verbose_name=gettext_lazy("Bild"),
         to="MediaFile",
         on_delete=models.SET_NULL,
         null=True,
@@ -734,19 +734,19 @@ class ClericalWordAudioFile(models.Model):
     )
 
     mime_type = models.CharField(
-        ugettext_lazy("MIME-Type (Internet Media Type)"),
+        gettext_lazy("MIME-Type (Internet Media Type)"),
         max_length=255,
         default="audio/mpeg",
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Dieser Wert ist ggf. an das Dateiformat anzupassen (z. B. in "
             "audio/mp4, audio/ogg, audio/wav)."
         ),
     )
 
     hidden = models.BooleanField(
-        ugettext_lazy("Versteckt"),
+        gettext_lazy("Versteckt"),
         blank=True,
-        help_text=ugettext_lazy(
+        help_text=gettext_lazy(
             "Hiermit kann der Beitrag auf der Seite ausgeblendet werden."
         ),
     )
@@ -754,13 +754,13 @@ class ClericalWordAudioFile(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     pubdate = models.DateTimeField(
-        ugettext_lazy("Veröffentlicht am"), auto_now_add=True
+        gettext_lazy("Veröffentlicht am"), auto_now_add=True
     )
 
     class Meta:
         ordering = ("-pubdate",)
-        verbose_name = ugettext_lazy("Geistliches Wort Audio-Datei")
-        verbose_name_plural = ugettext_lazy("Geistliches Wort Audio-Dateien")
+        verbose_name = gettext_lazy("Geistliches Wort Audio-Datei")
+        verbose_name_plural = gettext_lazy("Geistliches Wort Audio-Dateien")
 
     def __str__(self):
         return self.file.url

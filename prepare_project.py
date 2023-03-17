@@ -12,29 +12,30 @@ SITE_IDS = {
     'kindergarden': 'parish',
 }
 
-DATABASES_DEVELOPMENT = dedent(
-    """
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'db_dreifaltigkeit_{}.sqlite3'.format(SITE_ID)
-            ),
-        }
-    }
-    """
-).strip()
+# DATABASES_DEVELOPMENT = dedent(
+#     """
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(
+#                 os.path.dirname(os.path.abspath(__file__)),
+#                 'db_dreifaltigkeit_{}.sqlite3'.format(SITE_ID)
+#             ),
+#         }
+#     }
+#     """
+# ).strip()
 
 DATABASES_PRODUCTION = dedent(
     """
+    DB_HOST = os.getenv('PG_HOST', '')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'dreifaltigkeit_{}'.format(SITE_ID),
             'USER': 'dreifaltigkeit',
             'PASSWORD': '',
-            'HOST': '',
+            'HOST': DB_HOST,
             'PORT': '',
         }
     }
@@ -52,7 +53,7 @@ def create_settings():
                 secret_key = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
                 host = os.environ.get('DREIFALTIGKEIT_{}_HOST'.format(site_id.upper()))
                 other_site = os.environ.get('DREIFALTIGKEIT_{}_HOST'.format(SITE_IDS[site_id].upper()))
-                databases = DATABASES_PRODUCTION if host else DATABASES_DEVELOPMENT
+                databases = DATABASES_PRODUCTION  # if host else DATABASES_DEVELOPMENT
                 context = dict(
                     secret_key=secret_key,
                     debug=not host,

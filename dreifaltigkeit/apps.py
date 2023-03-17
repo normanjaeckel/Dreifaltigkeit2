@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings
 from django.utils.text import format_lazy
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 
 class DreifaltigkeitAppConfig(AppConfig):
@@ -12,6 +12,6 @@ class DreifaltigkeitAppConfig(AppConfig):
     name = "dreifaltigkeit"
     verbose_name = format_lazy(
         "{headline} ({site_id})",
-        headline=ugettext_lazy("Homepage der Dreifaltigkeitskirchgemeinde"),
+        headline=gettext_lazy("Homepage der Dreifaltigkeitskirchgemeinde"),
         site_id=settings.SITE_ID,
     )

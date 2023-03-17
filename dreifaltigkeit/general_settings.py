@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import re
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 # Application definition
 
@@ -79,7 +79,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "de-DE"
 
 # Operating system locales de_DE.UTF-8 and en_US.UTF-8 are required.
-LANGUAGES = [("de", ugettext_lazy("German")), ("en", ugettext_lazy("English"))]
+LANGUAGES = [("de", gettext_lazy("German")), ("en", gettext_lazy("English"))]
 
 TIME_ZONE = "Europe/Berlin"
 
