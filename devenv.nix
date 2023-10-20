@@ -3,6 +3,7 @@
 {
   languages.python = {
     enable = true;
+    version = "3.11";
     venv.enable = true;
   };
 
@@ -19,6 +20,8 @@
     ];
     initdbArgs = [ "--username=dreifaltigkeit" "--locale=C" "--encoding=UTF8" ];
   };
+
+  languages.elm.enable = true;
 
   # https://devenv.sh/basics/
   # env.GREET = "devenv";
