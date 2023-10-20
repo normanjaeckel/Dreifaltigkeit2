@@ -1,0 +1,23 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  default:
+    - task: build
+
+  build:
+    desc: Compiles all Elm files to our assets/elm.js
+    cmds:
+      - elm make --output=../static/assets/js/elm.js --optimize src/Main.elm
+    sources:
+      - src/**/*.elm
+    generates:
+      - ../static/assets/js/elm.js
+
+  review:
+    desc: Analyzes source code with elm-review
+    cmds:
+      - elm-review
+    sources:
+      - src/**/*.elm

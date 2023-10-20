@@ -12,40 +12,44 @@
         <h1>Gottesdienste und Andachten</h1>
     </header>
 
-    <p><span class="image right big"><img src="{% static 'images/Altar_01.jpg' %}" title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>Wir feiern jeden Sonn- und Feiertag Gottesdienste und laden Sie herzlich dazu ein, entweder in unsere <a href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#trinitatiskirche">Trinitatiskirche</a> in der Theodor-Neubauer-Straße 16 oder in die <a href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#markuskapelle">Markuskapelle</a> in der Dresdner Straße 59.</p>
-    <p>Für die Kinder wird in der Kirche meistens ein Kindergottesdienst angeboten, und für die ganz Kleinen liegt ein Spieleteppich bereit.</p>
-    <p>Wenn Sie mögen, hören Sie zu Hause oder unterwegs ein <a href="{% url 'clerical_word' %}">Geistliches Wort</a> aus unserer Gemeinde.</p>
+    <p><span class="image right big"><img src="{% static 'images/Altar_01.jpg' %}"
+                title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
+                alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>Wir
+        feiern jeden Sonn- und Feiertag Gottesdienste und laden Sie herzlich dazu ein, entweder in unsere <a
+            href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#trinitatiskirche">Trinitatiskirche</a> in
+        der Theodor-Neubauer-Straße 16 oder in die <a
+            href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#markuskapelle">Markuskapelle</a> in der
+        Dresdner Straße 59.</p>
+    <p>Für die Kinder wird in der Kirche meistens ein Kindergottesdienst angeboten, und für die ganz Kleinen liegt ein
+        Spieleteppich bereit.</p>
+    <!-- <p>Wenn Sie mögen, hören Sie zu Hause oder unterwegs ein <a href="{% url 'clerical_word' %}">Geistliches Wort</a> aus unserer Gemeinde.</p> -->
 
     <hr class="major" />
 
     <h2>Alle kommenden Gottesdienste und Andachten</h2>
 
-    <dl>
-        {% for service in services %}
-            {% ifchanged %}
-                {% if service.monthly_text %}
-                    <blockquote>{{ service.monthly_text.text }}<br />{{ service.monthly_text.verse }}</blockquote>
-                {% endif %}
-            {% endifchanged %}
-            <dt id="termin-{{ service.pk }}">{{ service.begin }} Uhr &middot; {{ service.place }} &middot; {{service.get_type_display }}</dt>
-            <dd>
-                <p>
-                    {{ service.title }}: {{ service.content|linkify }}
-                    {% if service.for_kids %}
-                        <span class="image kids-logo" title="Kindergottesdienst">
-                            <img src="{% static 'images/Kindergottesdienst_Logo.jpg' %}" alt="Kindergottesdienst" />
-                        </span>
-                    {% endif %}
-                </p>
-            </dd>
-        {% empty %}
-            <dt>Gottesdienste in der Trinitatiskirche oder der Markuskapelle</dt>
-            <dd>Die nächsten Gottesdienste werden in Kürze bekannt gegeben.</dd>
-        {% endfor %}
-    </dl>
+    <div id="list-of-services"></div>
 
     <hr class="major" />
 
 </section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+<script src="{% static 'assets/js/elm.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        var app = Elm.Main.init({
+            node: document.getElementById("list-of-services"),
+            flags: {
+                staticPrefix: "{% static '' %}",
+                monthlyTexts: "",
+            },
+        });
+    });
+</script>
 
 {% endblock %}

@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  packages = [
+    pkgs.go-task
+  ];
+
   languages.python = {
     enable = true;
     version = "3.11";
@@ -11,6 +15,8 @@
     pip install --upgrade --requirement requirements.txt
     pip freeze
   '';
+
+  env.PGUSER = "dreifaltigkeit";
 
   services.postgres = {
     enable = true;
