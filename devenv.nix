@@ -12,6 +12,7 @@
   };
 
   enterShell = ''
+    export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
     pip install --upgrade --requirement requirements.txt
     pip freeze
   '';

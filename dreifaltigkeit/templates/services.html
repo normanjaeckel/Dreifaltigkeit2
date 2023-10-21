@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load dreifaltigkeit_filters %}
 
 {% block content %}
 
@@ -14,12 +13,13 @@
 
     <p><span class="image right big"><img src="{% static 'images/Altar_01.jpg' %}"
                 title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
-                alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>Wir
-        feiern jeden Sonn- und Feiertag Gottesdienste und laden Sie herzlich dazu ein, entweder in unsere <a
-            href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#trinitatiskirche">Trinitatiskirche</a> in
-        der Theodor-Neubauer-Straße 16 oder in die <a
-            href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#markuskapelle">Markuskapelle</a> in der
-        Dresdner Straße 59.</p>
+                alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" /></span>
+        Wir feiern jeden Sonn- und Feiertag Gottesdienste und laden Sie herzlich dazu ein, entweder in unsere
+        <a href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#trinitatiskirche">Trinitatiskirche</a> in der
+        Theodor-Neubauer-Straße 16 oder in die
+        <a href="{% url 'flat_page' category='gemeinde' page='gebaeude' %}#markuskapelle">Markuskapelle</a> in der
+        Dresdner Straße 59.
+    </p>
     <p>Für die Kinder wird in der Kirche meistens ein Kindergottesdienst angeboten, und für die ganz Kleinen liegt ein
         Spieleteppich bereit.</p>
     <!-- <p>Wenn Sie mögen, hören Sie zu Hause oder unterwegs ein <a href="{% url 'clerical_word' %}">Geistliches Wort</a> aus unserer Gemeinde.</p> -->
@@ -29,6 +29,11 @@
     <h2>Alle kommenden Gottesdienste und Andachten</h2>
 
     <div id="list-of-services"></div>
+
+    <!-- <dl>
+        <dt>Gottesdienste in der Trinitatiskirche oder der Markuskapelle</dt>
+        <dd>Die nächsten Gottesdienste werden in Kürze bekannt gegeben.</dd>
+    </dl> -->
 
     <hr class="major" />
 
@@ -46,7 +51,7 @@
             node: document.getElementById("list-of-services"),
             flags: {
                 staticPrefix: "{% static '' %}",
-                monthlyTexts: "",
+                monthlyTexts: {{ monthly_texts | safe }},
             },
         });
     });

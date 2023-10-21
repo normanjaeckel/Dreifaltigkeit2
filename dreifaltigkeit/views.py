@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 from itertools import chain
 
@@ -12,10 +13,10 @@ from .models import (
     Announcement,
     ClericalWordAudioFile,
     CurrentMarkusbote,
-    Event,
-    FlatPage as FlatPageModel,
-    YearlyText,
+    Event
 )
+from .models import FlatPage as FlatPageModel
+from .models import MonthlyText, YearlyText
 
 
 class Home(TemplateView):
@@ -59,19 +60,21 @@ class Home(TemplateView):
         )
 
 
-class Services(ListView):
+class Services(TemplateView):
     """
     View for all services
     """
 
     template_name = "services.html"
-    context_object_name = "services"
 
-    def get_queryset(self):
-        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
-        return Event.objects.filter(
-            Q(type="service") | Q(type="prayer"), begin__gte=threshold
-        ).reverse()
+    def get_context_data(self, **context):
+        monthly_texts = [
+            {"month": t.month, "text": t.text, "verse": t.verse}
+            for t in MonthlyText.objects.all()
+        ]
+        return super().get_context_data(
+            monthly_texts=json.dumps(monthly_texts), **context
+        )
 
 
 class ClericalWordPage(ListView):
