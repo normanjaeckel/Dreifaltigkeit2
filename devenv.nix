@@ -20,7 +20,7 @@
   '';
 
   processes = {
-    install-python-requirements.exec = "pip install --upgrade --requirement requirements.txt && pip freeze";
+    install-python-requirements.exec = "pip install --upgrade --requirement requirements.txt && pip freeze && sleep infinity";
   };
 
   env.PGUSER = "dreifaltigkeit";

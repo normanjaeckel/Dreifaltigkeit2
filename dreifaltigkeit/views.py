@@ -36,9 +36,6 @@ class Home(TemplateView):
         except YearlyText.DoesNotExist:
             yearly_text = None
 
-        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
-        next_service = Event.objects.filter(type="service", begin__gte=threshold).last()
-
         try:
             current_markusbote = CurrentMarkusbote.objects.get()
         except CurrentMarkusbote.DoesNotExist:
@@ -53,7 +50,6 @@ class Home(TemplateView):
 
         return super().get_context_data(
             yearly_text=yearly_text,
-            next_service=next_service,
             current_markusbote=current_markusbote,
             articles=articles,
             **context

@@ -30,11 +30,6 @@
 
     <div id="list-of-services"></div>
 
-    <!-- <dl>
-        <dt>Gottesdienste in der Trinitatiskirche oder der Markuskapelle</dt>
-        <dd>Die nächsten Gottesdienste werden in Kürze bekannt gegeben.</dd>
-    </dl> -->
-
     <hr class="major" />
 
 </section>
@@ -50,6 +45,7 @@
         var app = Elm.Main.init({
             node: document.getElementById("list-of-services"),
             flags: {
+                page: "services",
                 staticPrefix: "{% static '' %}",
                 monthlyTexts: {{ monthly_texts | safe }},
             },
