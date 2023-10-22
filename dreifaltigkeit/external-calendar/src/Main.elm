@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, blockquote, br, dd, div, dl, dt, img, p, s, span, text)
+import Html exposing (Html, blockquote, br, dd, div, dl, dt, img, p, span, text)
 import Html.Attributes exposing (alt, class, src, title)
 import Http
 import Iso8601
