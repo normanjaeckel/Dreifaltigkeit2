@@ -28,3 +28,6 @@ dreifaltigkeit/templates/special_page*
 .direnv/
 .devenv*
 devenv.local.nix
+
+# IDE settins
+.vscode/
