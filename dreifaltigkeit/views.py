@@ -3,7 +3,6 @@ from datetime import timedelta
 from itertools import chain
 
 from django.conf import settings
-from django.db.models import Q
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -13,10 +12,11 @@ from .models import (
     Announcement,
     ClericalWordAudioFile,
     CurrentMarkusbote,
-    Event
+    Event,
+    MonthlyText,
+    YearlyText,
 )
 from .models import FlatPage as FlatPageModel
-from .models import MonthlyText, YearlyText
 
 
 class Home(TemplateView):

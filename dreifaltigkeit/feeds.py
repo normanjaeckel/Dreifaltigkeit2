@@ -4,7 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.syndication.views import Feed, add_domain
 from django.urls import reverse
 from django.utils.formats import localize
-from django.utils.timezone import localtime, now
+from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy
 from django_ical.views import ICalFeed
 
