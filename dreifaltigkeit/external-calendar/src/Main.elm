@@ -221,6 +221,7 @@ eventDecoder =
             |> DP.required "END_RFC" Iso8601.decoder
             |> DP.required "LITURG_BEZ" D.string
             |> DP.required "_place_NAME" D.string
+            |> DP.required "_event_LINK" D.string
             |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "ja"))
         )
 
@@ -258,9 +259,7 @@ eventEncoderForFullCalendar event =
         , ( "start", E.string (event.start |> Iso8601.fromTime) )
         , ( "end", E.string (event.end |> Iso8601.fromTime) )
         , ( "color", E.string (event.eventtype |> eventtypeToColor) )
-
-        -- TODO: Add url to single event page.
-        --, ( "url", E.string "google.de" )
+        , ( "url", E.string event.link )
         ]
 
 
@@ -273,6 +272,7 @@ type alias Event =
     , end : Time.Posix
     , liturgBez : String
     , place : String
+    , link : String
     , withKidsService : Bool
     }
 
