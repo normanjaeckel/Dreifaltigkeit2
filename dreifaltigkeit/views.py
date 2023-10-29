@@ -82,36 +82,20 @@ class ClericalWordPage(ListView):
     template_name = "clerical_word.html"
 
 
-class Events(ListView):
+class Events(TemplateView):
     """
     View for all events.
     """
 
     template_name = "events.html"
-    context_object_name = "events"
-    model = Event
 
 
-class SingleEvent(DetailView):
+class SingleEvent(TemplateView):
     """
     View for a single event.
     """
 
     template_name = "single_event.html"
-    model = Event
-
-    def get_object(self):
-        """
-        Customized method: Send HTTP 404 if event type is service or prayer or
-        there is no event content.
-        """
-        event = super().get_object()
-        if event.type in ("service", "prayer") or event.flat_page or not event.content:
-            message = "Event {} is a service or prayer, has a flat page or has no content.".format(
-                event.title
-            )
-            raise Http404(message)
-        return event
 
 
 class FlatPage(TemplateView):

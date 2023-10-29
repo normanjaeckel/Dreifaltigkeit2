@@ -41,6 +41,10 @@ externalCalendarUrl page =
             -- TODO: We can strip events in the past with "&start=2023-01-1&end=2999-12-25" which is useful with dynamic start value
             url ++ "&past=2"
 
+        SingleEvent ->
+            -- TODO: We can strip events in the past with "&start=2023-01-1&end=2999-12-25" which is useful with dynamic start value
+            url ++ "&past=2"
+
 
 localTimezome : Time.Zone
 localTimezome =
@@ -71,6 +75,8 @@ type alias Flags =
     { page : Page
     , staticPrefix : String
     , monthlyTexts : List MonthlyText
+    , defaultImage : Image
+    , eventId : Int
     }
 
 
@@ -78,11 +84,12 @@ type Page
     = Home
     | Services
     | Calendar
+    | SingleEvent
 
 
 flagsDecoder : D.Decoder Flags
 flagsDecoder =
-    D.map3 Flags
+    D.map5 Flags
         (D.field "page" pageDecoder)
         (D.maybe (D.field "staticPrefix" D.string)
             |> D.andThen (Maybe.withDefault "" >> D.succeed)
@@ -90,6 +97,8 @@ flagsDecoder =
         (D.maybe (D.field "monthlyTexts" (D.list monthlyTextDecoder))
             |> D.andThen (Maybe.withDefault [] >> D.succeed)
         )
+        (D.maybe (D.field "defaultImage" defaultImageDecoder) |> D.andThen (Maybe.withDefault (Image "" "") >> D.succeed))
+        (D.maybe (D.field "eventId" D.int) |> D.andThen (Maybe.withDefault 0 >> D.succeed))
 
 
 pageDecoder : D.Decoder Page
@@ -106,6 +115,9 @@ pageDecoder =
 
                     "calendar" ->
                         D.succeed Calendar
+
+                    "singleEvent" ->
+                        D.succeed SingleEvent
 
                     _ ->
                         D.fail "bad value for flag 'page'"
@@ -209,11 +221,19 @@ monthlyTextMonthDecoder =
             )
 
 
+defaultImageDecoder : D.Decoder Image
+defaultImageDecoder =
+    D.map2 Image
+        (D.field "src" D.string)
+        (D.field "text" D.string)
+
+
 eventDecoder : D.Decoder Event
 eventDecoder =
     D.field "Veranstaltung"
         (D.succeed Event
             |> DP.required "_event_EVENTTYPE" eventtypeDecoder
+            |> DP.required "ID" (D.string |> D.andThen (String.toInt >> Maybe.withDefault 0 >> D.succeed))
             |> DP.required "_event_TITLE" D.string
             |> DP.required "SUBTITLE" D.string
             |> DP.required "_event_LONG_DESCRIPTION" D.string
@@ -222,8 +242,26 @@ eventDecoder =
             |> DP.required "LITURG_BEZ" D.string
             |> DP.required "_place_NAME" D.string
             |> DP.required "_event_LINK" D.string
+            |> D.andThen
+                (\fn ->
+                    D.map2
+                        (\src txt ->
+                            if String.isEmpty src then
+                                Nothing
+
+                            else
+                                Just <| Image src txt
+                        )
+                        (D.field "_event_IMAGE" D.string)
+                        (D.field "_event_CAPTION" D.string)
+                        |> D.andThen (\i -> fn i |> D.succeed)
+                )
             |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "ja"))
         )
+
+
+
+-- required : String -> Decoder a -> Decoder (a -> (b -> c)) -> Decoder (b -> c)
 
 
 eventtypeDecoder : D.Decoder Eventtype
@@ -265,6 +303,7 @@ eventEncoderForFullCalendar event =
 
 type alias Event =
     { eventtype : Eventtype
+    , id : Int
     , title : String
     , subtitle : String
     , longDescription : String
@@ -273,6 +312,7 @@ type alias Event =
     , liturgBez : String
     , place : String
     , link : String
+    , image : Maybe Image
     , withKidsService : Bool
     }
 
@@ -296,6 +336,12 @@ type alias MonthlyText =
 type alias MonthlyTextMonth =
     { year : Int
     , month : Time.Month
+    }
+
+
+type alias Image =
+    { src : String
+    , text : String
     }
 
 
@@ -345,6 +391,9 @@ view model =
                 Calendar ->
                     div [] []
 
+                SingleEvent ->
+                    viewSingleEvent dataFromServer model
+
 
 viewHome : Model -> Html Msg
 viewHome model =
@@ -355,6 +404,8 @@ viewHome model =
         Just service ->
             div []
                 [ p [] [ text <| posixToStringWithWeekday service.start, br [] [], text service.place ]
+
+                -- TODO: Linkify longDescription
                 , p [] [ text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.title, service.subtitle, service.longDescription ] ]
                 ]
 
@@ -425,7 +476,8 @@ serviceView staticPrefix service =
     [ dt [] [ text <| String.join " · " [ service.start |> posixToString, service.place, service.title ] ]
     , dd []
         (firstLine
-            :: (if service.longDescription /= "" then
+            :: (if not <| String.isEmpty service.longDescription then
+                    -- TODO: Linkify longDescription
                     [ p [] [ text service.longDescription ] ]
 
                 else
@@ -433,6 +485,36 @@ serviceView staticPrefix service =
                )
         )
     ]
+
+
+viewSingleEvent : Flags -> Model -> Html Msg
+viewSingleEvent flags model =
+    case model.events |> List.filter (\e -> e.id == flags.eventId) |> List.head of
+        Nothing ->
+            div [] [ text "Veranstaltung nicht gefunden" ]
+
+        Just event ->
+            let
+                ( imageSrc, imageText ) =
+                    case event.image of
+                        Just i ->
+                            ( i.src, i.text )
+
+                        Nothing ->
+                            ( flags.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
+            in
+            div [ class "row" ]
+                [ div [ class "6u", class "12u$(small)" ]
+                    [ p [] [ text <| (event.start |> posixToString) ++ " · " ++ event.place ]
+                    , p [] [ text <| stringJoinIfNotEmpty " · " [ event.title, event.subtitle ] ]
+
+                    -- TODO: Linkify and Linebreaks for the longDescription
+                    , p [] [ text event.longDescription ]
+                    ]
+                , div [ class "6u", class "12u$(small)" ]
+                    [ span [ class "image", class "fit" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
+                    ]
+                ]
 
 
 posixToString : Time.Posix -> String

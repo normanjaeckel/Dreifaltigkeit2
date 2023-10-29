@@ -12,26 +12,7 @@
         <h1>{{ event.title }}</h1>
     </header>
 
-    <div class="row">
-      <div class="6u 12u$(small)">
-          <p>{{ event.begin }} Uhr &middot; {{ event.place }}</p>
-          {{ event.content|linkify|linebreaks }}
-      </div>
-      <div class="6u 12u$(small)">
-          {% with default_image=DEFAULT_IMAGES|random %}
-              {% static default_image.src as default_image_src %}
-              <span class="image fit ">
-                  <img src="{{ event.mediafile|default:default_image_src }}"
-                      {% if event.mediafile %}
-                          alt="{{ event.mediafile.text }}" title="{{ event.mediafile.text }}"
-                      {% else %}
-                          alt="{{ default_image.text }}" title="{{ default_image.text }}"
-                      {% endif %}
-                  />
-              </span>
-          {% endwith %}
-      </div>
-    </div>
+    <div id="single-event"></div>
 
     <hr class="major" />
 
@@ -39,9 +20,26 @@
 
 {% endblock %}
 
+{% block extra_scripts %}
 
-{% block admin_link %}
+<script src="{% static 'assets/js/elm.js' %}"></script>
 
-<a href="{% url 'admin:dreifaltigkeit_event_change' event.pk %}">Termin bearbeiten</a>
+{% with default_image=DEFAULT_IMAGES|random %}
+
+<script>
+    $(document).ready(function () {
+        var app = Elm.Main.init({
+            node: document.getElementById("single-event"),
+            flags: {
+                page: "singleEvent",
+                staticPrefix: "{% static '' %}",
+                defaultImage: {{ default_image | safe }},
+                eventId: {{ pk }},
+            },
+        });
+    });
+</script>
+
+{% endwith %}
 
 {% endblock %}
