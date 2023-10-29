@@ -1,4 +1,4 @@
-port module Main exposing (main)
+port module Main exposing (..)
 
 import Browser
 import Html exposing (Html, blockquote, br, dd, div, dl, dt, img, p, span, text)
@@ -292,12 +292,20 @@ eventtypeDecoder =
 
 eventEncoderForFullCalendar : Event -> E.Value
 eventEncoderForFullCalendar event =
+    let
+        link =
+            if String.isEmpty event.link then
+                "/termine/" ++ String.fromInt event.id
+
+            else
+                event.link
+    in
     E.object
         [ ( "title", E.string (stringJoinIfNotEmpty ": " [ event.title, event.liturgBez, event.subtitle ]) )
         , ( "start", E.string (event.start |> Iso8601.fromTime) )
         , ( "end", E.string (event.end |> Iso8601.fromTime) )
         , ( "color", E.string (event.eventtype |> eventtypeToColor) )
-        , ( "url", E.string event.link )
+        , ( "url", E.string link )
         ]
 
 
@@ -625,19 +633,9 @@ toGermanWeekday weekday =
 
 stringJoinIfNotEmpty : String -> List String -> String
 stringJoinIfNotEmpty sep chunks =
-    case chunks of
-        first :: rest ->
-            if first == "" then
-                stringJoinIfNotEmpty sep rest
-
-            else if List.isEmpty rest then
-                first
-
-            else
-                first ++ sep ++ stringJoinIfNotEmpty sep rest
-
-        [] ->
-            ""
+    chunks
+        |> List.filter (not << String.isEmpty)
+        |> String.join sep
 
 
 eventtypeToColor : Eventtype -> String

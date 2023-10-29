@@ -5,6 +5,7 @@
 {
   packages = [
     pkgs.go-task
+    pkgs.elmPackages.elm-test
   ];
 
   languages.python = {
