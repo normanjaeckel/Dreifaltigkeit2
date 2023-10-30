@@ -15,6 +15,14 @@ tasks:
     generates:
       - ../static/assets/js/elm.js
 
+  test:
+    desc: Runs tests
+    cmds:
+      - elm-test
+    sources:
+      - src/**/*.elm
+      - tests/**/*.elm
+
   review:
     desc: Analyzes source code with elm-review
     cmds:

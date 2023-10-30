@@ -1,5 +1,4 @@
 import json
-from datetime import timedelta
 from itertools import chain
 
 from django.conf import settings

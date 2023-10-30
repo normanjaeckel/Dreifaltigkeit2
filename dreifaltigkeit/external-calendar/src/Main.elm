@@ -1,4 +1,4 @@
-port module Main exposing (..)
+port module Main exposing (main, stringJoinIfNotEmpty)
 
 import Browser
 import Html exposing (Html, blockquote, br, dd, div, dl, dt, img, p, span, text)
@@ -293,6 +293,7 @@ eventtypeDecoder =
 eventEncoderForFullCalendar : Event -> E.Value
 eventEncoderForFullCalendar event =
     let
+        link : String
         link =
             if String.isEmpty event.link then
                 "/termine/" ++ String.fromInt event.id

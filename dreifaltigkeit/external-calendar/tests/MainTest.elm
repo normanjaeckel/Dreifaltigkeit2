@@ -1,8 +1,8 @@
-module MainTest exposing (..)
+module MainTest exposing (suite)
 
 import Expect
 import Main exposing (stringJoinIfNotEmpty)
-import Test exposing (..)
+import Test exposing (Test, describe, test)
 
 
 suite : Test
