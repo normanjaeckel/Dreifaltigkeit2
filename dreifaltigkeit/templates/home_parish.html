@@ -37,7 +37,10 @@
             <a href="{% url 'parish_feed' %}" class="icon fa-rss rss-icon"><span class="label">RSS</span></a>
         </h2>
     </header>
-    <div class="posts">
+
+    <div id="articles"></div>
+
+    <!-- <div class="posts">
         <article>
             <a href="{% url 'services' %}" class="image">
                 <img src="{% static 'images/Altar_02.jpg' %}"
@@ -103,7 +106,7 @@
             </ul>
         </article>
 
-    </div>
+    </div> -->
 
     <hr class="major" />
 
@@ -115,15 +118,30 @@
 
 <script src="{% static 'assets/js/elm.js' %}"></script>
 
+{% with default_image=DEFAULT_IMAGES|random %}
+
 <script>
     $(document).ready(function () {
         var app = Elm.Main.init({
-            node: document.getElementById("next-service"),
+            node: document.getElementById("articles"),
             flags: {
                 page: "home-parish",
+                staticPrefix: "{% static '' %}",
+                urls: {
+                    services: "{% url 'services' %}",
+                    markusbote: "{% url 'flat_page' category='gemeinde' page='markusbote' %}",
+                    events: "{% url 'events' %}",
+                },
+                {% if current_markusbote %}currentMarkusbote: {
+        url: "{{ current_markusbote.file }}",
+        months: "{{ current_markusbote.months }}",
+    }, {% endif %}
+        defaultImage: {{ default_image | safe }},
             },
         });
     });
 </script>
+
+{% endwith %}
 
 {% endblock %}

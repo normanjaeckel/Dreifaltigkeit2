@@ -1,8 +1,8 @@
 port module Main exposing (main, stringJoinIfNotEmpty)
 
 import Browser
-import Html exposing (Html, blockquote, br, dd, div, dl, dt, img, p, span, text)
-import Html.Attributes exposing (alt, class, src, title)
+import Html exposing (Html, a, article, blockquote, br, dd, div, dl, dt, h3, img, li, p, span, text, ul)
+import Html.Attributes exposing (alt, class, href, src, title)
 import Http
 import Iso8601
 import Json.Decode as D
@@ -32,7 +32,7 @@ externalCalendarUrl page =
     in
     case page of
         Home ->
-            url ++ "&eventtype=1&itemsPerPage=1"
+            url
 
         Services ->
             url ++ "&eventtype=1"
@@ -43,6 +43,7 @@ externalCalendarUrl page =
 
         SingleEvent ->
             -- TODO: We can strip events in the past with "&start=2023-01-1&end=2999-12-25" which is useful with dynamic start value
+            -- TODO: Just fetch one single event here.
             url ++ "&past=2"
 
 
@@ -74,7 +75,9 @@ init initialFlags =
 type alias Flags =
     { page : Page
     , staticPrefix : String
+    , urls : Urls
     , monthlyTexts : List MonthlyText
+    , currentMarkusbote : CurrentMarkusbote
     , defaultImage : Image
     , eventId : Int
     }
@@ -87,15 +90,28 @@ type Page
     | SingleEvent
 
 
+type alias Urls =
+    { services : String
+    , markusbote : String
+    , events : String
+    }
+
+
 flagsDecoder : D.Decoder Flags
 flagsDecoder =
-    D.map5 Flags
+    D.map7 Flags
         (D.field "page" pageDecoder)
         (D.maybe (D.field "staticPrefix" D.string)
             |> D.andThen (Maybe.withDefault "" >> D.succeed)
         )
+        (D.maybe (D.field "urls" urlsDecoder)
+            |> D.andThen (Maybe.withDefault (Urls "" "" "") >> D.succeed)
+        )
         (D.maybe (D.field "monthlyTexts" (D.list monthlyTextDecoder))
             |> D.andThen (Maybe.withDefault [] >> D.succeed)
+        )
+        (D.maybe (D.field "currentMarkusbote" currentMarkusboteDecoder)
+            |> D.andThen (Maybe.withDefault (CurrentMarkusbote "" "") >> D.succeed)
         )
         (D.maybe (D.field "defaultImage" defaultImageDecoder) |> D.andThen (Maybe.withDefault (Image "" "") >> D.succeed))
         (D.maybe (D.field "eventId" D.int) |> D.andThen (Maybe.withDefault 0 >> D.succeed))
@@ -122,6 +138,14 @@ pageDecoder =
                     _ ->
                         D.fail "bad value for flag 'page'"
             )
+
+
+urlsDecoder : D.Decoder Urls
+urlsDecoder =
+    D.map3 Urls
+        (D.field "services" D.string)
+        (D.field "markusbote" D.string)
+        (D.field "events" D.string)
 
 
 monthlyTextDecoder : D.Decoder MonthlyText
@@ -219,6 +243,13 @@ monthlyTextMonthDecoder =
                     Err _ ->
                         D.fail "Bad value for month in monthly text data."
             )
+
+
+currentMarkusboteDecoder : D.Decoder CurrentMarkusbote
+currentMarkusboteDecoder =
+    D.map2 CurrentMarkusbote
+        (D.field "url" D.string)
+        (D.field "months" D.string)
 
 
 defaultImageDecoder : D.Decoder Image
@@ -348,6 +379,12 @@ type alias MonthlyTextMonth =
     }
 
 
+type alias CurrentMarkusbote =
+    { url : String
+    , month : String
+    }
+
+
 type alias Image =
     { src : String
     , text : String
@@ -392,7 +429,7 @@ view model =
         Just dataFromServer ->
             case dataFromServer.page of
                 Home ->
-                    viewHome model
+                    viewHome dataFromServer model
 
                 Services ->
                     viewServices dataFromServer model
@@ -404,19 +441,134 @@ view model =
                     viewSingleEvent dataFromServer model
 
 
-viewHome : Model -> Html Msg
-viewHome model =
-    case model.events |> List.head of
-        Nothing ->
-            p [] [ text "Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link." ]
+viewHome : Flags -> Model -> Html Msg
+viewHome dataFromServer model =
+    div [ class "posts" ]
+        ([ articleNextService dataFromServer model, articleMarkusbote dataFromServer ] ++ articleEventsAndAnnoucements ++ [ articleAllEvents dataFromServer ])
 
-        Just service ->
-            div []
-                [ p [] [ text <| posixToStringWithWeekday service.start, br [] [], text service.place ]
 
-                -- TODO: Linkify longDescription
-                , p [] [ text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.title, service.subtitle, service.longDescription ] ]
+articleNextService : Flags -> Model -> Html Msg
+articleNextService dataFromServer model =
+    let
+        imgLabel =
+            "Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
+    in
+    article []
+        [ a [ href dataFromServer.urls.services, class "image" ]
+            [ img [ src <| dataFromServer.staticPrefix ++ "images/Altar_02.jpg", title imgLabel, alt imgLabel ] []
+            ]
+        , h3 [] [ text "Nächster Gottesdienst" ]
+        , case model.events |> List.filter (\e -> e.eventtype == Service) |> List.head of
+            Nothing ->
+                p [] [ text "Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link." ]
+
+            Just service ->
+                div []
+                    [ p [] [ text <| posixToStringWithWeekday service.start, br [] [], text service.place ]
+
+                    -- TODO: Linkify longDescription
+                    , p [] [ text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.title, service.subtitle, service.longDescription ] ]
+                    ]
+        , ul [ class "actions" ]
+            [ li [] [ a [ href dataFromServer.urls.services, class "button" ] [ text "Alle Gottesdienste" ] ]
+            ]
+        ]
+
+
+articleMarkusbote : Flags -> Html Msg
+articleMarkusbote dataFromServer =
+    let
+        imgLabel =
+            "Schriftzug des Markusboten, erste Ausgabe März 1907"
+    in
+    if not <| String.isEmpty dataFromServer.currentMarkusbote.url then
+        article []
+            [ a [ href dataFromServer.urls.markusbote, class "image" ]
+                [ img [ src <| dataFromServer.staticPrefix ++ "images/Markusbote_Schriftzug.jpg", title imgLabel, alt imgLabel ] []
                 ]
+            , h3 [] [ text "Aktueller Markusbote" ]
+            , p []
+                [ text "Hier finden Sie den aktuellen "
+                , a [ href dataFromServer.currentMarkusbote.url ] [ text <| "Markusboten (Ausgabe " ++ dataFromServer.currentMarkusbote.month ++ ")" ]
+                , text " als PDF zum Download."
+                ]
+            , ul [ class "actions" ]
+                [ li [] [ a [ href dataFromServer.urls.markusbote, class "button" ] [ text "Alle Markusboten" ] ]
+                ]
+            ]
+
+    else
+        article [] []
+
+
+
+-- viewHomeArticles : Flags -> Model -> Html Msg
+-- viewHomeArticles dataFromServer model =
+--     let
+--         articles : List Event
+--         articles =
+--             model.events |> List.take 3
+--     in
+--     div []
+--         (articles
+--             |> List.map
+--                 (\el ->
+--                     let
+--                         ( imageSrc, imageText ) =
+--                             case el.image of
+--                                 Just i ->
+--                                     ( i.src, i.text )
+--                                 Nothing ->
+--                                     ( dataFromServer.staticPrefix ++ dataFromServer.defaultImage.src, dataFromServer.defaultImage.text )
+--                     in
+--                     article []
+--                         [ a [ href "", class "image" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
+--                         , h3 [] [ text el.title ]
+--                         , text "MoreText"
+--                         , ul [ class "actions" ] [ li [] [ a [ href "", class "button" ] [ text "Weitere Informationen" ] ] ]
+--                         ]
+--                 )
+--         )
+-- <article>
+--     {% with default_image=DEFAULT_IMAGES|random %}
+--     {% static default_image.src as default_image_src %}
+--     <a {% if article.has_link_on_home %} href="{{ article.get_absolute_url }}" {% endif %} class="image">
+--         <img src="{{ article.mediafile|default:default_image_src }}" {% if article.mediafile %}
+--             alt="{{ article.mediafile.text }}" title="{{ article.mediafile.text }}" {% else %}
+--             alt="{{ default_image.text }}" title="{{ default_image.text }}" {% endif %} />
+--     </a>
+--     <h3>{{ article.title }}</h3>
+--     {{ article.more_text }}
+--     {% if article.has_link_on_home %}
+--     <ul class="actions">
+--         <li><a href="{{ article.get_absolute_url }}" class="button">Weitere Informationen</a></li>
+--     </ul>
+--     {% endif %}
+--     {% endwith %}
+-- </article>
+
+
+articleEventsAndAnnoucements : List (Html Msg)
+articleEventsAndAnnoucements =
+    []
+
+
+articleAllEvents : Flags -> Html Msg
+articleAllEvents dataFromServer =
+    let
+        imgLabel =
+            "Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober"
+    in
+    article []
+        [ a [ href dataFromServer.urls.events, class "image" ]
+            [ img [ src <| dataFromServer.staticPrefix ++ "images/Trinitatiskirche_02.jpg", title imgLabel, alt imgLabel ] []
+            ]
+        , h3 [] [ text "Veranstaltungen im Überblick" ]
+        , p [] [ text "Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen." ]
+        , ul [ class "actions" ]
+            [ li [] [ a [ href dataFromServer.urls.events, class "button" ] [ text "Zum Kalender" ] ]
+            ]
+        ]
 
 
 viewServices : Flags -> Model -> Html Msg
