@@ -9,6 +9,7 @@ import Json.Decode as D
 import Json.Decode.Pipeline as DP
 import Json.Encode as E
 import Parser exposing ((|.), (|=))
+import Shared
 import Time
 import TimeZone
 
@@ -74,8 +75,6 @@ init initialFlags =
 
 type alias Flags =
     { page : Page
-    , staticPrefix : String
-    , urls : Urls
     , monthlyTexts : List MonthlyText
     , currentMarkusbote : CurrentMarkusbote
     , defaultImage : Image
@@ -90,23 +89,10 @@ type Page
     | SingleEvent
 
 
-type alias Urls =
-    { services : String
-    , markusbote : String
-    , events : String
-    }
-
-
 flagsDecoder : D.Decoder Flags
 flagsDecoder =
-    D.map7 Flags
+    D.map5 Flags
         (D.field "page" pageDecoder)
-        (D.maybe (D.field "staticPrefix" D.string)
-            |> D.andThen (Maybe.withDefault "" >> D.succeed)
-        )
-        (D.maybe (D.field "urls" urlsDecoder)
-            |> D.andThen (Maybe.withDefault (Urls "" "" "") >> D.succeed)
-        )
         (D.maybe (D.field "monthlyTexts" (D.list monthlyTextDecoder))
             |> D.andThen (Maybe.withDefault [] >> D.succeed)
         )
@@ -138,14 +124,6 @@ pageDecoder =
                     _ ->
                         D.fail "bad value for flag 'page'"
             )
-
-
-urlsDecoder : D.Decoder Urls
-urlsDecoder =
-    D.map3 Urls
-        (D.field "services" D.string)
-        (D.field "markusbote" D.string)
-        (D.field "events" D.string)
 
 
 monthlyTextDecoder : D.Decoder MonthlyText
@@ -444,18 +422,18 @@ view model =
 viewHome : Flags -> Model -> Html Msg
 viewHome dataFromServer model =
     div [ class "posts" ]
-        ([ articleNextService dataFromServer model, articleMarkusbote dataFromServer ] ++ articleEventsAndAnnoucements ++ [ articleAllEvents dataFromServer ])
+        ([ articleNextService model, articleMarkusbote dataFromServer ] ++ articleEventsAndAnnoucements ++ [ articleAllEvents ])
 
 
-articleNextService : Flags -> Model -> Html Msg
-articleNextService dataFromServer model =
+articleNextService : Model -> Html Msg
+articleNextService model =
     let
         imgLabel =
             "Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
     in
     article []
-        [ a [ href dataFromServer.urls.services, class "image" ]
-            [ img [ src <| dataFromServer.staticPrefix ++ "images/Altar_02.jpg", title imgLabel, alt imgLabel ] []
+        [ a [ href Shared.urls.services, class "image" ]
+            [ img [ src <| Shared.staticPrefix ++ "images/Altar_02.jpg", title imgLabel, alt imgLabel ] []
             ]
         , h3 [] [ text "Nächster Gottesdienst" ]
         , case model.events |> List.filter (\e -> e.eventtype == Service) |> List.head of
@@ -470,7 +448,7 @@ articleNextService dataFromServer model =
                     , p [] [ text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.title, service.subtitle, service.longDescription ] ]
                     ]
         , ul [ class "actions" ]
-            [ li [] [ a [ href dataFromServer.urls.services, class "button" ] [ text "Alle Gottesdienste" ] ]
+            [ li [] [ a [ href Shared.urls.services, class "button" ] [ text "Alle Gottesdienste" ] ]
             ]
         ]
 
@@ -483,8 +461,8 @@ articleMarkusbote dataFromServer =
     in
     if not <| String.isEmpty dataFromServer.currentMarkusbote.url then
         article []
-            [ a [ href dataFromServer.urls.markusbote, class "image" ]
-                [ img [ src <| dataFromServer.staticPrefix ++ "images/Markusbote_Schriftzug.jpg", title imgLabel, alt imgLabel ] []
+            [ a [ href Shared.urls.markusbote, class "image" ]
+                [ img [ src <| Shared.staticPrefix ++ "images/Markusbote_Schriftzug.jpg", title imgLabel, alt imgLabel ] []
                 ]
             , h3 [] [ text "Aktueller Markusbote" ]
             , p []
@@ -493,7 +471,7 @@ articleMarkusbote dataFromServer =
                 , text " als PDF zum Download."
                 ]
             , ul [ class "actions" ]
-                [ li [] [ a [ href dataFromServer.urls.markusbote, class "button" ] [ text "Alle Markusboten" ] ]
+                [ li [] [ a [ href Shared.urls.markusbote, class "button" ] [ text "Alle Markusboten" ] ]
                 ]
             ]
 
@@ -553,20 +531,20 @@ articleEventsAndAnnoucements =
     []
 
 
-articleAllEvents : Flags -> Html Msg
-articleAllEvents dataFromServer =
+articleAllEvents : Html Msg
+articleAllEvents =
     let
         imgLabel =
             "Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober"
     in
     article []
-        [ a [ href dataFromServer.urls.events, class "image" ]
-            [ img [ src <| dataFromServer.staticPrefix ++ "images/Trinitatiskirche_02.jpg", title imgLabel, alt imgLabel ] []
+        [ a [ href Shared.urls.events, class "image" ]
+            [ img [ src <| Shared.staticPrefix ++ "images/Trinitatiskirche_02.jpg", title imgLabel, alt imgLabel ] []
             ]
         , h3 [] [ text "Veranstaltungen im Überblick" ]
         , p [] [ text "Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen." ]
         , ul [ class "actions" ]
-            [ li [] [ a [ href dataFromServer.urls.events, class "button" ] [ text "Zum Kalender" ] ]
+            [ li [] [ a [ href Shared.urls.events, class "button" ] [ text "Zum Kalender" ] ]
             ]
         ]
 
@@ -594,7 +572,7 @@ viewServices dataFromServer model =
                             else
                                 monthlyTextFor dataFromServer.monthlyTexts thisMonth
             in
-            ( html ++ printMonthlyText ++ serviceView dataFromServer.staticPrefix service, Just thisMonth )
+            ( html ++ printMonthlyText ++ serviceView service, Just thisMonth )
     in
     if List.isEmpty model.events then
         dl []
@@ -617,8 +595,8 @@ monthlyTextFor texts month =
             []
 
 
-serviceView : String -> Event -> List (Html Msg)
-serviceView staticPrefix service =
+serviceView : Event -> List (Html Msg)
+serviceView service =
     let
         firstLine : Html Msg
         firstLine =
@@ -626,7 +604,7 @@ serviceView staticPrefix service =
                 ((text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.subtitle ])
                     :: (if service.withKidsService then
                             [ span [ class "image", class "kids-logo", title "Kindergottesdienst" ]
-                                [ img [ src <| staticPrefix ++ "images/Kindergottesdienst_Logo.jpg", alt "Kindergottesdienst" ] [] ]
+                                [ img [ src <| Shared.staticPrefix ++ "images/Kindergottesdienst_Logo.jpg", alt "Kindergottesdienst" ] [] ]
                             ]
 
                         else
@@ -662,7 +640,7 @@ viewSingleEvent flags model =
                             ( i.src, i.text )
 
                         Nothing ->
-                            ( flags.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
+                            ( Shared.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
             in
             div [ class "row" ]
                 [ div [ class "6u", class "12u$(small)" ]
