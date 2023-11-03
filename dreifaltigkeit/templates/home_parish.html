@@ -126,17 +126,14 @@
             node: document.getElementById("articles"),
             flags: {
                 page: "home-parish",
-                staticPrefix: "{% static '' %}",
-                urls: {
-                    services: "{% url 'services' %}",
-                    markusbote: "{% url 'flat_page' category='gemeinde' page='markusbote' %}",
-                    events: "{% url 'events' %}",
+                announcements: {{ announcements | safe }},
+                {% if current_markusbote %}
+                currentMarkusbote: {
+                    url: "{{ current_markusbote.file }}",
+                    months: "{{ current_markusbote.months }}",
                 },
-                {% if current_markusbote %}currentMarkusbote: {
-        url: "{{ current_markusbote.file }}",
-        months: "{{ current_markusbote.months }}",
-    }, {% endif %}
-        defaultImage: {{ default_image | safe }},
+                {% endif %}
+                defaultImage: {{ default_image | safe }},
             },
         });
     });

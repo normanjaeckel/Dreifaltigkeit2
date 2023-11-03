@@ -40,17 +40,22 @@ class Home(TemplateView):
         except CurrentMarkusbote.DoesNotExist:
             current_markusbote = None
 
-        coming_events = Event.objects.get_coming_events()
-        coming_announcements = Announcement.objects.get_coming_announcements()
-        articles = sorted(
-            chain(coming_events, coming_announcements),
-            key=lambda article: article.time_sort,
-        )
+        announcements = []
+        for a in Announcement.objects.get_coming_announcements():
+            announcement = {
+                "title": a.title,
+                "short_text": a.short_text,
+                "link": a.get_absolute_url(),
+                "end": a.end.isoformat(),
+            }
+            if a.mediafile:
+                announcement["image"] = {"src": a.mediafile.mediafile.url, "text": a.mediafile.text}
+            announcements.append(announcement)
 
         return super().get_context_data(
             yearly_text=yearly_text,
             current_markusbote=current_markusbote,
-            articles=articles,
+            announcements=json.dumps(announcements),
             **context
         )
 

@@ -1,7 +1,7 @@
 port module Main exposing (main, stringJoinIfNotEmpty)
 
 import Browser
-import Html exposing (Html, a, article, blockquote, br, dd, div, dl, dt, h3, img, li, p, span, text, ul)
+import Html exposing (Html, a, article, blockquote, br, dd, div, dl, dt, h1, h3, header, img, li, p, span, text, ul)
 import Html.Attributes exposing (alt, class, href, src, title)
 import Http
 import Iso8601
@@ -53,6 +53,16 @@ localTimezome =
     TimeZone.europe__berlin ()
 
 
+overrideLiturgBez : String -> String
+overrideLiturgBez lbz =
+    case lbz of
+        "Drittl. Sonntag d. Kj." ->
+            "Drittletzter Sonntag des Kirchenjahres"
+
+        _ ->
+            lbz
+
+
 
 -- MODEL
 
@@ -75,6 +85,7 @@ init initialFlags =
 
 type alias Flags =
     { page : Page
+    , announcements : List Announcement
     , monthlyTexts : List MonthlyText
     , currentMarkusbote : CurrentMarkusbote
     , defaultImage : Image
@@ -91,15 +102,18 @@ type Page
 
 flagsDecoder : D.Decoder Flags
 flagsDecoder =
-    D.map5 Flags
+    D.map6 Flags
         (D.field "page" pageDecoder)
+        (D.maybe (D.field "announcements" (D.list announcementDecoder))
+            |> D.andThen (Maybe.withDefault [] >> D.succeed)
+        )
         (D.maybe (D.field "monthlyTexts" (D.list monthlyTextDecoder))
             |> D.andThen (Maybe.withDefault [] >> D.succeed)
         )
         (D.maybe (D.field "currentMarkusbote" currentMarkusboteDecoder)
             |> D.andThen (Maybe.withDefault (CurrentMarkusbote "" "") >> D.succeed)
         )
-        (D.maybe (D.field "defaultImage" defaultImageDecoder) |> D.andThen (Maybe.withDefault (Image "" "") >> D.succeed))
+        (D.maybe (D.field "defaultImage" imageDecoder) |> D.andThen (Maybe.withDefault (Image "" "") >> D.succeed))
         (D.maybe (D.field "eventId" D.int) |> D.andThen (Maybe.withDefault 0 >> D.succeed))
 
 
@@ -124,6 +138,16 @@ pageDecoder =
                     _ ->
                         D.fail "bad value for flag 'page'"
             )
+
+
+announcementDecoder : D.Decoder Announcement
+announcementDecoder =
+    D.map5 Announcement
+        (D.field "title" D.string)
+        (D.field "short_text" D.string)
+        (D.maybe (D.field "image" imageDecoder))
+        (D.field "link" D.string)
+        (D.field "end" Iso8601.decoder)
 
 
 monthlyTextDecoder : D.Decoder MonthlyText
@@ -230,8 +254,8 @@ currentMarkusboteDecoder =
         (D.field "months" D.string)
 
 
-defaultImageDecoder : D.Decoder Image
-defaultImageDecoder =
+imageDecoder : D.Decoder Image
+imageDecoder =
     D.map2 Image
         (D.field "src" D.string)
         (D.field "text" D.string)
@@ -246,9 +270,23 @@ eventDecoder =
             |> DP.required "_event_TITLE" D.string
             |> DP.required "SUBTITLE" D.string
             |> DP.required "_event_LONG_DESCRIPTION" D.string
+            |> DP.optional "field30"
+                (D.string
+                    |> D.andThen
+                        ((\v ->
+                            if String.isEmpty v then
+                                Nothing
+
+                            else
+                                Just v
+                         )
+                            >> D.succeed
+                        )
+                )
+                Nothing
             |> DP.required "START_RFC" Iso8601.decoder
             |> DP.required "END_RFC" Iso8601.decoder
-            |> DP.required "LITURG_BEZ" D.string
+            |> DP.required "LITURG_BEZ" (D.string |> D.andThen (overrideLiturgBez >> D.succeed))
             |> DP.required "_place_NAME" D.string
             |> DP.required "_event_LINK" D.string
             |> D.andThen
@@ -267,10 +305,6 @@ eventDecoder =
                 )
             |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "ja"))
         )
-
-
-
--- required : String -> Decoder a -> Decoder (a -> (b -> c)) -> Decoder (b -> c)
 
 
 eventtypeDecoder : D.Decoder Eventtype
@@ -305,7 +339,7 @@ eventEncoderForFullCalendar event =
         link : String
         link =
             if String.isEmpty event.link then
-                "/termine/" ++ String.fromInt event.id
+                Shared.urls.events ++ String.fromInt event.id
 
             else
                 event.link
@@ -325,6 +359,7 @@ type alias Event =
     , title : String
     , subtitle : String
     , longDescription : String
+    , textOnHomePage : Maybe String
     , start : Time.Posix
     , end : Time.Posix
     , liturgBez : String
@@ -342,6 +377,15 @@ type Eventtype
     | Gathering
     | PeriodOfReflection
     | Miscellaneous
+
+
+type alias Announcement =
+    { title : String
+    , text : String
+    , image : Maybe Image
+    , link : String
+    , end : Time.Posix
+    }
 
 
 type alias MonthlyText =
@@ -422,12 +466,13 @@ view model =
 viewHome : Flags -> Model -> Html Msg
 viewHome dataFromServer model =
     div [ class "posts" ]
-        ([ articleNextService model, articleMarkusbote dataFromServer ] ++ articleEventsAndAnnoucements ++ [ articleAllEvents ])
+        ((articleNextService model :: articleMarkusbote dataFromServer) ++ articleEventsAndAnnoucements dataFromServer model ++ [ articleAllEvents ])
 
 
 articleNextService : Model -> Html Msg
 articleNextService model =
     let
+        imgLabel : String
         imgLabel =
             "Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
     in
@@ -453,14 +498,15 @@ articleNextService model =
         ]
 
 
-articleMarkusbote : Flags -> Html Msg
+articleMarkusbote : Flags -> List (Html Msg)
 articleMarkusbote dataFromServer =
-    let
-        imgLabel =
-            "Schriftzug des Markusboten, erste Ausgabe März 1907"
-    in
     if not <| String.isEmpty dataFromServer.currentMarkusbote.url then
-        article []
+        let
+            imgLabel : String
+            imgLabel =
+                "Schriftzug des Markusboten, erste Ausgabe März 1907"
+        in
+        [ article []
             [ a [ href Shared.urls.markusbote, class "image" ]
                 [ img [ src <| Shared.staticPrefix ++ "images/Markusbote_Schriftzug.jpg", title imgLabel, alt imgLabel ] []
                 ]
@@ -474,66 +520,98 @@ articleMarkusbote dataFromServer =
                 [ li [] [ a [ href Shared.urls.markusbote, class "button" ] [ text "Alle Markusboten" ] ]
                 ]
             ]
+        ]
 
     else
-        article [] []
+        []
 
 
-
--- viewHomeArticles : Flags -> Model -> Html Msg
--- viewHomeArticles dataFromServer model =
---     let
---         articles : List Event
---         articles =
---             model.events |> List.take 3
---     in
---     div []
---         (articles
---             |> List.map
---                 (\el ->
---                     let
---                         ( imageSrc, imageText ) =
---                             case el.image of
---                                 Just i ->
---                                     ( i.src, i.text )
---                                 Nothing ->
---                                     ( dataFromServer.staticPrefix ++ dataFromServer.defaultImage.src, dataFromServer.defaultImage.text )
---                     in
---                     article []
---                         [ a [ href "", class "image" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
---                         , h3 [] [ text el.title ]
---                         , text "MoreText"
---                         , ul [ class "actions" ] [ li [] [ a [ href "", class "button" ] [ text "Weitere Informationen" ] ] ]
---                         ]
---                 )
---         )
--- <article>
---     {% with default_image=DEFAULT_IMAGES|random %}
---     {% static default_image.src as default_image_src %}
---     <a {% if article.has_link_on_home %} href="{{ article.get_absolute_url }}" {% endif %} class="image">
---         <img src="{{ article.mediafile|default:default_image_src }}" {% if article.mediafile %}
---             alt="{{ article.mediafile.text }}" title="{{ article.mediafile.text }}" {% else %}
---             alt="{{ default_image.text }}" title="{{ default_image.text }}" {% endif %} />
---     </a>
---     <h3>{{ article.title }}</h3>
---     {{ article.more_text }}
---     {% if article.has_link_on_home %}
---     <ul class="actions">
---         <li><a href="{{ article.get_absolute_url }}" class="button">Weitere Informationen</a></li>
---     </ul>
---     {% endif %}
---     {% endwith %}
--- </article>
+type alias EventOrAnnouncement =
+    { title : String
+    , text : List String
+    , image : Maybe Image
+    , link : String
+    , time : Int
+    }
 
 
-articleEventsAndAnnoucements : List (Html Msg)
-articleEventsAndAnnoucements =
-    []
+articleEventsAndAnnoucements : Flags -> Model -> List (Html Msg)
+articleEventsAndAnnoucements dataFromServer model =
+    let
+        elements : List EventOrAnnouncement
+        elements =
+            let
+                fn1 : Event -> List EventOrAnnouncement -> List EventOrAnnouncement
+                fn1 event acc =
+                    case event.textOnHomePage of
+                        Just textOnHomePage ->
+                            let
+                                link : String
+                                link =
+                                    if String.isEmpty event.link then
+                                        Shared.urls.events ++ String.fromInt event.id
+
+                                    else
+                                        event.link
+                            in
+                            EventOrAnnouncement
+                                event.title
+                                [ posixToStringWithWeekday event.start, textOnHomePage ]
+                                event.image
+                                link
+                                (event.start |> Time.posixToMillis)
+                                :: acc
+
+                        Nothing ->
+                            acc
+
+                fn2 : Announcement -> List EventOrAnnouncement -> List EventOrAnnouncement
+                fn2 announcement acc =
+                    EventOrAnnouncement
+                        announcement.title
+                        [ announcement.text ]
+                        announcement.image
+                        announcement.link
+                        (announcement.end |> Time.posixToMillis)
+                        :: acc
+            in
+            (model.events
+                |> List.foldr fn1 []
+            )
+                ++ (dataFromServer.announcements |> List.foldr fn2 [])
+    in
+    elements
+        |> List.sortBy (\el -> el.time)
+        |> List.map
+            (\el ->
+                let
+                    ( imageSrc, imageText ) =
+                        case el.image of
+                            Just i ->
+                                ( i.src, i.text )
+
+                            Nothing ->
+                                ( Shared.staticPrefix ++ dataFromServer.defaultImage.src, dataFromServer.defaultImage.text )
+
+                    paragraphs : List (Html Msg)
+                    paragraphs =
+                        el.text |> List.map (\t -> p [] [ text t ])
+                in
+                article []
+                    ([ a [ href el.link, class "image" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
+                     , h3 [] [ text el.title ]
+                     ]
+                        ++ paragraphs
+                        ++ [ ul [ class "actions" ] [ li [] [ a [ href el.link, class "button" ] [ text "Weitere Informationen" ] ] ]
+                           ]
+                    )
+            )
 
 
 articleAllEvents : Html Msg
 articleAllEvents =
     let
+        imgLabel : String
         imgLabel =
             "Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober"
     in
@@ -614,15 +692,7 @@ serviceView service =
     in
     [ dt [] [ text <| String.join " · " [ service.start |> posixToString, service.place, service.title ] ]
     , dd []
-        (firstLine
-            :: (if not <| String.isEmpty service.longDescription then
-                    -- TODO: Linkify longDescription
-                    [ p [] [ text service.longDescription ] ]
-
-                else
-                    []
-               )
-        )
+        (firstLine :: (service.longDescription |> linebreaks))
     ]
 
 
@@ -630,7 +700,9 @@ viewSingleEvent : Flags -> Model -> Html Msg
 viewSingleEvent flags model =
     case model.events |> List.filter (\e -> e.id == flags.eventId) |> List.head of
         Nothing ->
-            div [] [ text "Veranstaltung nicht gefunden" ]
+            header []
+                [ h1 [] [ text "Veranstaltung nicht gefunden" ]
+                ]
 
         Just event ->
             let
@@ -642,16 +714,21 @@ viewSingleEvent flags model =
                         Nothing ->
                             ( Shared.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
             in
-            div [ class "row" ]
-                [ div [ class "6u", class "12u$(small)" ]
-                    [ p [] [ text <| (event.start |> posixToString) ++ " · " ++ event.place ]
-                    , p [] [ text <| stringJoinIfNotEmpty " · " [ event.title, event.subtitle ] ]
-
-                    -- TODO: Linkify and Linebreaks for the longDescription
-                    , p [] [ text event.longDescription ]
+            div []
+                [ header [ class "main" ]
+                    [ h1 [] [ text event.title ]
                     ]
-                , div [ class "6u", class "12u$(small)" ]
-                    [ span [ class "image", class "fit" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
+                , div [ class "row" ]
+                    [ div [ class "6u", class "12u$(small)" ]
+                        ([ p [] [ text <| (event.start |> posixToStringWithWeekday) ++ " · " ++ event.place ]
+                         , p [] [ text event.subtitle ]
+                         ]
+                            -- TODO: Linkify long Descrition
+                            ++ (event.longDescription |> linebreaks)
+                        )
+                    , div [ class "6u", class "12u$(small)" ]
+                        [ span [ class "image", class "fit" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
+                        ]
                     ]
                 ]
 
@@ -789,6 +866,13 @@ eventtypeToColor et =
 
         Miscellaneous ->
             "grey"
+
+
+linebreaks : String -> List (Html Msg)
+linebreaks s =
+    s
+        |> String.split "\u{000D}\n\u{000D}\n"
+        |> List.map (\part -> p [] [ text part ])
 
 
 
