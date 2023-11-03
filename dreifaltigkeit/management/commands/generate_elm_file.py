@@ -1,7 +1,7 @@
 import os
 
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.urls import reverse
 
 
@@ -17,7 +17,11 @@ class Command(BaseCommand):
             ),
             events_url=reverse("events"),
         )
-        filename = os.path.abspath(os.path.join(__file__, "..", "..", "..", "external-calendar", "src", "Shared.elm"))
+        filename = os.path.abspath(
+            os.path.join(
+                __file__, "..", "..", "..", "external-calendar", "src", "Shared.elm"
+            )
+        )
         with open(filename, "w") as f:
             f.write(elm_file)
 

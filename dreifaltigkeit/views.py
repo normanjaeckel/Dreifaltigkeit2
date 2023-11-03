@@ -1,5 +1,4 @@
 import json
-from itertools import chain
 
 from django.conf import settings
 from django.http import Http404, HttpResponsePermanentRedirect
@@ -11,7 +10,6 @@ from .models import (
     Announcement,
     ClericalWordAudioFile,
     CurrentMarkusbote,
-    Event,
     MonthlyText,
     YearlyText,
 )
@@ -49,7 +47,10 @@ class Home(TemplateView):
                 "end": a.end.isoformat(),
             }
             if a.mediafile:
-                announcement["image"] = {"src": a.mediafile.mediafile.url, "text": a.mediafile.text}
+                announcement["image"] = {
+                    "src": a.mediafile.mediafile.url,
+                    "text": a.mediafile.text,
+                }
             announcements.append(announcement)
 
         return super().get_context_data(
