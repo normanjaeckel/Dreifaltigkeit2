@@ -27,6 +27,8 @@ Run in a second terminal:
 
     $ python manage.py migrate  # Setup database
 
+    $ python manage.py createsuperuser  # Create a superuser for the admin panel
+
     $ python manage.py runserver
 
 In case you changed urls.py or static file prefix, run:

@@ -57,6 +57,7 @@ class Home(TemplateView):
             yearly_text=yearly_text,
             current_markusbote=current_markusbote,
             announcements=json.dumps(announcements),
+            announcements_django=Announcement.objects.get_coming_announcements(),
             **context
         )
 
