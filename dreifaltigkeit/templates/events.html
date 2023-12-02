@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{% static 'fullcalendar-3.10.5/fullcalendar.min.css' %}" />
 
 <style>
-
     #calendar {
         margin-top: 1em;
     }
@@ -26,11 +25,11 @@
 
     /* Fix CSS value for fullcalendar event links */
     #calendar .fc-event:hover {
-        color:#fff !important;
+        color: #fff !important;
     }
 
     /* Allow wrapping event titles by overriding default fullcalendar CSS */
-    #calendar .fc-day-grid-event > .fc-content {
+    #calendar .fc-day-grid-event>.fc-content {
         white-space: normal;
     }
 
@@ -48,11 +47,15 @@
         <h1>Besondere Termine und Veranstaltungen</h1>
     </header>
 
-    <p>Im Kalender finden Sie besondere Termine und Veranstaltungen der Gemeinde. Die wöchentlichen Treffen der verschiedenen <a href="/gemeinde/gruppen/">Gruppen und Kreise</a> sind nicht im Kalender eingetragen. Den Kalender gibt es auch als <a href="{% url 'event_feed' %}">iCalendar</a>.</p>
+    <p>Im Kalender finden Sie besondere Termine und Veranstaltungen der Gemeinde. Die wöchentlichen Treffen der
+        verschiedenen <a href="/gemeinde/gruppen/">Gruppen und Kreise</a> sind nicht im Kalender eingetragen. Den
+        Kalender gibt es auch als <a href="https://kalender.evlks.de/ical?vid=98">iCalendar</a>.</p>
 
     <div id="calendar"></div>
 
     <hr class="major" />
+
+    <div id="elm-app"></div>
 
 </section>
 
@@ -65,49 +68,52 @@
 <script src="{% static 'fullcalendar-3.10.5/lib/moment.min.js' %}"></script>
 <script src="{% static 'fullcalendar-3.10.5/fullcalendar.min.js' %}"></script>
 <script src="{% static 'fullcalendar-3.10.5/locale-all.js' %}"></script>
+<script src="{% static 'assets/js/elm.js' %}"></script>
 
 <script>
-    $(document).ready(function() {
-        var initialLocaleCode = 'de';
-
-        var currentView;
-
-        $('#calendar').fullCalendar({
-            locale: initialLocaleCode,
-            timezone: 'local',
-            timeFormat: 'HH:mm',
-            header: {
-                right: 'today prev next month listMonth',
+    $(document).ready(function () {
+        var app = Elm.Main.init({
+            node: document.getElementById("elm-app"),
+            flags: {
+                page: "calendar",
             },
-            fixedWeekCount: false,
-            viewRender: function (view) {
-                $('#calendar button')
-                .removeClass('fc-state-default disabled')
-
-                $('#calendar button.fc-state-disabled')
-                .removeClass('fc-state-disabled')
-                .addClass('disabled');
-
-                if (!currentView || view.type !== currentView.type) {
-                    $('#calendar button')
-                    .removeClass('special')
-
-                    $('#calendar button.fc-state-active')
-                    .removeClass('fc-state-active')
-                    .addClass('special');
-                }
-
-                currentView = view;
-            },
-
-            events:[
-                {% for event in events %}
-                    {{ event.fc_data|safe }},
-                {% endfor %}
-            ]
         });
 
+        app.ports.eventsToJavascript.subscribe(function (message) {
+            var initialLocaleCode = 'de';
 
+            var currentView;
+
+            $('#calendar').fullCalendar({
+                locale: initialLocaleCode,
+                timezone: 'local',
+                timeFormat: 'HH:mm',
+                header: {
+                    right: 'today prev next month listMonth',
+                },
+                fixedWeekCount: false,
+                viewRender: function (view) {
+                    $('#calendar button')
+                        .removeClass('fc-state-default disabled')
+
+                    $('#calendar button.fc-state-disabled')
+                        .removeClass('fc-state-disabled')
+                        .addClass('disabled');
+
+                    if (!currentView || view.type !== currentView.type) {
+                        $('#calendar button')
+                            .removeClass('special')
+
+                        $('#calendar button.fc-state-active')
+                            .removeClass('fc-state-active')
+                            .addClass('special');
+                    }
+
+                    currentView = view;
+                },
+                events: message,
+            });
+        });
     });
 </script>
 

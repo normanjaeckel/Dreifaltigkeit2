@@ -753,9 +753,7 @@ class ClericalWordAudioFile(models.Model):
 
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
-    pubdate = models.DateTimeField(
-        gettext_lazy("Veröffentlicht am"), auto_now_add=True
-    )
+    pubdate = models.DateTimeField(gettext_lazy("Veröffentlicht am"), auto_now_add=True)
 
     class Meta:
         ordering = ("-pubdate",)

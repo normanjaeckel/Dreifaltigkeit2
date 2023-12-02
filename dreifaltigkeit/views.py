@@ -1,8 +1,6 @@
-from datetime import timedelta
-from itertools import chain
+import json
 
 from django.conf import settings
-from django.db.models import Q
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -12,10 +10,10 @@ from .models import (
     Announcement,
     ClericalWordAudioFile,
     CurrentMarkusbote,
-    Event,
-    FlatPage as FlatPageModel,
+    MonthlyText,
     YearlyText,
 )
+from .models import FlatPage as FlatPageModel
 
 
 class Home(TemplateView):
@@ -35,43 +33,50 @@ class Home(TemplateView):
         except YearlyText.DoesNotExist:
             yearly_text = None
 
-        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
-        next_service = Event.objects.filter(type="service", begin__gte=threshold).last()
-
         try:
             current_markusbote = CurrentMarkusbote.objects.get()
         except CurrentMarkusbote.DoesNotExist:
             current_markusbote = None
 
-        coming_events = Event.objects.get_coming_events()
-        coming_announcements = Announcement.objects.get_coming_announcements()
-        articles = sorted(
-            chain(coming_events, coming_announcements),
-            key=lambda article: article.time_sort,
-        )
+        announcements = []
+        for a in Announcement.objects.get_coming_announcements():
+            announcement = {
+                "title": a.title,
+                "short_text": a.short_text,
+                "link": a.get_absolute_url(),
+                "end": a.end.isoformat(),
+            }
+            if a.mediafile:
+                announcement["image"] = {
+                    "src": a.mediafile.mediafile.url,
+                    "text": a.mediafile.text,
+                }
+            announcements.append(announcement)
 
         return super().get_context_data(
             yearly_text=yearly_text,
-            next_service=next_service,
             current_markusbote=current_markusbote,
-            articles=articles,
+            announcements=json.dumps(announcements),
+            announcements_django=Announcement.objects.get_coming_announcements(),
             **context
         )
 
 
-class Services(ListView):
+class Services(TemplateView):
     """
     View for all services
     """
 
     template_name = "services.html"
-    context_object_name = "services"
 
-    def get_queryset(self):
-        threshold = timezone.now() - timedelta(minutes=settings.THRESHOLD)
-        return Event.objects.filter(
-            Q(type="service") | Q(type="prayer"), begin__gte=threshold
-        ).reverse()
+    def get_context_data(self, **context):
+        monthly_texts = [
+            {"month": t.month, "text": t.text, "verse": t.verse}
+            for t in MonthlyText.objects.all()
+        ]
+        return super().get_context_data(
+            monthly_texts=json.dumps(monthly_texts), **context
+        )
 
 
 class ClericalWordPage(ListView):
@@ -83,36 +88,20 @@ class ClericalWordPage(ListView):
     template_name = "clerical_word.html"
 
 
-class Events(ListView):
+class Events(TemplateView):
     """
     View for all events.
     """
 
     template_name = "events.html"
-    context_object_name = "events"
-    model = Event
 
 
-class SingleEvent(DetailView):
+class SingleEvent(TemplateView):
     """
     View for a single event.
     """
 
     template_name = "single_event.html"
-    model = Event
-
-    def get_object(self):
-        """
-        Customized method: Send HTTP 404 if event type is service or prayer or
-        there is no event content.
-        """
-        event = super().get_object()
-        if event.type in ("service", "prayer") or event.flat_page or not event.content:
-            message = "Event {} is a service or prayer, has a flat page or has no content.".format(
-                event.title
-            )
-            raise Http404(message)
-        return event
 
 
 class FlatPage(TemplateView):

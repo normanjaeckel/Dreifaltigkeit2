@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load dreifaltigkeit_filters %}
 
 {% block content %}
 
@@ -13,9 +12,10 @@
             <p>auf der Webseite der Ev.-Luth. Dreifaltigkeitskirchgemeinde Leipzig</p>
         </header>
         {% if yearly_text %}
-            <blockquote>{{ yearly_text.text }}<br />{{ yearly_text.verse}}</blockquote>
+        <blockquote>{{ yearly_text.text }}<br />{{ yearly_text.verse}}</blockquote>
         {% endif %}
-        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und Gruppen und Kreisen.</p>
+        <p>Wir begrüßen Sie auf unserer Webseite. Sie sind eingeladen zu unseren Gottesdiensten, Veranstaltungen und
+            Gruppen und Kreisen.</p>
         <ul class="actions">
             <li><a href="#aktuelles" class="button big icon fa-chevron-down">Aktuelles</a></li>
             <!-- <li><a href="/newsletter/" class="button big icon fa-paper-plane-o">Newsletter</a></li> -->
@@ -23,7 +23,9 @@
 
     </div>
     <span class="image object">
-        <img src="{% static 'images/Trinitatiskirche_01.jpg' %}" title="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Ralf Mäkert" alt="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Ralf Mäkert" />
+        <img src="{% static 'images/Trinitatiskirche_01.jpg' %}"
+            title="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Ralf Mäkert"
+            alt="Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Ralf Mäkert" />
     </span>
 </section>
 
@@ -35,68 +37,67 @@
             <a href="{% url 'parish_feed' %}" class="icon fa-rss rss-icon"><span class="label">RSS</span></a>
         </h2>
     </header>
-    <div class="posts">
+
+    <div id="articles"></div>
+
+    <!-- <div class="posts">
         <article>
             <a href="{% url 'services' %}" class="image">
-                <img src="{% static 'images/Altar_02.jpg' %}" title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" />
+                <img src="{% static 'images/Altar_02.jpg' %}"
+                    title="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober"
+                    alt="Altar der Trinitatiskirche zu Leipzig Anger-Crottendorf mit Abendmahlsgeräten, Foto: Lutz Schober" />
             </a>
             <h3>Nächster Gottesdienst</h3>
-            {% if next_service %}
-                <p>
-                    {{ next_service.begin|date:"l, j. F Y, H:i" }}
-                    <br />{{ next_service.place }}
-                </p>
-                <p>
-                    {{ next_service.title }}: {{ next_service.content|linkify }}
-                </p>
-            {% else %}
-                <p>Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link.</p>
-            {% endif %}
+
+            <div id="next-service"></div>
+
             <ul class="actions">
                 <li><a href="{% url 'services' %}" class="button">Alle Gottesdienste</a></li>
             </ul>
         </article>
 
         {% if current_markusbote %}
-            <article>
-                <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image">
-                    <img src="{% static 'images/Markusbote_Schriftzug.jpg' %}" title="Schriftzug des Markusboten, erste Ausgabe März 1907" alt="Schriftzug des Markusboten, erste Ausgabe März 1907" />
-                </a>
-                <h3>Aktueller Markusbote</h3>
-                <p>Hier finden Sie den aktuellen <a href="{{ current_markusbote.file }}">Markusboten (Ausgabe {{ current_markusbote.months }})</a> als PDF zum Download.</p>
-                <ul class="actions">
-                    <li><a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="button">Alle Markusboten</a></li>
-                </ul>
-            </article>
+        <article>
+            <a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="image">
+                <img src="{% static 'images/Markusbote_Schriftzug.jpg' %}"
+                    title="Schriftzug des Markusboten, erste Ausgabe März 1907"
+                    alt="Schriftzug des Markusboten, erste Ausgabe März 1907" />
+            </a>
+            <h3>Aktueller Markusbote</h3>
+            <p>Hier finden Sie den aktuellen <a href="{{ current_markusbote.file }}">Markusboten (Ausgabe {{
+                    current_markusbote.months }})</a> als PDF zum Download.</p>
+            <ul class="actions">
+                <li><a href="{% url 'flat_page' category='gemeinde' page='markusbote' %}" class="button">Alle
+                        Markusboten</a></li>
+            </ul>
+        </article>
         {% endif %}
 
         {% for article in articles %}
-            <article>
-                {% with default_image=DEFAULT_IMAGES|random %}
-                    {% static default_image.src as default_image_src %}
-                    <a {% if article.has_link_on_home %} href="{{ article.get_absolute_url }}" {% endif %} class="image">
-                        <img src="{{ article.mediafile|default:default_image_src }}"
-                           {% if article.mediafile %}
-                               alt="{{ article.mediafile.text }}" title="{{ article.mediafile.text }}"
-                           {% else %}
-                               alt="{{ default_image.text }}" title="{{ default_image.text }}"
-                           {% endif %}
-                        />
-                    </a>
-                    <h3>{{ article.title }}</h3>
-                    {{ article.more_text }}
-                    {% if article.has_link_on_home %}
-                        <ul class="actions">
-                            <li><a href="{{ article.get_absolute_url }}" class="button">Weitere Informationen</a></li>
-                        </ul>
-                    {% endif %}
-                {% endwith %}
-            </article>
+        <article>
+            {% with default_image=DEFAULT_IMAGES|random %}
+            {% static default_image.src as default_image_src %}
+            <a {% if article.has_link_on_home %} href="{{ article.get_absolute_url }}" {% endif %} class="image">
+                <img src="{{ article.mediafile|default:default_image_src }}" {% if article.mediafile %}
+                    alt="{{ article.mediafile.text }}" title="{{ article.mediafile.text }}" {% else %}
+                    alt="{{ default_image.text }}" title="{{ default_image.text }}" {% endif %} />
+            </a>
+            <h3>{{ article.title }}</h3>
+            {{ article.more_text }}
+            {% if article.has_link_on_home %}
+            <ul class="actions">
+                <li><a href="{{ article.get_absolute_url }}" class="button">Weitere Informationen</a></li>
+            </ul>
+            {% endif %}
+            {% endwith %}
+        </article>
         {% endfor %}
 
         <article>
             <a href="{% url 'events' %}" class="image">
-                <img src="{% static 'images/Trinitatiskirche_02.jpg' %}" title="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" alt="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" />
+                <img src="{% static 'images/Trinitatiskirche_02.jpg' %}"
+                    title="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober"
+                    alt="Kirchenschiff der Trinitatiskirche zu Leipzig Anger-Crottendorf, Foto: Lutz Schober" />
             </a>
             <h3>Veranstaltungen im Überblick</h3>
             <p>Viele Termine und Veranstaltungen sind in unserem Kalender eingetragen.</p>
@@ -105,10 +106,39 @@
             </ul>
         </article>
 
-    </div>
+    </div> -->
 
     <hr class="major" />
 
 </section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+
+<script src="{% static 'assets/js/elm.js' %}"></script>
+
+{% with default_image=DEFAULT_IMAGES|random %}
+
+<script>
+    $(document).ready(function () {
+        var app = Elm.Main.init({
+            node: document.getElementById("articles"),
+            flags: {
+                page: "home-parish",
+                announcements: {{ announcements | safe }},
+                {% if current_markusbote %}
+                currentMarkusbote: {
+                    url: "{{ current_markusbote.file }}",
+                    months: "{{ current_markusbote.months }}",
+                },
+                {% endif %}
+                defaultImage: {{ default_image | safe }},
+            },
+        });
+    });
+</script>
+
+{% endwith %}
 
 {% endblock %}
