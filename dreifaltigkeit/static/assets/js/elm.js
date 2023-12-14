@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.K.al === region.av.al)
+	if (region.K.al === region.aw.al)
 	{
 		return 'on line ' + region.K.al;
 	}
-	return 'on lines ' + region.K.al + ' through ' + region.av.al;
+	return 'on lines ' + region.K.al + ' through ' + region.aw.al;
 }
 
 
@@ -5514,7 +5514,7 @@ var $author$project$Main$Event = function (eventtype) {
 										return function (link) {
 											return function (image) {
 												return function (withKidsService) {
-													return {av: end, aK: eventtype, ax: id, W: image, D: link, ay: liturgBez, az: longDescription, aB: place, K: start, ap: subtitle, bY: textOnHomePage, I: title, b6: withKidsService};
+													return {aw: end, aK: eventtype, ay: id, W: image, D: link, az: liturgBez, aA: longDescription, ao: place, K: start, aq: subtitle, bY: textOnHomePage, I: title, b6: withKidsService};
 												};
 											};
 										};
@@ -5530,7 +5530,7 @@ var $author$project$Main$Event = function (eventtype) {
 };
 var $author$project$Main$Image = F2(
 	function (src, text) {
-		return {ao: src, C: text};
+		return {ap: src, C: text};
 	});
 var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$core$Basics$composeR = F3(
@@ -5666,7 +5666,7 @@ var $elm$parser$Parser$Advanced$fromState = F2(
 var $elm$parser$Parser$Advanced$end = function (x) {
 	return function (s) {
 		return _Utils_eq(
-			$elm$core$String$length(s.ao),
+			$elm$core$String$length(s.ap),
 			s.b) ? A3($elm$parser$Parser$Advanced$Good, false, 0, s) : A2(
 			$elm$parser$Parser$Advanced$Bad,
 			false,
@@ -5682,13 +5682,13 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	function (isGood, offset, row, col, s0) {
 		chompWhileHelp:
 		while (true) {
-			var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, offset, s0.ao);
+			var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, offset, s0.ap);
 			if (_Utils_eq(newOffset, -1)) {
 				return A3(
 					$elm$parser$Parser$Advanced$Good,
 					_Utils_cmp(s0.b, offset) < 0,
 					0,
-					{a2: col, d: s0.d, e: s0.e, b: offset, bL: row, ao: s0.ao});
+					{a2: col, d: s0.d, e: s0.e, b: offset, bL: row, ap: s0.ap});
 			} else {
 				if (_Utils_eq(newOffset, -2)) {
 					var $temp$isGood = isGood,
@@ -5746,7 +5746,7 @@ var $elm$parser$Parser$Advanced$mapChompedString = F2(
 					p,
 					A2(
 						func,
-						A3($elm$core$String$slice, s0.b, s1.b, s0.ao),
+						A3($elm$core$String$slice, s0.b, s1.b, s0.ap),
 						a),
 					s1);
 			}
@@ -5900,7 +5900,7 @@ var $elm$parser$Parser$UnexpectedChar = {$: 11};
 var $elm$parser$Parser$Advanced$chompIf = F2(
 	function (isGood, expecting) {
 		return function (s) {
-			var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, s.b, s.ao);
+			var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, s.b, s.ap);
 			return _Utils_eq(newOffset, -1) ? A2(
 				$elm$parser$Parser$Advanced$Bad,
 				false,
@@ -5908,11 +5908,11 @@ var $elm$parser$Parser$Advanced$chompIf = F2(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{a2: 1, d: s.d, e: s.e, b: s.b + 1, bL: s.bL + 1, ao: s.ao}) : A3(
+				{a2: 1, d: s.d, e: s.e, b: s.b + 1, bL: s.bL + 1, ap: s.ap}) : A3(
 				$elm$parser$Parser$Advanced$Good,
 				true,
 				0,
-				{a2: s.a2 + 1, d: s.d, e: s.e, b: newOffset, bL: s.bL, ao: s.ao}));
+				{a2: s.a2 + 1, d: s.d, e: s.e, b: newOffset, bL: s.bL, ap: s.ap}));
 		};
 	});
 var $elm$parser$Parser$chompIf = function (isGood) {
@@ -6048,7 +6048,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 	var expecting = _v0.b;
 	var progress = !$elm$core$String$isEmpty(str);
 	return function (s) {
-		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.bL, s.a2, s.ao);
+		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.b, s.bL, s.a2, s.ap);
 		var newOffset = _v1.a;
 		var newRow = _v1.b;
 		var newCol = _v1.c;
@@ -6059,7 +6059,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 			$elm$parser$Parser$Advanced$Good,
 			progress,
 			0,
-			{a2: newCol, d: s.d, e: s.e, b: newOffset, bL: newRow, ao: s.ao});
+			{a2: newCol, d: s.d, e: s.e, b: newOffset, bL: newRow, ap: s.ap});
 	};
 };
 var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
@@ -6334,7 +6334,7 @@ var $elm$parser$Parser$Advanced$run = F2(
 	function (_v0, src) {
 		var parse = _v0;
 		var _v1 = parse(
-			{a2: 1, d: _List_Nil, e: 1, b: 0, bL: 1, ao: src});
+			{a2: 1, d: _List_Nil, e: 1, b: 0, bL: 1, ap: src});
 		if (!_v1.$) {
 			var value = _v1.b;
 			return $elm$core$Result$Ok(value);
@@ -7203,11 +7203,11 @@ var $author$project$Main$CurrentMarkusbote = F2(
 	});
 var $author$project$Main$Flags = F6(
 	function (page, announcements, monthlyTexts, currentMarkusbote, defaultImage, eventId) {
-		return {aZ: announcements, au: currentMarkusbote, aj: defaultImage, a8: eventId, aN: monthlyTexts, aQ: page};
+		return {aZ: announcements, av: currentMarkusbote, aj: defaultImage, a8: eventId, aN: monthlyTexts, aQ: page};
 	});
 var $author$project$Main$Announcement = F5(
 	function (title, text, image, link, end) {
-		return {av: end, W: image, D: link, C: text, I: title};
+		return {aw: end, W: image, D: link, C: text, I: title};
 	});
 var $author$project$Main$imageDecoder = A3(
 	$elm$json$Json$Decode$map2,
@@ -7929,7 +7929,7 @@ var $author$project$Shared$urls = A3($author$project$Shared$Urls, '/gottesdienst
 var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 	var link = $elm$core$String$isEmpty(event.D) ? _Utils_ap(
 		$author$project$Shared$urls.z,
-		$elm$core$String$fromInt(event.ax)) : event.D;
+		$elm$core$String$fromInt(event.ay)) : event.D;
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
 			[
@@ -7940,7 +7940,7 @@ var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 						$author$project$Main$stringJoinIfNotEmpty,
 						': ',
 						_List_fromArray(
-							[event.I, event.ay, event.ap])))),
+							[event.I, event.az, event.aq])))),
 				_Utils_Tuple2(
 				'start',
 				$elm$json$Json$Encode$string(
@@ -7948,7 +7948,7 @@ var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 				_Utils_Tuple2(
 				'end',
 				$elm$json$Json$Encode$string(
-					$rtfeldman$elm_iso8601_date_strings$Iso8601$fromTime(event.av))),
+					$rtfeldman$elm_iso8601_date_strings$Iso8601$fromTime(event.aw))),
 				_Utils_Tuple2(
 				'color',
 				$elm$json$Json$Encode$string(
@@ -8739,7 +8739,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 								[announcement.C]),
 							announcement.W,
 							announcement.D,
-							$elm$time$Time$posixToMillis(announcement.av)),
+							$elm$time$Time$posixToMillis(announcement.aw)),
 						acc);
 				});
 			var fn1 = F2(
@@ -8749,7 +8749,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 						var textOnHomePage = _v2.a;
 						var link = $elm$core$String$isEmpty(event.D) ? _Utils_ap(
 							$author$project$Shared$urls.z,
-							$elm$core$String$fromInt(event.ax)) : event.D;
+							$elm$core$String$fromInt(event.ay)) : event.D;
 						return A2(
 							$elm$core$List$cons,
 							A5(
@@ -8758,6 +8758,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 								_List_fromArray(
 									[
 										$author$project$Main$posixToStringWithWeekday(event.K),
+										event.ao,
 										textOnHomePage
 									]),
 								event.W,
@@ -8791,10 +8792,10 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 					var _v1 = el.W;
 					if (!_v1.$) {
 						var i = _v1.a;
-						return _Utils_Tuple2(i.ao, i.C);
+						return _Utils_Tuple2(i.ap, i.C);
 					} else {
 						return _Utils_Tuple2(
-							_Utils_ap($author$project$Shared$staticPrefix, dataFromServer.aj.ao),
+							_Utils_ap($author$project$Shared$staticPrefix, dataFromServer.aj.ap),
 							dataFromServer.aj.C);
 					}
 				}();
@@ -8873,7 +8874,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 				elements));
 	});
 var $author$project$Main$articleMarkusbote = function (dataFromServer) {
-	if (!$elm$core$String$isEmpty(dataFromServer.au.aH)) {
+	if (!$elm$core$String$isEmpty(dataFromServer.av.aH)) {
 		var imgLabel = 'Schriftzug des Markusboten, erste Ausgabe März 1907';
 		return _List_fromArray(
 			[
@@ -8918,11 +8919,11 @@ var $author$project$Main$articleMarkusbote = function (dataFromServer) {
 								$elm$html$Html$a,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$href(dataFromServer.au.aH)
+										$elm$html$Html$Attributes$href(dataFromServer.av.aH)
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Markusboten (Ausgabe ' + (dataFromServer.au.am + ')'))
+										$elm$html$Html$text('Markusboten (Ausgabe ' + (dataFromServer.av.am + ')'))
 									])),
 								$elm$html$Html$text(' als PDF zum Download.')
 							])),
@@ -9032,7 +9033,7 @@ var $author$project$Main$articleNextService = function (model) {
 										$elm$html$Html$text(
 										$author$project$Main$posixToStringWithWeekday(service.K)),
 										A2($elm$html$Html$br, _List_Nil, _List_Nil),
-										$elm$html$Html$text(service.aB)
+										$elm$html$Html$text(service.ao)
 									])),
 								A2(
 								$elm$html$Html$p,
@@ -9044,7 +9045,7 @@ var $author$project$Main$articleNextService = function (model) {
 											$author$project$Main$stringJoinIfNotEmpty,
 											': ',
 											_List_fromArray(
-												[service.ay, service.I, service.ap, service.az])))
+												[service.az, service.I, service.aq, service.aA])))
 									]))
 							]));
 				}
@@ -9159,7 +9160,7 @@ var $author$project$Main$serviceView = function (service) {
 					$author$project$Main$stringJoinIfNotEmpty,
 					': ',
 					_List_fromArray(
-						[service.ay, service.ap]))),
+						[service.az, service.aq]))),
 			service.b6 ? _List_fromArray(
 				[
 					A2(
@@ -9196,7 +9197,7 @@ var $author$project$Main$serviceView = function (service) {
 						_List_fromArray(
 							[
 								$author$project$Main$posixToString(service.K),
-								service.aB,
+								service.ao,
 								service.I
 							])))
 				])),
@@ -9206,7 +9207,7 @@ var $author$project$Main$serviceView = function (service) {
 			A2(
 				$elm$core$List$cons,
 				firstLine,
-				$author$project$Main$linebreaks(service.az)))
+				$author$project$Main$linebreaks(service.aA)))
 		]);
 };
 var $author$project$Main$viewServices = F2(
@@ -9271,7 +9272,7 @@ var $author$project$Main$viewSingleEvent = F2(
 			A2(
 				$elm$core$List$filter,
 				function (e) {
-					return _Utils_eq(e.ax, flags.a8);
+					return _Utils_eq(e.ay, flags.a8);
 				},
 				model.z));
 		if (_v0.$ === 1) {
@@ -9294,10 +9295,10 @@ var $author$project$Main$viewSingleEvent = F2(
 				var _v2 = event.W;
 				if (!_v2.$) {
 					var i = _v2.a;
-					return _Utils_Tuple2(i.ao, i.C);
+					return _Utils_Tuple2(i.ap, i.C);
 				} else {
 					return _Utils_Tuple2(
-						_Utils_ap($author$project$Shared$staticPrefix, flags.aj.ao),
+						_Utils_ap($author$project$Shared$staticPrefix, flags.aj.ap),
 						flags.aj.C);
 				}
 			}();
@@ -9348,17 +9349,17 @@ var $author$project$Main$viewSingleEvent = F2(
 											_List_fromArray(
 												[
 													$elm$html$Html$text(
-													$author$project$Main$posixToStringWithWeekday(event.K) + (' · ' + event.aB))
+													$author$project$Main$posixToStringWithWeekday(event.K) + (' · ' + event.ao))
 												])),
 											A2(
 											$elm$html$Html$p,
 											_List_Nil,
 											_List_fromArray(
 												[
-													$elm$html$Html$text(event.ap)
+													$elm$html$Html$text(event.aq)
 												]))
 										]),
-									$author$project$Main$linebreaks(event.az))),
+									$author$project$Main$linebreaks(event.aA))),
 								A2(
 								$elm$html$Html$div,
 								_List_fromArray(
