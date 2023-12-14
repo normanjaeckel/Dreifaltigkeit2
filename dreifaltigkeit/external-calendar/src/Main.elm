@@ -59,6 +59,9 @@ overrideLiturgBez lbz =
         "Drittl. Sonntag d. Kj." ->
             "Drittletzter Sonntag des Kirchenjahres"
 
+        "Vorletzter Sonntag d. Kj." ->
+            "Vorletzter Sonntag des Kirchenjahres"
+
         _ ->
             lbz
 
@@ -287,6 +290,20 @@ eventDecoder =
             |> DP.required "START_RFC" Iso8601.decoder
             |> DP.required "END_RFC" Iso8601.decoder
             |> DP.required "LITURG_BEZ" (D.string |> D.andThen (overrideLiturgBez >> D.succeed))
+            |> DP.optional "field47"
+                (D.string
+                    |> D.andThen
+                        ((\v ->
+                            if String.isEmpty v then
+                                Nothing
+
+                            else
+                                Just v
+                         )
+                            >> D.succeed
+                        )
+                )
+                Nothing
             |> DP.required "_place_NAME" D.string
             |> DP.required "_event_LINK" D.string
             |> D.andThen
@@ -343,9 +360,18 @@ eventEncoderForFullCalendar event =
 
             else
                 event.link
+
+        liturgBez : String
+        liturgBez =
+            case event.alternativeLiturgBez of
+                Nothing ->
+                    event.liturgBez
+
+                Just lbz ->
+                    lbz
     in
     E.object
-        [ ( "title", E.string (stringJoinIfNotEmpty ": " [ event.title, event.liturgBez, event.subtitle ]) )
+        [ ( "title", E.string (stringJoinIfNotEmpty ": " [ event.title, liturgBez, event.subtitle ]) )
         , ( "start", E.string (event.start |> Iso8601.fromTime) )
         , ( "end", E.string (event.end |> Iso8601.fromTime) )
         , ( "color", E.string (event.eventtype |> eventtypeToColor) )
@@ -363,6 +389,7 @@ type alias Event =
     , start : Time.Posix
     , end : Time.Posix
     , liturgBez : String
+    , alternativeLiturgBez : Maybe String
     , place : String
     , link : String
     , image : Maybe Image
@@ -486,11 +513,20 @@ articleNextService model =
                 p [] [ text "Wann und wo wir den nächsten Gottesdienst in unserer Gemeinde feiern, erfahren Sie unter dem folgenden Link." ]
 
             Just service ->
+                let
+                    liturgBez =
+                        case service.alternativeLiturgBez of
+                            Nothing ->
+                                service.liturgBez
+
+                            Just lbz ->
+                                lbz
+                in
                 div []
                     [ p [] [ text <| posixToStringWithWeekday service.start, br [] [], text service.place ]
 
                     -- TODO: Linkify longDescription
-                    , p [] [ text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.title, service.subtitle, service.longDescription ] ]
+                    , p [] [ text <| stringJoinIfNotEmpty ": " [ liturgBez, service.title, service.subtitle, service.longDescription ] ]
                     ]
         , ul [ class "actions" ]
             [ li [] [ a [ href Shared.urls.services, class "button" ] [ text "Alle Gottesdienste" ] ]
@@ -676,10 +712,19 @@ monthlyTextFor texts month =
 serviceView : Event -> List (Html Msg)
 serviceView service =
     let
+        liturgBez : String
+        liturgBez =
+            case service.alternativeLiturgBez of
+                Nothing ->
+                    service.liturgBez
+
+                Just lbz ->
+                    lbz
+
         firstLine : Html Msg
         firstLine =
             p []
-                ((text <| stringJoinIfNotEmpty ": " [ service.liturgBez, service.subtitle ])
+                ((text <| stringJoinIfNotEmpty ": " [ liturgBez, service.subtitle ])
                     :: (if service.withKidsService then
                             [ span [ class "image", class "kids-logo", title "Kindergottesdienst" ]
                                 [ img [ src <| Shared.staticPrefix ++ "images/Kindergottesdienst_Logo.jpg", alt "Kindergottesdienst" ] [] ]
