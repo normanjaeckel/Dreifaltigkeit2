@@ -556,7 +556,7 @@ articleEventsAndAnnoucements dataFromServer model =
                             in
                             EventOrAnnouncement
                                 event.title
-                                [ posixToStringWithWeekday event.start, textOnHomePage ]
+                                [ posixToStringWithWeekday event.start, event.place, textOnHomePage ]
                                 event.image
                                 link
                                 (event.start |> Time.posixToMillis)
