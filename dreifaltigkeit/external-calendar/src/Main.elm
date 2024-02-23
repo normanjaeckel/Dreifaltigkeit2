@@ -320,6 +320,24 @@ eventDecoder =
                         (D.field "_event_CAPTION" D.string)
                         |> D.andThen (\i -> fn i |> D.succeed)
                 )
+            |> D.andThen
+                (\fn ->
+                    D.map2
+                        (\src txt ->
+                            src
+                                |> Maybe.andThen
+                                    (\s ->
+                                        if String.isEmpty s then
+                                            Nothing
+
+                                        else
+                                            Just <| Image s txt
+                                    )
+                        )
+                        (D.maybe (D.field "field53" D.string))
+                        (D.field "_event_CAPTION" D.string)
+                        |> D.andThen (\i -> fn i |> D.succeed)
+                )
             |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "ja"))
         )
 
@@ -393,6 +411,7 @@ type alias Event =
     , place : String
     , link : String
     , image : Maybe Image
+    , alternativeImage : Maybe Image
     , withKidsService : Bool
     }
 
@@ -514,6 +533,7 @@ articleNextService model =
 
             Just service ->
                 let
+                    liturgBez : String
                     liturgBez =
                         case service.alternativeLiturgBez of
                             Nothing ->
@@ -589,11 +609,19 @@ articleEventsAndAnnoucements dataFromServer model =
 
                                     else
                                         event.link
+
+                                image : Maybe Image
+                                image =
+                                    if event.alternativeImage == Nothing then
+                                        event.image
+
+                                    else
+                                        event.alternativeImage
                             in
                             EventOrAnnouncement
                                 event.title
                                 [ posixToStringWithWeekday event.start, event.place, textOnHomePage ]
-                                event.image
+                                image
                                 link
                                 (event.start |> Time.posixToMillis)
                                 :: acc
@@ -752,12 +780,17 @@ viewSingleEvent flags model =
         Just event ->
             let
                 ( imageSrc, imageText ) =
-                    case event.image of
+                    case event.alternativeImage of
                         Just i ->
                             ( i.src, i.text )
 
                         Nothing ->
-                            ( Shared.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
+                            case event.image of
+                                Just i ->
+                                    ( i.src, i.text )
+
+                                Nothing ->
+                                    ( Shared.staticPrefix ++ flags.defaultImage.src, flags.defaultImage.text )
             in
             div []
                 [ header [ class "main" ]
