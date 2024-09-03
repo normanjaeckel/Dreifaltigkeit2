@@ -338,7 +338,7 @@ eventDecoder =
                         (D.field "_event_CAPTION" D.string)
                         |> D.andThen (\i -> fn i |> D.succeed)
                 )
-            |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "ja"))
+            |> DP.required "_event_MENUE_1" (D.string |> D.andThen (\v -> D.succeed <| v == "mit Kindergottesdienst"))
         )
 
 

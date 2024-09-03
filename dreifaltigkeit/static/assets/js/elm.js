@@ -6511,7 +6511,7 @@ var $author$project$Main$eventDecoder = A2(
 		A2(
 			$elm$json$Json$Decode$andThen,
 			function (v) {
-				return $elm$json$Json$Decode$succeed(v === 'ja');
+				return $elm$json$Json$Decode$succeed(v === 'mit Kindergottesdienst');
 			},
 			$elm$json$Json$Decode$string),
 		A2(
