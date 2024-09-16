@@ -2,6 +2,7 @@
 
 This is the codebase of our website.
 
+
 ## Credits
 
 This website uses
@@ -11,7 +12,7 @@ This website uses
 * [FullCalendar v3.10.5](https://fullcalendar.io/) by [Adam Shaw](http://arshaw.com/) and others which is licensed under [MIT](https://github.com/fullcalendar/fullcalendar/blob/v3.10.5/LICENSE.txt) including dependencies (see [dreifaltigkeit/static/fullcalendar-3.10.5/lib](dreifaltigkeit/static/fullcalendar-3.10.5/lib)).
 
 
-## Setup
+## Setup development version
 
 Get [devenv](https://devenv.sh/) and then run:
 
@@ -36,3 +37,20 @@ Run in a second terminal:
 In case you changed urls.py or static file prefix, run:
 
     $ python manage.py generate_elm_file  # Some code generation for the elm client
+
+
+## Using Docker Compose
+
+    $ export DREIFALTIGKEIT_SITE_ID=parish  # Or use kindergarden in other case
+
+    $ mkdir secrets
+
+    $ tr -dc [:alnum:] < /dev/urandom | head -c 50 > secrets/django-secret-key  # Generate a secret key
+
+    $ tr -dc [:alnum:] < /dev/urandom | head -c 50 > secrets/postgres-password  # Generate a password for postgres
+
+    $ docker volume create media_$DREIFALTIGKEIT_SITE_ID
+
+    $ docker volume create postgres_data_$DREIFALTIGKEIT_SITE_ID
+
+    $ docker compose up
