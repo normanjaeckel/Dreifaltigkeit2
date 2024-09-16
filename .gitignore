@@ -3,31 +3,20 @@
 # Python compiled files
 __pycache__/
 
-# Virtual Python Environment builder
-.virtualenv/
+# Direnv and Devenv
+.direnv/
+.devenv*
+devenv.local.nix
 
-# Django settings
-dreifaltigkeit_settings.py
-dreifaltigkeit_*_settings.py
-dreifaltigkeit_wsgi.py
-
-# Development database
-db.sqlite3
-db_dreifaltigkeit_*.sqlite3
-
-# Deployment directory
-deployment/
+# Secrets
+secrets/
+django_secret_key.txt
 
 # Private development data
 private/
 
 # Special page
 dreifaltigkeit/templates/special_page*
-
-# Direnv and Devenv
-.direnv/
-.devenv*
-devenv.local.nix
 
 # IDE settins
 .vscode/

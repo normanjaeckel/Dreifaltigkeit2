@@ -21,9 +21,11 @@ Run in a second terminal:
 
     $ devenv shell  # To activate the developer environment
 
-    $ python prepare_project.py  # To create settings files
+    $ export DREIFALTIGKEIT_SITE_ID=parish  # Or use kindergarden in other case
 
-    $ export DJANGO_SETTINGS_MODULE=dreifaltigkeit_parish_settings  # Or use kindergarden settings in other case
+    $ export DJANGO_SECRET_KEY_FILE=django_secret_key.txt
+
+    $ tr -dc [:alnum:] < /dev/urandom | head -c 50 > $DJANGO_SECRET_KEY_FILE  # Generate a secret key
 
     $ python manage.py migrate  # Setup database
 

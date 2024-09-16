@@ -3,10 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dreifaltigkeit_settings")
-    if not os.environ.get("DJANGO_SETTINGS_MODULE"):
-        raise RuntimeError(
-            "You have to set DJANGO_SETTINGS_MODULE environment variable.")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dreifaltigkeit_settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

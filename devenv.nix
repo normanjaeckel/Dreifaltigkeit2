@@ -29,8 +29,7 @@
   services.postgres = {
     enable = true;
     initialDatabases = [
-      { name = "dreifaltigkeit_parish"; }
-      { name = "dreifaltigkeit_kindergarden"; }
+      { name = "dreifaltigkeit"; }
     ];
     initdbArgs = [ "--username=dreifaltigkeit" "--locale=C" "--encoding=UTF8" ];
   };

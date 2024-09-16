@@ -1,0 +1,91 @@
+---
+name: dreifaltigkeit
+
+services:
+  frontend:
+    image: caddy:2.8.4-alpine
+    restart: unless-stopped
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+    networks:
+      - front-tier
+    volumes:
+      - caddy_config:/config
+      - caddy_data:/data
+      - static:/srv/static
+      - media:/srv/media
+    depends_on:
+      - backend
+    ports:
+      - "8000:8000"
+
+  backend:
+    # image: ghcr.io/normanjaeckel/Dreifaltigkeit:latest
+    build: .
+    environment:
+      DREIFALTIGKEIT_SITE_ID: ${DREIFALTIGKEIT_SITE_ID:?error}
+      DREIFALTIGKEIT_HOST: localhost
+      DREIFALTIGKEIT_LINK_TO_OTHER_SITE: https://example.com
+      PGHOST: database
+    secrets:
+      - django_secret_key
+      - postgres_password
+    networks:
+      - front-tier
+      - back-tier
+    volumes:
+      - static:/app/static
+      - media:/app/media
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16.4-alpine3.20
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: dreifaltigkeit
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    networks:
+      - back-tier
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  front-tier:
+  back-tier:
+    internal: true
+
+volumes:
+  caddy_config:
+  caddy_data:
+  static:
+  media:
+    name: media_${DREIFALTIGKEIT_SITE_ID:?error}
+    external: true
+  postgres_data:
+    name: postgres_data_${DREIFALTIGKEIT_SITE_ID:?error}
+    external: true
+
+configs:
+  caddyfile:
+    content: |
+      :8000 {
+        @assets path /static/* /media/*
+        handle @assets {
+          file_server
+        }
+        handle {
+          reverse_proxy backend:8000
+        }
+      }
+
+secrets:
+  django_secret_key:
+    file: secrets/django_secret_key
+  postgres_password:
+    file: secrets/postgres_password
+...
