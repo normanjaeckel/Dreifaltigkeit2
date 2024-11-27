@@ -4520,9 +4520,9 @@ var _Http_toTask = F3(function(router, toTask, request)
 		$elm$core$Maybe$isJust(request.b2) && _Http_track(router, xhr, request.b2.a);
 
 		try {
-			xhr.open(request.cC, request.aJ, true);
+			xhr.open(request.cC, request.aK, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.aJ));
+			return done($elm$http$Http$BadUrl_(request.aK));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -4566,7 +4566,7 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		aJ: xhr.responseURL,
+		aK: xhr.responseURL,
 		cZ: xhr.status,
 		c_: xhr.statusText,
 		bj: _Http_parseHeaders(xhr.getAllResponseHeaders())
@@ -5516,7 +5516,7 @@ var $author$project$Main$Event = function (eventtype) {
 												return function (image) {
 													return function (alternativeImage) {
 														return function (withKidsService) {
-															return {av: alternativeImage, aw: alternativeLiturgBez, ay: end, aM: eventtype, aA: id, W: image, D: link, aB: liturgBez, aC: longDescription, ap: place, K: start, aq: subtitle, b_: textOnHomePage, I: title, b8: withKidsService};
+															return {av: alternativeImage, aw: alternativeLiturgBez, ay: end, az: eventtype, aB: id, W: image, D: link, aC: liturgBez, aD: longDescription, ap: place, K: start, aq: subtitle, b_: textOnHomePage, I: title, b8: withKidsService};
 														};
 													};
 												};
@@ -7261,7 +7261,7 @@ var $author$project$Main$externalCalendarUrl = function (page) {
 };
 var $author$project$Main$CurrentMarkusbote = F2(
 	function (url, month) {
-		return {an: month, aJ: url};
+		return {an: month, aK: url};
 	});
 var $author$project$Main$Flags = F6(
 	function (page, announcements, monthlyTexts, currentMarkusbote, defaultImage, eventId) {
@@ -7632,7 +7632,7 @@ var $elm$http$Http$cmdMap = F2(
 					cC: r.cC,
 					c2: r.c2,
 					b2: r.b2,
-					aJ: r.aJ
+					aK: r.aK
 				});
 		}
 	});
@@ -7655,11 +7655,11 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{cc: false, cg: r.cg, cq: r.cq, bj: r.bj, cC: r.cC, c2: r.c2, b2: r.b2, aJ: r.aJ}));
+			{cc: false, cg: r.cg, cq: r.cq, bj: r.bj, cC: r.cC, c2: r.c2, b2: r.b2, aK: r.aK}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{cg: $elm$http$Http$emptyBody, cq: r.cq, bj: _List_Nil, cC: 'GET', c2: $elm$core$Maybe$Nothing, b2: $elm$core$Maybe$Nothing, aJ: r.aJ});
+		{cg: $elm$http$Http$emptyBody, cq: r.cq, bj: _List_Nil, cC: 'GET', c2: $elm$core$Maybe$Nothing, b2: $elm$core$Maybe$Nothing, aK: r.aK});
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -7678,7 +7678,7 @@ var $author$project$Main$init = function (initialFlags) {
 						$elm$http$Http$expectJson,
 						$elm$core$Basics$identity,
 						$elm$json$Json$Decode$list($author$project$Main$eventDecoder)),
-					aJ: $author$project$Main$externalCalendarUrl(flags.aS)
+					aK: $author$project$Main$externalCalendarUrl(flags.aS)
 				}));
 	} else {
 		return _Utils_Tuple2(
@@ -7984,7 +7984,12 @@ var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 	var liturgBez = function () {
 		var _v0 = event.aw;
 		if (_v0.$ === 1) {
-			return event.aB;
+			var _v1 = event.az;
+			if (!_v1) {
+				return event.aC;
+			} else {
+				return '';
+			}
 		} else {
 			var lbz = _v0.a;
 			return lbz;
@@ -7992,7 +7997,7 @@ var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 	}();
 	var link = $elm$core$String$isEmpty(event.D) ? _Utils_ap(
 		$author$project$Shared$urls.A,
-		$elm$core$String$fromInt(event.aA)) : event.D;
+		$elm$core$String$fromInt(event.aB)) : event.D;
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
 			[
@@ -8015,7 +8020,7 @@ var $author$project$Main$eventEncoderForFullCalendar = function (event) {
 				_Utils_Tuple2(
 				'color',
 				$elm$json$Json$Encode$string(
-					$author$project$Main$eventtypeToColor(event.aM))),
+					$author$project$Main$eventtypeToColor(event.az))),
 				_Utils_Tuple2(
 				'url',
 				$elm$json$Json$Encode$string(link))
@@ -8164,7 +8169,7 @@ var $justinmimbs$timezone_data$TimeZone$Specification$Save = function (a) {
 var $justinmimbs$timezone_data$TimeZone$Specification$WallClock = 2;
 var $justinmimbs$timezone_data$TimeZone$Specification$Zone = F2(
 	function (history, current) {
-		return {aK: current, B: history};
+		return {aL: current, B: history};
 	});
 var $justinmimbs$timezone_data$TimeZone$Specification$ZoneState = F2(
 	function (standardOffset, zoneRules) {
@@ -8527,7 +8532,7 @@ var $justinmimbs$timezone_data$TimeZone$Specification$zoneToRanges = F3(
 		return $elm$core$List$reverse(
 			A2(
 				$elm$core$List$cons,
-				_Utils_Tuple3(currentStart, zone.aK, zoneUntil),
+				_Utils_Tuple3(currentStart, zone.aL, zoneUntil),
 				historyRanges));
 	});
 var $justinmimbs$timezone_data$TimeZone$Specification$toOffsets = F3(
@@ -8539,7 +8544,7 @@ var $justinmimbs$timezone_data$TimeZone$Specification$toOffsets = F3(
 				var earliest = _v6.a;
 				return earliest;
 			} else {
-				return zone.aK;
+				return zone.aL;
 			}
 		}();
 		var initialOffset = {
@@ -8812,7 +8817,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 						var textOnHomePage = _v2.a;
 						var link = $elm$core$String$isEmpty(event.D) ? _Utils_ap(
 							$author$project$Shared$urls.A,
-							$elm$core$String$fromInt(event.aA)) : event.D;
+							$elm$core$String$fromInt(event.aB)) : event.D;
 						var image = _Utils_eq(event.av, $elm$core$Maybe$Nothing) ? event.W : event.av;
 						return A2(
 							$elm$core$List$cons,
@@ -8938,7 +8943,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 				elements));
 	});
 var $author$project$Main$articleMarkusbote = function (dataFromServer) {
-	if (!$elm$core$String$isEmpty(dataFromServer.ax.aJ)) {
+	if (!$elm$core$String$isEmpty(dataFromServer.ax.aK)) {
 		var imgLabel = 'Schriftzug des Markusboten, erste Ausgabe März 1907';
 		return _List_fromArray(
 			[
@@ -8983,7 +8988,7 @@ var $author$project$Main$articleMarkusbote = function (dataFromServer) {
 								$elm$html$Html$a,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$href(dataFromServer.ax.aJ)
+										$elm$html$Html$Attributes$href(dataFromServer.ax.aK)
 									]),
 								_List_fromArray(
 									[
@@ -9071,7 +9076,7 @@ var $author$project$Main$articleNextService = function (model) {
 					A2(
 						$elm$core$List$filter,
 						function (e) {
-							return !e.aM;
+							return !e.az;
 						},
 						model.A));
 				if (_v0.$ === 1) {
@@ -9087,7 +9092,7 @@ var $author$project$Main$articleNextService = function (model) {
 					var liturgBez = function () {
 						var _v1 = service.aw;
 						if (_v1.$ === 1) {
-							return service.aB;
+							return service.aC;
 						} else {
 							var lbz = _v1.a;
 							return lbz;
@@ -9118,7 +9123,7 @@ var $author$project$Main$articleNextService = function (model) {
 											$author$project$Main$stringJoinIfNotEmpty,
 											': ',
 											_List_fromArray(
-												[liturgBez, service.I, service.aq, service.aC])))
+												[liturgBez, service.I, service.aq, service.aD])))
 									]))
 							]));
 				}
@@ -9226,7 +9231,7 @@ var $author$project$Main$serviceView = function (service) {
 	var liturgBez = function () {
 		var _v0 = service.aw;
 		if (_v0.$ === 1) {
-			return service.aB;
+			return service.aC;
 		} else {
 			var lbz = _v0.a;
 			return lbz;
@@ -9289,7 +9294,7 @@ var $author$project$Main$serviceView = function (service) {
 			A2(
 				$elm$core$List$cons,
 				firstLine,
-				$author$project$Main$linebreaks(service.aC)))
+				$author$project$Main$linebreaks(service.aD)))
 		]);
 };
 var $author$project$Main$viewServices = F2(
@@ -9354,7 +9359,7 @@ var $author$project$Main$viewSingleEvent = F2(
 			A2(
 				$elm$core$List$filter,
 				function (e) {
-					return _Utils_eq(e.aA, flags.ba);
+					return _Utils_eq(e.aB, flags.ba);
 				},
 				model.A));
 		if (_v0.$ === 1) {
@@ -9447,7 +9452,7 @@ var $author$project$Main$viewSingleEvent = F2(
 													$elm$html$Html$text(event.aq)
 												]))
 										]),
-									$author$project$Main$linebreaks(event.aC))),
+									$author$project$Main$linebreaks(event.aD))),
 								A2(
 								$elm$html$Html$div,
 								_List_fromArray(

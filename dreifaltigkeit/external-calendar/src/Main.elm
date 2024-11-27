@@ -383,7 +383,12 @@ eventEncoderForFullCalendar event =
         liturgBez =
             case event.alternativeLiturgBez of
                 Nothing ->
-                    event.liturgBez
+                    case event.eventtype of
+                        Service ->
+                            event.liturgBez
+
+                        _ ->
+                            ""
 
                 Just lbz ->
                     lbz
