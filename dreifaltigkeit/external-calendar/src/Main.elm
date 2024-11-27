@@ -940,7 +940,7 @@ eventtypeToColor et =
             "darkcyan"
 
         PeriodOfReflection ->
-            "forestgreen"
+            "darkblue"
 
         Miscellaneous ->
             "grey"
