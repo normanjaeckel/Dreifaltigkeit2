@@ -7702,7 +7702,7 @@ var $author$project$Main$eventtypeToColor = function (et) {
 		case 3:
 			return 'darkcyan';
 		case 4:
-			return 'forestgreen';
+			return 'darkblue';
 		default:
 			return 'grey';
 	}
