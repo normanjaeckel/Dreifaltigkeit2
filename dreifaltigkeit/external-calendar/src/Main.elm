@@ -664,7 +664,7 @@ articleEventsAndAnnoucements dataFromServer model =
 
                     paragraphs : List (Html Msg)
                     paragraphs =
-                        el.text |> List.map (\t -> p [] [ text t ])
+                        el.text |> List.map (\t -> p [] (parseLinksFromText t))
                 in
                 article []
                     ([ a [ href el.link, class "image" ] [ img [ src imageSrc, alt imageText, title imageText ] [] ]
@@ -675,6 +675,53 @@ articleEventsAndAnnoucements dataFromServer model =
                            ]
                     )
             )
+
+
+parseLinksFromText : String -> List (Html Msg)
+parseLinksFromText t =
+    Parser.run linkifyParser t
+        |> Result.withDefault [ text "--> Ungültiger Text <--" ]
+
+
+linkifyParser : Parser.Parser (List (Html Msg))
+linkifyParser =
+    Parser.loop [] linkifyParserHelper
+
+
+linkifyParserHelper : List (Html Msg) -> Parser.Parser (Parser.Step (List (Html Msg)) (List (Html Msg)))
+linkifyParserHelper revTexts =
+    Parser.oneOf
+        [ linkParser
+            |> Parser.andThen (\l -> Parser.Loop (l :: revTexts) |> Parser.succeed)
+            |> Parser.backtrackable
+        , chompOneUntilEndOr "["
+            |> Parser.andThen (\s -> Parser.Loop (text s :: revTexts) |> Parser.succeed)
+        , Parser.succeed ()
+            |> Parser.map (\_ -> Parser.Done (List.reverse revTexts))
+        ]
+
+
+linkParser : Parser.Parser (Html Msg)
+linkParser =
+    Parser.succeed (\t -> \prot -> \ref -> a [ href (prot ++ ref) ] [ text t ])
+        |. Parser.symbol "["
+        |= (Parser.chompWhile (\c -> c /= ']') |> Parser.getChompedString)
+        |. Parser.symbol "]"
+        |. Parser.symbol "("
+        |= Parser.oneOf
+            [ Parser.keyword "https" |> Parser.map (\_ -> "https")
+            , Parser.keyword "http" |> Parser.map (\_ -> "http")
+            ]
+        |= (Parser.chompWhile (\c -> c /= ')') |> Parser.getChompedString)
+        |. Parser.symbol ")"
+
+
+chompOneUntilEndOr : String -> Parser.Parser String
+chompOneUntilEndOr s =
+    Parser.getChompedString <|
+        Parser.succeed ()
+            |. Parser.chompIf (always True)
+            |. Parser.chompUntilEndOr s
 
 
 articleAllEvents : Html Msg

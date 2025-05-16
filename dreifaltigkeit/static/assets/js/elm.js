@@ -8156,6 +8156,196 @@ var $author$project$Main$EventOrAnnouncement = F5(
 	function (title, text, image, link, time) {
 		return {W: image, D: link, y: text, b$: time, I: title};
 	});
+var $elm$parser$Parser$Advanced$backtrackable = function (_v0) {
+	var parse = _v0;
+	return function (s0) {
+		var _v1 = parse(s0);
+		if (_v1.$ === 1) {
+			var x = _v1.b;
+			return A2($elm$parser$Parser$Advanced$Bad, false, x);
+		} else {
+			var a = _v1.b;
+			var s1 = _v1.c;
+			return A3($elm$parser$Parser$Advanced$Good, false, a, s1);
+		}
+	};
+};
+var $elm$parser$Parser$backtrackable = $elm$parser$Parser$Advanced$backtrackable;
+var $elm$parser$Parser$Advanced$chompUntilEndOr = function (str) {
+	return function (s) {
+		var _v0 = A5(_Parser_findSubString, str, s.b, s.bN, s.a4, s.ad);
+		var newOffset = _v0.a;
+		var newRow = _v0.b;
+		var newCol = _v0.c;
+		var adjustedOffset = (newOffset < 0) ? $elm$core$String$length(s.ad) : newOffset;
+		return A3(
+			$elm$parser$Parser$Advanced$Good,
+			_Utils_cmp(s.b, adjustedOffset) < 0,
+			0,
+			{a4: newCol, d: s.d, e: s.e, b: adjustedOffset, bN: newRow, ad: s.ad});
+	};
+};
+var $elm$parser$Parser$chompUntilEndOr = $elm$parser$Parser$Advanced$chompUntilEndOr;
+var $author$project$Main$chompOneUntilEndOr = function (s) {
+	return $elm$parser$Parser$getChompedString(
+		A2(
+			$elm$parser$Parser$ignorer,
+			A2(
+				$elm$parser$Parser$ignorer,
+				$elm$parser$Parser$succeed(0),
+				$elm$parser$Parser$chompIf(
+					$elm$core$Basics$always(true))),
+			$elm$parser$Parser$chompUntilEndOr(s)));
+};
+var $elm$parser$Parser$ExpectingKeyword = function (a) {
+	return {$: 9, a: a};
+};
+var $elm$parser$Parser$Advanced$keyword = function (_v0) {
+	var kwd = _v0.a;
+	var expecting = _v0.b;
+	var progress = !$elm$core$String$isEmpty(kwd);
+	return function (s) {
+		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, kwd, s.b, s.bN, s.a4, s.ad);
+		var newOffset = _v1.a;
+		var newRow = _v1.b;
+		var newCol = _v1.c;
+		return (_Utils_eq(newOffset, -1) || (0 <= A3(
+			$elm$parser$Parser$Advanced$isSubChar,
+			function (c) {
+				return $elm$core$Char$isAlphaNum(c) || (c === '_');
+			},
+			newOffset,
+			s.ad))) ? A2(
+			$elm$parser$Parser$Advanced$Bad,
+			false,
+			A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
+			$elm$parser$Parser$Advanced$Good,
+			progress,
+			0,
+			{a4: newCol, d: s.d, e: s.e, b: newOffset, bN: newRow, ad: s.ad});
+	};
+};
+var $elm$parser$Parser$keyword = function (kwd) {
+	return $elm$parser$Parser$Advanced$keyword(
+		A2(
+			$elm$parser$Parser$Advanced$Token,
+			kwd,
+			$elm$parser$Parser$ExpectingKeyword(kwd)));
+};
+var $author$project$Main$linkParser = A2(
+	$elm$parser$Parser$keeper,
+	A2(
+		$elm$parser$Parser$keeper,
+		A2(
+			$elm$parser$Parser$keeper,
+			A2(
+				$elm$parser$Parser$ignorer,
+				$elm$parser$Parser$succeed(
+					function (t) {
+						return function (prot) {
+							return function (ref) {
+								return A2(
+									$elm$html$Html$a,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$href(
+											_Utils_ap(prot, ref))
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text(t)
+										]));
+							};
+						};
+					}),
+				$elm$parser$Parser$symbol('[')),
+			A2(
+				$elm$parser$Parser$ignorer,
+				A2(
+					$elm$parser$Parser$ignorer,
+					$elm$parser$Parser$getChompedString(
+						$elm$parser$Parser$chompWhile(
+							function (c) {
+								return c !== ']';
+							})),
+					$elm$parser$Parser$symbol(']')),
+				$elm$parser$Parser$symbol('('))),
+		$elm$parser$Parser$oneOf(
+			_List_fromArray(
+				[
+					A2(
+					$elm$parser$Parser$map,
+					function (_v0) {
+						return 'https';
+					},
+					$elm$parser$Parser$keyword('https')),
+					A2(
+					$elm$parser$Parser$map,
+					function (_v1) {
+						return 'http';
+					},
+					$elm$parser$Parser$keyword('http'))
+				]))),
+	A2(
+		$elm$parser$Parser$ignorer,
+		$elm$parser$Parser$getChompedString(
+			$elm$parser$Parser$chompWhile(
+				function (c) {
+					return c !== ')';
+				})),
+		$elm$parser$Parser$symbol(')')));
+var $author$project$Main$linkifyParserHelper = function (revTexts) {
+	return $elm$parser$Parser$oneOf(
+		_List_fromArray(
+			[
+				$elm$parser$Parser$backtrackable(
+				A2(
+					$elm$parser$Parser$andThen,
+					function (l) {
+						return $elm$parser$Parser$succeed(
+							$elm$parser$Parser$Loop(
+								A2($elm$core$List$cons, l, revTexts)));
+					},
+					$author$project$Main$linkParser)),
+				A2(
+				$elm$parser$Parser$andThen,
+				function (s) {
+					return $elm$parser$Parser$succeed(
+						$elm$parser$Parser$Loop(
+							A2(
+								$elm$core$List$cons,
+								$elm$html$Html$text(s),
+								revTexts)));
+				},
+				$author$project$Main$chompOneUntilEndOr('[')),
+				A2(
+				$elm$parser$Parser$map,
+				function (_v0) {
+					return $elm$parser$Parser$Done(
+						$elm$core$List$reverse(revTexts));
+				},
+				$elm$parser$Parser$succeed(0))
+			]));
+};
+var $author$project$Main$linkifyParser = A2($elm$parser$Parser$loop, _List_Nil, $author$project$Main$linkifyParserHelper);
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (!result.$) {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
+var $author$project$Main$parseLinksFromText = function (t) {
+	return A2(
+		$elm$core$Result$withDefault,
+		_List_fromArray(
+			[
+				$elm$html$Html$text('--> Ungültiger Text <--')
+			]),
+		A2($elm$parser$Parser$run, $author$project$Main$linkifyParser, t));
+};
 var $justinmimbs$timezone_data$TimeZone$Specification$DateTime = F5(
 	function (year, month, day, time, clock) {
 		return {N: clock, a6: day, an: month, b$: time, c7: year};
@@ -8851,10 +9041,7 @@ var $author$project$Main$articleEventsAndAnnoucements = F2(
 						return A2(
 							$elm$html$Html$p,
 							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$html$Html$text(t)
-								]));
+							$author$project$Main$parseLinksFromText(t));
 					},
 					el.y);
 				var _v0 = function () {
