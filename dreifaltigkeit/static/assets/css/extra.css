@@ -1,28 +1,29 @@
 /* Main header with links to parish, kindergarden and quarter project */
 
 @media screen and (max-width: 736px) {
-    #header .logo {
-        margin-bottom: 0.5em;
-    }
-    #header .logo:last-child {
-        margin-bottom: 0;
-    }
+  #header .logo {
+    margin-bottom: 0.5em;
+  }
+
+  #header .logo:last-child {
+    margin-bottom: 0;
+  }
 }
 
 @media screen and (min-width: 737px) {
-    #header .title-box {
-        max-width: 15em;
-        margin: 0 auto;
-    }
+  #header .title-box {
+    max-width: 15em;
+    margin: 0 auto;
+  }
 }
 
 #header .logo {
-    text-align: center;
+  text-align: center;
 }
 
 /* Last section and footer in main block */
 
-#main > .inner > section:last-of-type {
+#main>.inner>section:last-of-type {
   padding-bottom: 0em;
 }
 
@@ -41,26 +42,27 @@
 
 @media screen and (min-width: 1281px) {
   nav#menu header {
-    display:none;
+    display: none;
   }
+
   nav#menu ul {
-    margin-top:5em;
+    margin-top: 5em;
   }
 }
 
 /* Active links in main menu */
 
 #menu ul a.active {
-    color: #f56a6a;
+  color: #f56a6a;
 }
 
 
 /* RSS icon in header on home view */
 
 .major h2 a.rss-icon {
-    color: #7f888f;
-    margin-left: 0.5em;
-    font-size: 0.7143em;
+  color: #7f888f;
+  margin-left: 0.5em;
+  font-size: 0.7143em;
 }
 
 
@@ -75,12 +77,23 @@
 }
 
 
+/* Paragraphs in text for services on service */
+
+.service-list p {
+  margin-bottom: 0.3em;
+}
+
+.service-list p:last-of-type {
+  margin-bottom: 2em;
+}
+
+
 /* Logo for kids service */
 
 .kids-logo {
-    vertical-align: text-top;
-    margin-top: -0.8em;
-    margin-left: 0.5em;
+  vertical-align: text-top;
+  margin-top: -0.8em;
+  margin-left: 0.5em;
 }
 
 .kids-logo img {
@@ -98,15 +111,15 @@
 /* Contact info for parish staff flat page */
 
 ul.parish-contact {
-    clear: both;
+  clear: both;
 }
 
 ul.parish-contact li {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 ul.parish-contact li i {
-    color: #f56a6a;
+  color: #f56a6a;
 }
 
 
@@ -130,13 +143,14 @@ ul.parish-contact li i {
 
 /* Images for services and imprint page */
 
-.image.left.big, .image.right.big {
-    max-width: 50%;
+.image.left.big,
+.image.right.big {
+  max-width: 50%;
 }
 
 
 /* Django admin */
 
 #flatpage_form #id_content {
-    font-family: monospace;
+  font-family: monospace;
 }
