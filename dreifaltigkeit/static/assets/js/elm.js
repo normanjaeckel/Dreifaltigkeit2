@@ -9563,7 +9563,7 @@ var $author$project$Main$viewSingleEvent = F2(
 						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Veranstaltung nicht gefunden')
+								$elm$html$Html$text('Veranstaltungen werden geladen. Bitte warten …')
 							]))
 					]));
 		} else {

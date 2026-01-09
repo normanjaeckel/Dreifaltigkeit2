@@ -826,7 +826,7 @@ viewSingleEvent flags model =
     case model.events |> List.filter (\e -> e.id == flags.eventId) |> List.head of
         Nothing ->
             header []
-                [ h1 [] [ text "Veranstaltung nicht gefunden" ]
+                [ h1 [] [ text "Veranstaltungen werden geladen. Bitte warten …" ]
                 ]
 
         Just event ->
