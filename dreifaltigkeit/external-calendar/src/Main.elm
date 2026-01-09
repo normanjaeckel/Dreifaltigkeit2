@@ -783,7 +783,12 @@ monthlyTextFor : List MonthlyText -> MonthlyTextMonth -> List (Html Msg)
 monthlyTextFor texts month =
     case texts |> List.filter (\mt -> mt.month == month) |> List.head of
         Just mt ->
-            [ blockquote [] [ text mt.text, br [] [], text mt.verse ] ]
+            let
+                monthHeading : String
+                monthHeading =
+                    toGermanMonth mt.month.month ++ " " ++ String.fromInt mt.month.year
+            in
+            [ h3 [] [ text monthHeading ], blockquote [] [ text mt.text, br [] [], text mt.verse ] ]
 
         Nothing ->
             []
@@ -815,7 +820,11 @@ serviceView service =
                        )
                 )
     in
-    [ dt [] [ text <| String.join " · " [ service.start |> posixToString, service.place, service.title ] ]
+    [ dt []
+        [ text <| (posixToString service.start ++ " · " ++ service.title)
+        , br [] []
+        , text service.place
+        ]
     , dd []
         (firstLine :: (service.longDescription |> linebreaks))
     ]

@@ -88,6 +88,17 @@
 }
 
 
+/* Headings with name of month in service list */
+
+.service-list h3 {
+    margin-top: 3em;
+}
+
+.service-list h3:first-of-type {
+    margin-top: 0em;
+}
+
+
 /* Logo for kids service */
 
 .kids-logo {
