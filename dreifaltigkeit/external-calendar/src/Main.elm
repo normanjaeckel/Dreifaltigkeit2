@@ -40,12 +40,12 @@ externalCalendarUrl page =
 
         Calendar ->
             -- TODO: We can strip events in the past with "&start=2023-01-01&end=2999-12-25" which is useful with dynamic start value
-            url ++ "&past=2&start=2025-03-01&end=2999-12-25"
+            url ++ "&past=2&start=2026-03-01&end=2999-12-25"
 
         SingleEvent ->
             -- TODO: We can strip events in the past with "&start=2023-01-01&end=2999-12-25" which is useful with dynamic start value
             -- TODO: Just fetch one single event here.
-            url ++ "&past=2&start=2025-03-01&end=2999-12-25"
+            url ++ "&past=2&start=2026-03-01&end=2999-12-25"
 
 
 localTimezome : Time.Zone

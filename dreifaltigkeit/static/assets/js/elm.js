@@ -7254,9 +7254,9 @@ var $author$project$Main$externalCalendarUrl = function (page) {
 		case 1:
 			return url + '&eventtype=1';
 		case 2:
-			return url + '&past=2&start=2025-03-01&end=2999-12-25';
+			return url + '&past=2&start=2026-03-01&end=2999-12-25';
 		default:
-			return url + '&past=2&start=2025-03-01&end=2999-12-25';
+			return url + '&past=2&start=2026-03-01&end=2999-12-25';
 	}
 };
 var $author$project$Main$CurrentMarkusbote = F2(
