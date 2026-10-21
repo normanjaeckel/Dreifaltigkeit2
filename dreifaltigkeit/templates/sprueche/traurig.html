@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no" />
+    <title>Zufälliger Spruch – Traurig?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .quote-box {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .text {
+            font-size: 1.25rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .source {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Traurig?</h1>
+    <div class="quote-box">
+        <div id="quote-text" class="text"></div>
+        <div id="quote-source" class="source"></div>
+    </div>
+</div>
+
+<script>
+    const sprueche = [
+        {
+            text: "Er wird jede Träne abwischen von ihren Augen.",
+            quelle: "Off 21,4 BB"
+        },
+        {
+            text: "Übergib dem Herrn deine Last! Er selbst wird für dich sorgen!",
+            quelle: "Ps 55,23 BB"
+        },
+        {
+            text: "Der Herr ist nahe bei den Menschen, die im Herzen verzweifelt sind.",
+            quelle: "Ps 34,19 BB"
+        },
+        {
+            text: "Siehe ich bin mit dir und will dich behüten, wo du hinziehst.",
+            quelle: "Gen 28,15 LU17"
+        },
+        {
+            text: "Der Herr wird seinen Engel vor dir her senden.",
+            quelle: "Gen 24,7 LU17"
+        },
+        {
+            text: "Ich habe dein Gebet gehört und deine Tränen gesehen.",
+            quelle: "2 Kön 20,5 BB"
+        },
+        {
+            text: "So spricht der Herr der himmlischen Heere: Wer euch antastet, der tastet meinen Augapfel an.",
+            quelle: "Sach 2,12 BB"
+        },
+        {
+            text: "Jesus verspricht: Ich bin bei euch jeden Tag bis zum Ende der Welt.",
+            quelle: "Mt 28,20 BB"
+        },
+        {
+            text: "Von allen Seiten umgibst du mich und hältst deine Hand über mir.",
+            quelle: "Ps 139,5 BB"
+        }
+    ];
+
+    function neuerSpruch() {
+        const randomIndex = Math.floor(Math.random() * sprueche.length);
+        const auswahl = sprueche[randomIndex];
+
+        document.getElementById('quote-text').innerText = `„${auswahl.text}“`;
+        document.getElementById('quote-source').innerText = auswahl.quelle;
+    }
+
+    // Beim ersten Laden der Seite direkt einen Spruch anzeigen
+    neuerSpruch();
+</script>
+
+</body>
+</html>

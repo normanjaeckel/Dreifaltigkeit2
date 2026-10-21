@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no" />
+    <title>Zufälliger Spruch – Sorgen?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .quote-box {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .text {
+            font-size: 1.25rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .source {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sorgen?</h1>
+    <div class="quote-box">
+        <div id="quote-text" class="text"></div>
+        <div id="quote-source" class="source"></div>
+    </div>
+</div>
+
+<script>
+    const sprueche = [
+        {
+            text: "Wer von euch kann dadurch, dass er sich Sorgen macht, sein Leben nur um eine Stunde verlängern?",
+            quelle: "Lk 12,25 BB"
+        },
+        {
+            text: "Ich habe dir doch gesagt, dass du stark und mutig sein sollst! Fürchte dich nicht und schrecke vor nichts zurück!",
+            quelle: "Jos 1,9 BB"
+        },
+        {
+            text: "Wer unerschütterlich auf dich (Gott) vertraut, dem schenkst du (Gott) bleibenden Frieden.",
+            quelle: "Jes 26,3 BB"
+        },
+        {
+            text: "Das Herz des Menschen denkt sich seinen Weg, doch der Herr lenkt seinen Schritt.",
+            quelle: "Spr 16,9 BB"
+        },
+        {
+            text: "Macht euch also keine Sorgen um den kommenden Tag – der wird schon für sich selber sorgen.",
+            quelle: "Mt 6,34 BB"
+        },
+        {
+            text: "Der Herr ist für mich, er steht mir zur Seite! So kann ich denen, die mich hassen, unerschrocken in die Augen blicken.",
+            quelle: "Ps 118,7 BB"
+        },
+        {
+            text: "Denn der Geist, den Gott uns geschenkt hat, lässt uns nicht verzagen. Vielmehr gibt er uns Kraft, Liebe und Besonnenheit.",
+            quelle: "2 Tim 1,7 BB"
+        },
+        {
+            text: "Der Herr hebe sein Angesicht auf dich und gebe dir Frieden.",
+            quelle: "Num 6,26 LU17"
+        },
+        {
+            text: "Gott legt uns eine Last auf, aber er hilft uns auch.",
+            quelle: "Ps 68,20 LU17"
+        },
+        {
+            text: "Eifer und Zorn verkürzen das Leben, und Sorge macht alt vor der Zeit.",
+            quelle: "Sir 30,24 LU17"
+        }
+    ];
+
+    function neuerSpruch() {
+        const randomIndex = Math.floor(Math.random() * sprueche.length);
+        const auswahl = sprueche[randomIndex];
+
+        document.getElementById('quote-text').innerText = `„${auswahl.text}“`;
+        document.getElementById('quote-source').innerText = auswahl.quelle;
+    }
+
+    // Beim ersten Laden der Seite direkt einen Spruch anzeigen
+    neuerSpruch();
+</script>
+
+</body>
+</html>

@@ -32,6 +32,11 @@ urlpatterns = [
     path("impressum/", views.Imprint.as_view(), name="imprint"),
     path("ankuendigung/<int:pk>/", views.Announcements.as_view(), name="announcement"),
     path("admin/", admin.site.urls),
+    path("sprueche/erschoepft/", views.SpecialPage.as_view(template_name="sprueche/erschoepft.html")),
+    path("sprueche/sorgen/", views.SpecialPage.as_view(template_name="sprueche/sorgen.html")),
+    path("sprueche/streit/", views.SpecialPage.as_view(template_name="sprueche/streit.html")),
+    path("sprueche/traurig/", views.SpecialPage.as_view(template_name="sprueche/traurig.html")),
+    path("sprueche/verliebt/", views.SpecialPage.as_view(template_name="sprueche/verliebt.html")),
     # path("kv-wahl-2020/", views.SpecialPage.as_view(template_name="special_page.html")),
     # path(
     #    "bauarbeiten/", views.SpecialPage.as_view(template_name="special_page_1.html")

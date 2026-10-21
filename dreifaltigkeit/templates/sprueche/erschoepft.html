@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no" />
+    <title>Zufälliger Spruch – Erschöpft?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .quote-box {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .text {
+            font-size: 1.25rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .source {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Erschöpft?</h1>
+    <div class="quote-box">
+        <div id="quote-text" class="text"></div>
+        <div id="quote-source" class="source"></div>
+    </div>
+</div>
+
+<script>
+    const sprueche = [
+        {
+            text: "Ich mache dich stark und helfe dir.",
+            quelle: "Jes 41,10 BB"
+        },
+        {
+            text: "In der Liebe gibt es keine Furcht, sondern die vollkommende liebe vertreibt dir Furcht.",
+            quelle: "1 Joh 4,18 BB"
+        },
+        {
+            text: "Ich bin allem gewachsen durch den, der mich stark macht.",
+            quelle: "Phil 4,13 BB"
+        },
+        {
+            text: "Am siebenten Tag vollendet Gott sein Werk, das er gemacht hatte. An diesem Tag ruhte er aus von all seiner Arbeit, die er getan hatte.",
+            quelle: "Gen 2,2 BB"
+        },
+        {
+            text: "Kommt mit an einen ruhigen Ort, nur ihr allein, und ruht euch ein wenig aus.",
+            quelle: "Mk 6,31 BB"
+        },
+        {
+            text: "Es nützt euch nichts, dass ihr früh am Morgen aufsteht und euch erst spät wieder hinsetzt. Ihr esst doch nur das Brot für das ihr unermüdlich arbeitet.",
+            quelle: "Ps 127,2 BB"
+        },
+        {
+            text: "Besser eine Hand voll mit Ruhe als beide Fäuste voll mit Mühe und Haschen nach Wind.",
+            quelle: "Koh 4,6 LU17"
+        },
+        {
+            text: "Und die da müde werden tröstet er, dass sie nicht verzagen.",
+            quelle: "Sir 17,24 LU17"
+        },
+        {
+            text: "Du hast dich müde gemacht mit der Menge deiner Pläne.",
+            quelle: "Jes 47,13 LU17"
+        },
+        {
+            text: "Er gibt dem Müden neue Kraft, und macht den Schwachen wieder stark.",
+            quelle: "Jes 40,29 BB"
+        }
+    ];
+
+    function neuerSpruch() {
+        const randomIndex = Math.floor(Math.random() * sprueche.length);
+        const auswahl = sprueche[randomIndex];
+
+        document.getElementById('quote-text').innerText = `„${auswahl.text}“`;
+        document.getElementById('quote-source').innerText = auswahl.quelle;
+    }
+
+    // Beim ersten Laden der Seite direkt einen Spruch anzeigen
+    neuerSpruch();
+</script>
+
+</body>
+</html>

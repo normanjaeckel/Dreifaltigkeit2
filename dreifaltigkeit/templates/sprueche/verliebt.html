@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no" />
+    <title>Zufälliger Spruch – Verliebt?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .quote-box {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .text {
+            font-size: 1.25rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .source {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Verliebt?</h1>
+    <div class="quote-box">
+        <div id="quote-text" class="text"></div>
+        <div id="quote-source" class="source"></div>
+    </div>
+</div>
+
+<script>
+    const sprueche = [
+        {
+            text: "Die Liebe ist geduldig. Gütig ist sie, die Liebe. Die Liebe ereifert sich nicht. Sie prahlt nicht und spielt sich nicht auf.",
+            quelle: "1 Kor 13,4 BB"
+        },
+        {
+            text: "Du bist kostbar und wertvoll für mich, und ich habe dich lieb.",
+            quelle: "Jes 43,4 BB"
+        },
+        {
+            text: "Ihr Männer, liebt eure Frauen und seid nicht rücksichtslos gegen sie!",
+            quelle: "Kol 3,19 BB"
+        },
+        {
+            text: "In der Liebe gibt es keine Furcht, sondern die vollkommene Liebe vertreibt die Furcht.",
+            quelle: "1 Joh 4,18 NeÜ"
+        },
+        {
+            text: "Ja schön bist du, meine Freundin! Du bist so wunderschön! Deine Augen sind wie zwei Tauben.",
+            quelle: "Hld 1,15 BB"
+        },
+        {
+            text: "Wie eine Lilie unter den Dornen, so ist meine Freundin unter den Mädchen.",
+            quelle: "Hld 2,2 BB"
+        },
+        {
+            text: "Lass mich nur deine Stimme hören! Denn deine Stimme klingt süß wie Honig.",
+            quelle: "Hld 2,14 BB"
+        },
+        {
+            text: "Einem roten Band gleichen deine Lippen, und dein Mund ist schön geformt.",
+            quelle: "Hld 4,3 BB"
+        },
+        {
+            text: "Du hast mich bezaubert, meine Schwester und Braut, bezaubert mit einem einzigen Blick deiner Augen.",
+            quelle: "Hld 4,9 BB"
+        },
+        {
+            text: "Und Jonathan ließ David noch einmal schwören bei der Liebe, die er für ihn empfand. Denn er liebte ihn wie sein eigenes Leben.",
+            quelle: "1 Sam 20,17 BB"
+        }
+    ];
+
+    function neuerSpruch() {
+        const randomIndex = Math.floor(Math.random() * sprueche.length);
+        const auswahl = sprueche[randomIndex];
+
+        document.getElementById('quote-text').innerText = `„${auswahl.text}“`;
+        document.getElementById('quote-source').innerText = auswahl.quelle;
+    }
+
+    // Beim ersten Laden der Seite direkt einen Spruch anzeigen
+    neuerSpruch();
+</script>
+
+</body>
+</html>
