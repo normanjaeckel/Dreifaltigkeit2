@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalabel=no" />
-    <title>Ein Wort zum Streit</title>
+    <title>Zufälliger Spruch – Ein Wort zum Streit</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             color: #333;
             display: flex;
             justify-content: center;
@@ -17,60 +17,111 @@
             padding: 20px;
             box-sizing: border-box;
         }
-        .card {
+        .container {
+            text-align: center;
             background: white;
             padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
             width: 100%;
         }
-        .quote {
-            font-size: 1.5rem;
-            font-weight: 500;
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .quote-box {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .text {
+            font-size: 1.25rem;
+            font-style: italic;
             line-height: 1.6;
-            margin-bottom: 20px;
-            color: #1a1a1a;
+            margin-bottom: 15px;
         }
         .source {
             font-size: 1rem;
-            color: #666;
-            font-style: italic;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+        .footer a {
+            text-decoration: none;
+            border-bottom: dotted 1px;
+            color: #f56a6a;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="quote" id="quote-text">Lade Spruch...</div>
-    <div class="source" id="quote-source"></div>
+<div class="container">
+    <h1>Streit?</h1>
+    <div class="quote-box">
+        <div id="quote-text" class="text"></div>
+        <div id="quote-source" class="source"></div>
+    </div>
+    <p class="footer"><a href="/">Kirchgemeinde</a> · <a href="/impressum/">Impressum</a></p>
 </div>
 
 <script>
-    const quotes = [
-        { text: "Vergeltet Böses nicht mit Bösem", source: "Röm 12,17 LU17" },
-        { text: "Seid alle miteinander auf Einigkeit aus. Werdet nicht überheblich, sondern lasst euch auf die Unbedeutenden ein.", source: "Röm 12,16 BB" },
-        { text: "Jagt dem Frieden nach.", source: "Hebr 12,14 LU17" },
-        { text: "Er hat eine Grube gegraben und ausgehöhlt – und ist in die Grube gefallen, die er gemacht hat.", source: "Ps 7,16 LU17" },
-        { text: "Ich gebe euch ein neues Gebot: Liebt einander! Genauso wie ich euch geliebt habe.", source: "Joh 13,34 BB" },
-        { text: "Du siehst den Splitter im Auge deines Gegenübers. Bemerkst du nicht den Balken in deinem eigenen Auge?", source: "Mt 7,3 BB" },
-        { text: "Dagegen sollen wir uns an die Wahrheit halten und uns von der Liebe leiten lassen.", source: "nach Eph 4,15" },
-        { text: "Wer von euch ohne Schuld ist, werfe den ersten Stein!", source: "Joh 8,7 BB" },
-        { text: "Ein Geduldiger ist besser als ein Starker und wer sich selbst beherrscht, besser als einer, der Städte einnimmt.", source: "Spr 16,32 LU17" },
-        { text: "Meinst du, dass du mit Recht zürnst?", source: "Jona 4,4 LU17" }
+    const sprueche = [
+        {
+            text: "Vergeltet Böses nicht mit Bösem",
+            quelle: "Röm 12,17 LU17"
+        },
+        {
+            text: "Seid alle miteinander auf Einigkeit aus. Werdet nicht überheblich, sondern lasst euch auf die Unbedeutenden ein.",
+            quelle: "Röm 12,16 BB"
+        },
+        {
+            text: "Jagt dem Frieden nach.",
+            source: "Hebr 12,14 LU17"
+        },
+        {
+            text: "Er hat eine Grube gegraben und ausgehöhlt – und ist in die Grube gefallen, die er gemacht hat.",
+            quelle: "Ps 7,16 LU17"
+        },
+        {
+            text: "Ich gebe euch ein neues Gebot: Liebt einander! Genauso wie ich euch geliebt habe.",
+            quelle: "Joh 13,34 BB"
+        },
+        {
+            text: "Du siehst den Splitter im Auge deines Gegenübers. Bemerkst du nicht den Balken in deinem eigenen Auge?",
+            quelle: "Mt 7,3 BB"
+        },
+        {
+            text: "Dagegen sollen wir uns an die Wahrheit halten und uns von der Liebe leiten lassen.",
+            quelle: "Eph 4,15 BB"
+        },
+        {
+            text: "Wer von euch ohne Schuld ist, werfe den ersten Stein!",
+            quelle: "Joh 8,7 BB"
+        },
+        {
+            text: "Ein Geduldiger ist besser als ein Starker und wer sich selbst beherrscht, besser als einer, der Städte einnimmt.",
+            quelle: "Spr 16,32 LU17"
+        },
+        {
+            text: "Meinst du, dass du mit Recht zürnst?",
+            quelle: "Jona 4,4 LU17"
+        }
     ];
 
-    function getRandomQuote() {
-        const randomIndex = Math.floor(Math.random() * quotes.length);
-        const selected = quotes[randomIndex];
+    function neuerSpruch() {
+        const randomIndex = Math.floor(Math.random() * sprueche.length);
+        const auswahl = sprueche[randomIndex];
 
-        document.getElementById('quote-text').innerText = `„${selected.text}“`;
-        document.getElementById('quote-source').innerText = selected.source;
+        document.getElementById('quote-text').innerText = `„${auswahl.text}“`;
+        document.getElementById('quote-source').innerText = auswahl.quelle;
     }
 
-    // Beim ersten Laden direkt einen Spruch anzeigen
-    window.onload = getRandomQuote;
+    // Beim ersten Laden der Seite direkt einen Spruch anzeigen
+    neuerSpruch();
 </script>
 
 </body>
